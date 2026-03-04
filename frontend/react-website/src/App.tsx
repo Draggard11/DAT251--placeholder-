@@ -20,17 +20,19 @@ function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <div>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Navbar />}/>
-          <Route index element={<Home />}/>
-          <Route path="Stats" element={<Stats />}/>
-          <Route path="Groups" element={<Groups />}/>
-          <Route path="Login" element={<Login />}/>
-          <Route path="Subjects" element={<Subjects />}/>
-      </Routes>
-    </div>
+    <>
+      <div className="nav2">
+          <Navbar />
+      </div>
+        <Routes>
+          <Route path="/" element={<Navbar />}/>
+            <Route index element={<Home />}/>
+            <Route path="Stats" element={<Stats />}/>
+            <Route path="Groups" element={<Groups />}/>
+            <Route path="Login" element={<Login />}/>
+            <Route path="Subjects" element={<Subjects />}/>
+        </Routes>
+    </>
   )
 }
 
