@@ -1,30 +1,21 @@
 import React from "react";
+import ProgressBar from "../components/ProgressBar";
 
 const Stats = () => {
-    const progress = 40;
+    const progress = 67;
+    const level = 3;
     return (
         <div>
+        <div style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center"
+            }}
+        >
+
             <h1>These are your stats:</h1>
-            <div style={{
-                    width: "300px",
-                    height: "20px",
-                    backgroundColor: "#ddd",
-                    borderRadius: "10px",
-                    overflow: "hidden"
-                  }}>
-                    <div style={{
-                      width: progress + "%",
-                      height: "100%",
-                      backgroundColor: "green",
-                      borderRadius: "10px",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      color: "white",
-                      fontWeight: "bold"
-                    }} >
-                  {progress}%
-                  </div>
+            <ProgressBar progress = {progress} level= {level}/>
             </div>
         </div>
     );
