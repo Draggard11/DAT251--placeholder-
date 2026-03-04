@@ -1,17 +1,17 @@
-package no.hvl.dat251.backend
-import lombok.Getter
+package no.hvl.dat251.backend.entity
 
-@Getter
-public class Student(
-    val name: String
+import jakarta.persistence.*
+
+@Entity
+class Student(
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var id: Long? = null,
+
+    var name: String
+
+
 ) {
-    
-    //@id
-    //@GenerateValue(strategy = GenerationType.IDENTITY)
-    //private val: Long = id
-
-    //private val: String = name
-    private var activeSubjects: List<String> = ArrayList<String>()
-    private var passedSubjects: List<String> = ArrayList<String>()
 
 }
