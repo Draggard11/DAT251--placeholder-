@@ -21,6 +21,8 @@
   display: flex;
   list-style: none;
   gap: 1.5rem;
+  /*This changes the space between the links in the nav bar*/
+  justify-content: space-evenly;
 }
 
 .nav-links a {
