@@ -1,5 +1,6 @@
 package no.hvl.dat251.backend.entity
 
+import jakarta.persistence.CascadeType
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
@@ -7,6 +8,8 @@ import jakarta.persistence.Id
 import jakarta.persistence.JoinColumn
 import jakarta.persistence.JoinTable
 import jakarta.persistence.ManyToMany
+import jakarta.persistence.OneToMany
+import jakarta.persistence.OneToOne
 import no.hvl.dat251.backend.entity.Student
 
 @Entity
@@ -23,9 +26,14 @@ class StudyGroup (
         joinColumns = [JoinColumn(name = "studygroup_id")],
         inverseJoinColumns = [JoinColumn(name = "student_id")]
     )
-    var students: MutableList<Student> = mutableListOf()
+    val students: MutableList<Student> = mutableListOf(),
 
-    ) {
+    val attendance: HashSet<Student> = hashSetOf(),
+    @OneToMany(cascade = [(CascadeType.MERGE)])
+    var studySessions: MutableList<StudySession> = mutableListOf()
+
+
+) {
 
     fun addStudent(student: Student) {
         this.students.add(student)
