@@ -16,11 +16,11 @@ data class Subject(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null,
     var subjectCode: String = "Test subject",
-    @ManyToMany
 
+    @ManyToMany
     var studyGroups: MutableList<StudyGroup> = mutableListOf(),
-    @ManyToMany
 
+    @ManyToMany
     var students: MutableList<Student> =  mutableListOf()) {
 
     fun addStudent(student: Student) {
