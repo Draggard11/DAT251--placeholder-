@@ -1,6 +1,6 @@
 package no.hvl.dat251.backend.repository
 
 import no.hvl.dat251.backend.entity.Student
-import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.repository.CrudRepository
 
-interface StudentRepository : JpaRepository<Student, Long>
+interface StudentRepository : CrudRepository<Student, Long>
