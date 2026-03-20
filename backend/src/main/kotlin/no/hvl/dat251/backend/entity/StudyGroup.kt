@@ -10,9 +10,11 @@ import jakarta.persistence.JoinTable
 import jakarta.persistence.ManyToMany
 import jakarta.persistence.OneToMany
 import jakarta.persistence.OneToOne
+import jakarta.persistence.Table
 import no.hvl.dat251.backend.entity.Student
 
 @Entity
+@Table(name = "Study_Group")
 class StudyGroup (
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
