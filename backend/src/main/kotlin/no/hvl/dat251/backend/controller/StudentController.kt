@@ -5,6 +5,7 @@ import no.hvl.dat251.backend.repository.StudentRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -45,6 +46,13 @@ class StudentController(@Autowired private val studentRepository: StudentReposit
         //ToDO
         return ResponseEntity.ok(student)
     }
-
+    @DeleteMapping("/{id}")
+    fun deleteStudentById(@PathVariable("id") id : Long) : ResponseEntity<Student> {
+        if (!studentRepository.existsById(id)){
+            return ResponseEntity(HttpStatus.NOT_FOUND)
+        }
+        studentRepository.deleteById(id)
+        return ResponseEntity(HttpStatus.NO_CONTENT)
+    }
 
 }
