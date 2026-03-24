@@ -15,6 +15,8 @@ interface Props {
 }
 
 const CreateSessionModal = ({ isOpen, onClose, onSave }: Props) => {
+  // Oppdater duration i modal slik at vi istedenfor ser duration som: 60 min. Så ser vi 15:15 - 16:15 også i tillegg
+  // må vi se lokasjon, f eks hvl: M410 eller UiB: romnr
   const [subject, setSubject] = useState("");
   const [duration, setDuration] = useState("");
 
