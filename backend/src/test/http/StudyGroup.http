@@ -1,0 +1,35 @@
+### Base
+@host = http://localhost:8080
+@json = application/json
+@form = application/x-www-form-urlencoded
+
+@userId = 1
+
+###
+POST {{host}}/api/studygroups
+Content-Type: {{json}}
+
+{
+  "name": "first group"
+}
+###
+GET {{host}}/api/studygroups/1
+###
+###
+GET {{host}}/api/studygroups
+### making a student to add in the group
+POST {{host}}/api/students
+Content-Type: {{json}}
+
+{
+  "name": "bob"
+}
+### add student to group should be post or put
+POST {{host}}/api/studygroups/1/students/1
+### check all students in that group
+GET {{host}}/api/studygroups/1/students
+### remove the student from the group
+DELETE {{host}}/api/studygroups/1/students/1
+### check that no students are in the group
+GET {{host}}/api/studygroups/1/students
+###
