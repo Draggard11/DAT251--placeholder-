@@ -28,11 +28,10 @@ class StudyGroup (
         joinColumns = [JoinColumn(name = "studygroup_id")],
         inverseJoinColumns = [JoinColumn(name = "student_id")]
     )
-    val students: MutableList<Student> = mutableListOf(),
+    var students: MutableSet<Student> = mutableSetOf(),
 
-    val attendance: HashSet<Student> = hashSetOf(),
-    @OneToMany(cascade = [(CascadeType.MERGE)])
-    var studySessions: MutableList<StudySession> = mutableListOf()
+    @OneToMany(mappedBy = "studyGroup", cascade = [CascadeType.MERGE])
+    var studySessions: MutableSet<StudySession> = mutableSetOf()
 
 
 ) {
