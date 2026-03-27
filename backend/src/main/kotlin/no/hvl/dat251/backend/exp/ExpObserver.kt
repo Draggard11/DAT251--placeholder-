@@ -1,23 +1,31 @@
 package no.hvl.dat251.backend.exp
 
-interface ExpObserver<T> {
-    fun update()
+interface ExpObserver {
+    fun update(xp: Double)
 }
 
-abstract class ExpObservervable<T>(
-    val observers: MutableList<ExpObserver<T>> = mutableListOf(),
-) {
-    fun notifyObservers() {
+interface ExpObservervable {
+    fun notifyObservers(xp: Double)
+
+    fun register(observable: ExpObserver)
+
+    fun deregister(observable: ExpObserver)
+}
+
+abstract class ExpObservervableBase : ExpObservervable {
+    val observers: MutableList<ExpObserver> = mutableListOf()
+
+    override fun notifyObservers(xp: Double) {
         for (observer in observers) {
-            observer.update()
+            observer.update(xp)
         }
     }
 
-    fun register(observable: ExpObserver<T>) {
+    override fun register(observable: ExpObserver) {
         observers.add(observable)
     }
 
-    fun deregister(observable: ExpObserver<T>) {
+    override fun deregister(observable: ExpObserver) {
         observers.remove(observable)
     }
 }
