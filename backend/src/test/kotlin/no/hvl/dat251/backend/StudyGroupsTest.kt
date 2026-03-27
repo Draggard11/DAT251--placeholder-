@@ -48,11 +48,11 @@ class StudyGroupsTest {
         var student0 = Student(name = "John Doe")
         var student1 = Student(name = "Tom Smith")
         var student2 = Student(name = "Jane Doe")
-        var group = StudyGroup(students =  mutableListOf(student0, student1, student2))
+        var group = StudyGroup(students =  mutableSetOf(student0, student1, student2))
         Assertions.assertEquals(3, group.students.size)
-        Assertions.assertEquals(student0, group.students[0])
-        Assertions.assertEquals(student1, group.students[1])
-        Assertions.assertEquals(student2, group.students[2])
+        Assertions.assertTrue(group.students.contains(student0))
+        Assertions.assertTrue(group.students.contains(student1))
+        Assertions.assertTrue(group.students.contains(student2))
     }
 
     @Test
@@ -61,10 +61,10 @@ class StudyGroupsTest {
         var student0 = Student(name = "John Doe")
         var student1 = Student(name = "Tom Smith")
         var student2 = Student(name = "Jane Doe")
-        var group = StudyGroup(students = mutableListOf(student0, student1))
+        var group = StudyGroup(students = mutableSetOf(student0, student1))
         group.addStudent(student2)
         Assertions.assertEquals(3, group.students.size)
-        Assertions.assertEquals(student2, group.students[2])
+        Assertions.assertTrue(group.students.contains(student2))
     }
 
 }
