@@ -2,6 +2,7 @@ package no.hvl.dat251.backend.controller
 
 import no.hvl.dat251.backend.dto.StudentUpdateDTO
 import no.hvl.dat251.backend.entity.Student
+import no.hvl.dat251.backend.entity.StudyGroup
 import no.hvl.dat251.backend.repository.StudentRepository
 import no.hvl.dat251.backend.repository.StudyGroupRepository
 import no.hvl.dat251.backend.repository.SubjectRepository
@@ -46,7 +47,8 @@ class StudentController(
 
     @PatchMapping("/{id}")
     fun updateStudent(@PathVariable id: Long,
-                      @RequestBody dto: StudentUpdateDTO) : ResponseEntity<Student> {
+                      @RequestBody dto: StudentUpdateDTO
+    ) : ResponseEntity<Student> {
 
         val student = studentRepository.findById(id).orElse(null)
             ?: return ResponseEntity(HttpStatus.NOT_FOUND)
@@ -57,19 +59,37 @@ class StudentController(
         dto.enrollmentDate?.let { student.enrollmentDate = it }
 
         dto.activeSubjectIds?.let {
-            student.activeSubjects = subjectRepository.findAllById(it).toMutableList()
+            student.activeSubjects = subjectRepository.findAllById(it).toMutableSet()
         }
 
         dto.completedSubjectIds?.let {
-            student.completedSubjects = subjectRepository.findAllById(it).toMutableList()
+            student.completedSubjects = subjectRepository.findAllById(it).toMutableSet()
         }
 
         dto.studyGroupIds?.let {
-            student.studygroups = studyGroupRepository.findAllById(it).toMutableList()
+            student.studygroups = studyGroupRepository.findAllById(it).toMutableSet()
         }
 
         val updated = studentRepository.save(student)
         return ResponseEntity.ok(updated)
+    }
+    @PatchMapping("/{id}/subjects")
+    fun addSubject(@PathVariable("id") id : Long, @RequestBody subjectId: Long) : ResponseEntity<Long> {
+        val student = studentRepository.findById(id).orElse(null)
+        ?: return ResponseEntity(HttpStatus.NOT_FOUND)
+        val subject = subjectRepository.findById(subjectId).orElse(null)
+        ?: return ResponseEntity(HttpStatus.NOT_FOUND)
+        student.addActiveSubject(subject)
+        return ResponseEntity(subjectId, HttpStatus.OK)
+    }
+
+    @GetMapping("/{id}/studyGroups")
+    fun getStudyGroups(@PathVariable("id") id : Long) : ResponseEntity<Set<StudyGroup>> {
+        val student = studentRepository.findById(id).orElse(null)
+        ?: return ResponseEntity(HttpStatus.NOT_FOUND)
+        return ResponseEntity(student.studygroups, HttpStatus.OK)
+
+
     }
 
     @DeleteMapping("/{id}")
@@ -80,5 +100,6 @@ class StudentController(
         studentRepository.deleteById(id)
         return ResponseEntity(HttpStatus.NO_CONTENT)
     }
+
 
 }

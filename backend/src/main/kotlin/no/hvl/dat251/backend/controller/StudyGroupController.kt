@@ -1,10 +1,14 @@
 package no.hvl.dat251.backend.controller
 
+import no.hvl.dat251.backend.dto.StudyGroupUpdateDTO
 import no.hvl.dat251.backend.entity.Student
 import no.hvl.dat251.backend.repository.StudentRepository
 
 import no.hvl.dat251.backend.entity.StudyGroup
+import no.hvl.dat251.backend.entity.StudySession
 import no.hvl.dat251.backend.repository.StudyGroupRepository
+import no.hvl.dat251.backend.repository.StudySessionRepository
+import no.hvl.dat251.backend.repository.SubjectRepository
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -13,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.DeleteMapping
+import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -22,13 +27,15 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("api/studygroups")
 class StudyGroupsController(
-        private val studyGroupRepository: StudyGroupRepository,
-        private val studentRepository: StudentRepository
+    @Autowired private val studentRepository: StudentRepository,
+    @Autowired private val subjectRepository: SubjectRepository,
+    @Autowired private val studyGroupRepository: StudyGroupRepository,
+    @Autowired private val studySessionRepository: StudySessionRepository
     )
     {
         @GetMapping("")
-        fun getAllGroups(): ResponseEntity<List<StudyGroup>> {
-            val groups = studyGroupRepository.findAll().toList()
+        fun getAllGroups(): ResponseEntity<Set<StudyGroup>> {
+            val groups = studyGroupRepository.findAll().toSet()
             return ResponseEntity.ok(groups)
         }
 
@@ -45,40 +52,59 @@ class StudyGroupsController(
                 return ResponseEntity(studyGroup, HttpStatus.OK)
             } else return ResponseEntity(HttpStatus.NOT_FOUND)
         }
+        @PatchMapping("/{id}")
+        fun updateStudyGroup(
+            @PathVariable id: Long,
+            @RequestBody dto: StudyGroupUpdateDTO
+        ): ResponseEntity<StudyGroup> {
 
-        //PUT: What should be the logic here? 
-        // We don't really have a method for changing a group's id but I guess we could clone it and delete the old? Or update StudyGroup, or add a service class
+            val group = studyGroupRepository.findById(id).orElse(null)
+                ?: return ResponseEntity(HttpStatus.NOT_FOUND)
+
+            dto.name?.let { group.name = it }
+            dto.studentsIds?.let {
+                group.students = studentRepository.findAllById(it).toMutableSet()
+            }
+            dto.studySessionsIds?.let {
+                group.studySessions = studySessionRepository.findAllById(it).toMutableSet()
+            }
 
 
+            val saved = studyGroupRepository.save(group)
+            return ResponseEntity.ok(saved)
+        }
         //STUDENTS
         @GetMapping("/{id}/students")
-        fun getStudents(@PathVariable id: Long): ResponseEntity<List<Student>> {
+        fun getStudents(@PathVariable id: Long): ResponseEntity<Set<Student>> {
             val group = studyGroupRepository.findById(id).orElse(null)
-            return ResponseEntity.ok(group.students.toList())
+            ?: return ResponseEntity(HttpStatus.NOT_FOUND)
+            return ResponseEntity.ok(group.students.toSet())
         }
         
-        @GetMapping("/{group_id}/students/{student_id}")
-        fun addStudentToGroup(@PathVariable("group_id") group_id: Long, @PathVariable("student_id") student_id: Long) : ResponseEntity<Void> {
+        @PostMapping("/{group_id}/students/{student_id}")
+        fun addStudentToGroup(@PathVariable("group_id") group_id: Long, @PathVariable("student_id") student_id: Long) : ResponseEntity<Student> {
             val group = studyGroupRepository.findById(group_id).orElse(null)
+            ?: return ResponseEntity(HttpStatus.NOT_FOUND)
             val student = studentRepository.findById(student_id).orElse(null)
+            ?: return ResponseEntity(HttpStatus.NOT_FOUND)
 
-            //Todo: Handle rule against adding duplicates. This should probably be enforced in the StudyGroup class.
-            //Chat also receommends adding this to a service class instead that handles business logic.
             group.addStudent(student)
 
             studyGroupRepository.save(group)
-            return ResponseEntity.noContent().build()
+            return ResponseEntity.ok(student)
         }
 
         @DeleteMapping("/{group_id}/students/{student_id}")
-        fun removeStudentFromGroup(@PathVariable("group_id") group_id: Long, @PathVariable("student_id") student_id: Long) : ResponseEntity<Void> {
+        fun removeStudentFromGroup(@PathVariable("group_id") group_id: Long, @PathVariable("student_id") student_id: Long) : ResponseEntity<Student> {
             val group = studyGroupRepository.findById(group_id).orElse(null)
+            ?: return ResponseEntity(HttpStatus.NOT_FOUND)
             val student = studentRepository.findById(student_id).orElse(null)
+            ?: return ResponseEntity(HttpStatus.NOT_FOUND)
             
             group.removeStudent(student)
 
             studyGroupRepository.save(group)
-            return ResponseEntity.noContent().build()
+            return ResponseEntity.ok(student)
         }
 
 
