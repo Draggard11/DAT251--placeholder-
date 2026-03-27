@@ -17,12 +17,21 @@ class Student(
     var dateOfBirth: LocalDate? = null,
     var enrollmentDate: LocalDate? = null,
     @ManyToMany(cascade = [(CascadeType.MERGE)])
-    var activeSubjects: MutableList<Subject> = mutableListOf(),
+    var activeSubjects: MutableSet<Subject> = mutableSetOf(),
     @ManyToMany(cascade = [(CascadeType.MERGE)])
-    var completedSubjects: MutableList<Subject> = mutableListOf(),
+    var completedSubjects: MutableSet<Subject> = mutableSetOf(),
     @OneToMany(cascade = [(CascadeType.MERGE)])
-    var studygroups: MutableList<StudyGroup> = mutableListOf()
+    var studygroups: MutableSet<StudyGroup> = mutableSetOf()
 
 ) {
+    fun addStudyGroup(studyGroup: StudyGroup) {
+        studygroups.add(studyGroup)
+    }
+    fun removeStudyGroup(studyGroup: StudyGroup) {
+        studygroups.remove(studyGroup)
+    }
+    fun addActiveSubject(subject: Subject) {
+        activeSubjects.add(subject)
+    }
 
 }

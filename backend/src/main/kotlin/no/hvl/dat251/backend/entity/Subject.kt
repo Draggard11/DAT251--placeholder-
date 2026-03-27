@@ -18,10 +18,10 @@ data class Subject(
     var subjectCode: String = "Test subject",
 
     @ManyToMany
-    var studyGroups: MutableList<StudyGroup> = mutableListOf(),
+    var studyGroups: MutableSet<StudyGroup> = mutableSetOf(),
 
     @ManyToMany
-    var students: MutableList<Student> =  mutableListOf()) {
+    var students: MutableSet<Student> =  mutableSetOf()) {
 
     fun addStudent(student: Student) {
         students.add(student)

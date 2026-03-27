@@ -28,7 +28,7 @@ class SubjectTest {
         var student = Student(name = "John Doe")
         subject.addStudent(student)
         Assertions.assertTrue(subject.students.size == 1)
-        Assertions.assertTrue(subject.students[0].name == student.name)
+        Assertions.assertTrue(subject.students.contains(student))
     }
 
     @Test
