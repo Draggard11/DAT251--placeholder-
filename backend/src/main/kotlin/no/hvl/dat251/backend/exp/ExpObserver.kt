@@ -1,11 +1,11 @@
 package no.hvl.dat251.backend.exp
 
 interface ExpObserver {
-    fun update(xp: Double)
+    fun update(xp: Float)
 }
 
 interface ExpObservervable {
-    fun notifyObservers(xp: Double)
+    fun notifyObservers(xp: Float)
 
     fun register(observable: ExpObserver)
 
@@ -15,7 +15,7 @@ interface ExpObservervable {
 abstract class ExpObservervableBase : ExpObservervable {
     val observers: MutableList<ExpObserver> = mutableListOf()
 
-    override fun notifyObservers(xp: Double) {
+    override fun notifyObservers(xp: Float) {
         for (observer in observers) {
             observer.update(xp)
         }

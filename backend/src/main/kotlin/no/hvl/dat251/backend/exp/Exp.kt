@@ -1,7 +1,10 @@
-
 package no.hvl.dat251.backend.exp
 
 data class Exp(
-    var xp: Int = 0,
-    var xpModifier: Float = 0.0f,
-)
+    var xp: Float = 0f,
+    var xpModifier: Float = 0f,
+) {
+    fun calculate(): Float {
+        return xp * xpModifier
+    }
+}
