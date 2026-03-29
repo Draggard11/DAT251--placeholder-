@@ -5,7 +5,7 @@ import type { StudyGroupItem } from "../types/studyGroupData";
 interface Props {
   group: StudyGroupItem;
   onEdit: (group: StudyGroupItem) => void;
-  onRemove: (groupName: string) => void;
+  onRemove: (groupId: string) => void;
 }
 
 const StudyGroupCard = ({ group, onEdit, onRemove }: Props) => {

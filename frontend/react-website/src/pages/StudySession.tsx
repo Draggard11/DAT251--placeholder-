@@ -1,17 +1,39 @@
 import React, { useState } from "react";
 import CreateSessionModal from "../components/CreateSessionModal";
-
-interface StudySessionItem {
-  subject: string;
-  duration: number;
-}
+import SessionCard from "../components/SessionCard";
+import type { StudySessionItem } from "../types/studySession";
 
 const StudySession = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [sessions, setSessions] = useState<StudySessionItem[]>([]);
+  const [sessionType, setSessionType] = useState<"personal" | "group">(
+    "personal"
+  );
+  const [selectedGroup, setSelectedGroup] = useState<null | {
+    id: string;
+    name: string;
+    subject: string;
+  }>(null);
+
+  const personalSessions = sessions.filter((s) => s.type === "personal");
+  const groupSessions = sessions.filter((s) => s.type === "group");
 
   const handleSaveSession = (newSession: StudySessionItem) => {
     setSessions((prev) => [...prev, newSession]);
+  };
+
+  const handleRemoveSession = (id: string) => {
+    setSessions((prev) => prev.filter((session) => session.id !== id));
+  };
+
+  const handleEditSession = (session: StudySessionItem) => {
+    console.log("Edit session:", session);
+  };
+
+  const gridStyle = {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
+    gap: "16px",
   };
 
   return (
@@ -55,11 +77,15 @@ const StudySession = () => {
             Create a session
           </h2>
           <p style={{ marginTop: 0, color: "#666", marginBottom: "20px" }}>
-            Start by creating a personal study session with a subject and
-            duration.
+            Start by creating a personal study session with a subject and time.
           </p>
+
           <div
-            onClick={() => setIsOpen(true)}
+            onClick={() => {
+              setSessionType("personal");
+              setSelectedGroup(null);
+              setIsOpen(true);
+            }}
             style={{
               marginTop: "20px",
               width: "220px",
@@ -122,30 +148,43 @@ const StudySession = () => {
                 borderRadius: "16px",
                 boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
                 padding: "24px",
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
-                gap: "16px",
               }}
             >
-              {sessions.map((session, index) => (
-                <div
-                  key={index}
-                  style={{
-                    width: "220px",
-                    padding: "16px",
-                    backgroundColor: "#f7f7f7",
-                    borderRadius: "12px",
-                    border: "1px solid #e2e2e2",
-                  }}
-                >
-                  <h3 style={{ marginTop: 0, marginBottom: "8px" }}>
-                    {session.subject}
-                  </h3>
-                  <p style={{ margin: 0, color: "#555" }}>
-                    {session.duration} min
-                  </p>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "32px",
+                }}
+              >
+                <div>
+                  <h2>Personal Sessions</h2>
+                  <div style={gridStyle}>
+                    {personalSessions.map((session) => (
+                      <SessionCard
+                        key={session.id}
+                        session={session}
+                        onEdit={handleEditSession}
+                        onRemove={handleRemoveSession}
+                      />
+                    ))}
+                  </div>
                 </div>
-              ))}
+
+                <div>
+                  <h2>Group Sessions</h2>
+                  <div style={gridStyle}>
+                    {groupSessions.map((session) => (
+                      <SessionCard
+                        key={session.id}
+                        session={session}
+                        onEdit={handleEditSession}
+                        onRemove={handleRemoveSession}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
           )}
         </section>
@@ -154,6 +193,8 @@ const StudySession = () => {
           isOpen={isOpen}
           onClose={() => setIsOpen(false)}
           onSave={handleSaveSession}
+          type={sessionType}
+          group={selectedGroup ?? undefined}
         />
       </div>
     </div>
