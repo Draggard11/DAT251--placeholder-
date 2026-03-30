@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import StudyGroupCard from "../components/CreateStudyGroupCard";
 import StudyGroupModal from "../components/StudyGroupModal";
 import type { StudyGroupData, StudyGroupItem } from "../types/studyGroupData";
+import CreateSessionModal from "../components/CreateSessionModal";
 
 const Groups = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -9,6 +10,9 @@ const Groups = () => {
   const [selectedGroup, setSelectedGroup] = useState<StudyGroupItem | null>(
     null
   );
+  const [isSessionModalOpen, setIsSessionModalOpen] = useState(false);
+  const [selectedGroupForSession, setSelectedGroupForSession] =
+    useState<StudyGroupItem | null>(null);
 
   const handleSaveGroup = (group: StudyGroupData) => {
     if (selectedGroup) {
@@ -31,6 +35,11 @@ const Groups = () => {
   const handleEditGroup = (group: StudyGroupItem) => {
     setSelectedGroup(group);
     setIsOpen(true);
+  };
+
+  const handleCreateSession = (group: StudyGroupItem) => {
+    setSelectedGroupForSession(group);
+    setIsSessionModalOpen(true);
   };
 
   return (
@@ -89,6 +98,7 @@ const Groups = () => {
               group={group}
               onEdit={handleEditGroup}
               onRemove={handleRemoveGroup}
+              onCreateSession={handleCreateSession}
             />
           ))}
         </div>
@@ -102,6 +112,24 @@ const Groups = () => {
         }}
         onSave={handleSaveGroup}
         initialData={selectedGroup}
+      />
+
+      <CreateSessionModal
+        isOpen={isSessionModalOpen}
+        onClose={() => setIsSessionModalOpen(false)}
+        onSave={(session) => {
+          console.log("Group session created:", session);
+        }}
+        type="group"
+        group={
+          selectedGroupForSession
+            ? {
+                id: selectedGroupForSession.id,
+                name: selectedGroupForSession.groupName,
+                subject: selectedGroupForSession.subject,
+              }
+            : undefined
+        }
       />
     </div>
   );
