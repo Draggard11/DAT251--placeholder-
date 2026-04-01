@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import type { StudySessionItem } from "../types/studySession";
 
 const subjects = ["DAT251", "DAT333", "INF222"];
@@ -7,6 +7,7 @@ interface Props {
   isOpen: boolean;
   onClose: () => void;
   onSave: (session: StudySessionItem) => void;
+  initialData?: StudySessionItem | null;
 
   type: "personal" | "group";
   group?: {
@@ -22,34 +23,80 @@ const CreateSessionModal = ({
   onSave,
   type,
   group,
+  initialData,
 }: Props) => {
   const [subject, setSubject] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
+  const [date, setDate] = useState("");
   const [location, setLocation] = useState("");
+
+  useEffect(() => {
+    if (initialData) {
+      setSubject(initialData.subject || "");
+      setStartTime(toTimeInputValue(initialData.startTime));
+      setEndTime(toTimeInputValue(initialData.endTime));
+      setDate(initialData.date || toDateInputValue(initialData.startTime));
+      setLocation(initialData.location || "");
+    } else {
+      setSubject("");
+      setStartTime("");
+      setEndTime("");
+      setDate("");
+      setLocation("");
+    }
+  }, [initialData, isOpen]);
 
   if (!isOpen) return null;
 
   const handleSave = () => {
-    if (!startTime || !endTime || !location) return;
-    if (endTime <= startTime) return;
-    if (type === "personal" && !subject) return;
+    if (!date) {
+      console.log("Missing date");
+      return;
+    }
+
+    if (!startTime) {
+      console.log("Missing start time");
+      return;
+    }
+
+    if (!endTime) {
+      console.log("Missing end time");
+      return;
+    }
+
+    if (endTime <= startTime) {
+      console.log("End time must be after start time");
+      return;
+    }
+
+    if (type === "personal" && !subject) {
+      console.log("Missing subject");
+      return;
+    }
+
+    if (type === "group" && !location) {
+      console.log("Missing location for group session");
+      return;
+    }
+
+    if (type === "group" && !group) {
+      console.log("Missing group object");
+      return;
+    }
 
     onSave({
-      id: crypto.randomUUID(),
+      id: initialData?.id ?? crypto.randomUUID(),
       subject: type === "group" ? group!.subject : subject,
       startTime,
       endTime,
+      date,
       location,
       type,
       groupId: group?.id,
       groupName: group?.name,
     });
 
-    setSubject("");
-    setStartTime("");
-    setEndTime("");
-    setLocation("");
     onClose();
   };
 
@@ -57,7 +104,9 @@ const CreateSessionModal = ({
     <div onClick={onClose} style={overlayStyle}>
       <div onClick={(e) => e.stopPropagation()} style={modalStyle}>
         <div style={headerStyle}>
-          <h2 style={titleStyle}>Create Study Session</h2>
+          <h2 style={titleStyle}>
+            {initialData ? "Edit Study Session " : "Create Study Session"}
+          </h2>
           <button onClick={onClose} style={closeButtonStyle}>
             ×
           </button>
@@ -81,6 +130,16 @@ const CreateSessionModal = ({
               </select>
             </div>
           )}
+
+          <div style={fieldStyle}>
+            <label style={labelStyle}>Date</label>
+            <input
+              type="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+              style={inputStyle}
+            />
+          </div>
 
           <div style={timeRowStyle}>
             <div style={fieldStyle}>
@@ -118,7 +177,7 @@ const CreateSessionModal = ({
           </div>
 
           <button onClick={handleSave} style={saveButtonStyle}>
-            Save Session
+            {initialData ? "Save Changes" : "Save Session"}
           </button>
         </div>
       </div>
@@ -216,6 +275,21 @@ const saveButtonStyle = {
   borderRadius: "8px",
   cursor: "pointer",
   fontWeight: 600,
+};
+
+const toDateInputValue = (value: string) => {
+  const date = new Date(value);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+};
+
+const toTimeInputValue = (value: string) => {
+  const date = new Date(value);
+  const hours = String(date.getHours()).padStart(2, "0");
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+  return `${hours}:${minutes}`;
 };
 
 export default CreateSessionModal;

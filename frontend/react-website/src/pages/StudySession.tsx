@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CreateSessionModal from "../components/CreateSessionModal";
 import SessionCard from "../components/SessionCard";
 import type { StudySessionItem } from "../types/studySession";
 
 const StudySession = () => {
+  const [selectedSession, setSelectedSession] =
+    useState<StudySessionItem | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [sessions, setSessions] = useState<StudySessionItem[]>([]);
   const [sessionType, setSessionType] = useState<"personal" | "group">(
@@ -15,26 +17,209 @@ const StudySession = () => {
     subject: string;
   }>(null);
 
+  const fetchSessions = async () => {
+    try {
+      const res = await fetch("http://localhost:8080/api/studySessions");
+      const data = await res.json();
+
+      setSessions(
+        data.map((session: any) => ({
+          id: String(session.id),
+          subject: session.subject ?? "",
+          date: session.startTime ? session.startTime.split("T")[0] : "",
+          startTime: session.startTime,
+          endTime: session.endTime,
+          completed: session.completed ?? false,
+          location: session.location ?? "",
+          type: session.studyGroup ? "group" : "personal",
+          groupId: session.studyGroup
+            ? String(session.studyGroup.id)
+            : undefined,
+          groupName: session.studyGroup ? session.studyGroup.name : undefined,
+        }))
+      );
+    } catch (err) {
+      console.error("Failed to fetch sessions:", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchSessions();
+  }, []);
+
+  const getSessionStatus = (session: StudySessionItem) => {
+    const now = new Date();
+    const start = new Date(session.startTime);
+    const end = new Date(session.endTime);
+
+    if (session.completed || now > end) return "completed";
+    if (now >= start && now <= end) return "active";
+    return "upcoming";
+  };
+
   const personalSessions = sessions.filter((s) => s.type === "personal");
   const groupSessions = sessions.filter((s) => s.type === "group");
 
-  const handleSaveSession = (newSession: StudySessionItem) => {
-    setSessions((prev) => [...prev, newSession]);
+  const personalActive = personalSessions.filter(
+    (s) => getSessionStatus(s) === "active"
+  );
+  const personalUpcoming = personalSessions.filter(
+    (s) => getSessionStatus(s) === "upcoming"
+  );
+  const personalCompleted = personalSessions.filter(
+    (s) => getSessionStatus(s) === "completed"
+  );
+
+  const groupUpcoming = groupSessions.filter(
+    (s) => getSessionStatus(s) === "upcoming"
+  );
+  const groupCompleted = groupSessions.filter(
+    (s) => getSessionStatus(s) === "completed"
+  );
+  const groupActive = groupSessions.filter(
+    (s) => getSessionStatus(s) === "active"
+  );
+
+  const handleSaveSession = async (newSession: StudySessionItem) => {
+    try {
+      const start = new Date(`${newSession.date}T${newSession.startTime}:00`);
+      const end = new Date(`${newSession.date}T${newSession.endTime}:00`);
+
+      let res: Response;
+
+      if (selectedSession) {
+        res = await fetch(
+          `http://localhost:8080/api/studySessions/${selectedSession.id}`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              subject: newSession.subject,
+              startTime: start.toISOString(),
+              endTime: end.toISOString(),
+              location: newSession.location,
+              completed: false,
+              studyGroupId: newSession.groupId
+                ? Number(newSession.groupId)
+                : null,
+            }),
+          }
+        );
+      } else {
+        res = await fetch("http://localhost:8080/api/studySessions", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            subject: newSession.subject,
+            startTime: start.toISOString(),
+            endTime: end.toISOString(),
+            location: newSession.location,
+            completed: false,
+            studyGroup: newSession.groupId
+              ? { id: Number(newSession.groupId) }
+              : null,
+          }),
+        });
+      }
+
+      if (!res.ok) {
+        throw new Error("Failed to save session");
+      }
+
+      await fetchSessions();
+      setIsOpen(false);
+      setSelectedSession(null);
+      setSelectedGroup(null);
+      setSessionType("personal");
+    } catch (err) {
+      console.error("Failed to save session:", err);
+    }
   };
 
-  const handleRemoveSession = (id: string) => {
-    setSessions((prev) => prev.filter((session) => session.id !== id));
+  const handleRemoveSession = async (id: string) => {
+    try {
+      const res = await fetch(`http://localhost:8080/api/studySessions/${id}`, {
+        method: "DELETE",
+      });
+
+      if (!res.ok) throw new Error("Failed to delete");
+
+      await fetchSessions();
+    } catch (err) {
+      console.error("Failed to delete session:", err);
+    }
   };
 
   const handleEditSession = (session: StudySessionItem) => {
-    console.log("Edit session:", session);
+    setSelectedSession(session);
+    setSessionType(session.type);
+    setSelectedGroup(
+      session.groupId && session.groupName
+        ? {
+            id: session.groupId,
+            name: session.groupName,
+            subject: session.subject,
+          }
+        : null
+    );
+    setIsOpen(true);
   };
 
   const gridStyle = {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
-    gap: "16px",
+    display: "flex",
+    flexDirection: "column" as const,
+    gap: "12px",
+    alignItems: "center",
   };
+
+  const renderSessionSection = (
+    title: string,
+    items: StudySessionItem[],
+    emptyText: string,
+    color: string
+  ) => (
+    <div
+      style={{
+        backgroundColor: color,
+        border: "1px solid #eee",
+        borderRadius: "12px",
+        padding: "16px",
+        minHeight: "150px",
+      }}
+    >
+      <h3 style={{ marginBottom: "12px" }}>{title}</h3>
+      {items.length === 0 ? (
+        <div
+          style={{
+            padding: "16px",
+            border: "1px dashed #ccc",
+            borderRadius: "12px",
+            color: "#666",
+            backgroundColor: "#fafafa",
+          }}
+        >
+          {emptyText}
+        </div>
+      ) : (
+        <div
+          style={{ ...gridStyle, alignItems: "center", justifyItems: "center" }}
+        >
+          {items.map((session) => (
+            <SessionCard
+              key={session.id}
+              session={session}
+              onEdit={handleEditSession}
+              onRemove={handleRemoveSession}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
 
   return (
     <div
@@ -84,6 +269,7 @@ const StudySession = () => {
             onClick={() => {
               setSessionType("personal");
               setSelectedGroup(null);
+              setSelectedSession(null);
               setIsOpen(true);
             }}
             style={{
@@ -154,34 +340,70 @@ const StudySession = () => {
                 style={{
                   display: "flex",
                   flexDirection: "column",
-                  gap: "32px",
+                  gap: "40px",
                 }}
               >
                 <div>
-                  <h2>Personal Sessions</h2>
-                  <div style={gridStyle}>
-                    {personalSessions.map((session) => (
-                      <SessionCard
-                        key={session.id}
-                        session={session}
-                        onEdit={handleEditSession}
-                        onRemove={handleRemoveSession}
-                      />
-                    ))}
+                  <h2 style={{ marginBottom: "20px" }}>
+                    Personal study sessions
+                  </h2>
+                  <div
+                    style={{
+                      display: "grid",
+                      gridTemplateColumns: "repeat(3, 1fr)",
+                      gap: "24px",
+                      alignItems: "start",
+                    }}
+                  >
+                    {renderSessionSection(
+                      "Active session",
+                      personalActive,
+                      "No active personal session right now.",
+                      "#fff4e5"
+                    )}
+                    {renderSessionSection(
+                      "Upcoming sessions",
+                      personalUpcoming,
+                      "No upcoming personal sessions.",
+                      "#e8f1ff"
+                    )}
+                    {renderSessionSection(
+                      "Completed sessions",
+                      personalCompleted,
+                      "No completed personal sessions yet.",
+                      "#e6f7ee"
+                    )}
                   </div>
                 </div>
 
                 <div>
-                  <h2>Group Sessions</h2>
-                  <div style={gridStyle}>
-                    {groupSessions.map((session) => (
-                      <SessionCard
-                        key={session.id}
-                        session={session}
-                        onEdit={handleEditSession}
-                        onRemove={handleRemoveSession}
-                      />
-                    ))}
+                  <h2 style={{ marginBottom: "20px" }}>Group study sessions</h2>
+                  <div
+                    style={{
+                      display: "grid",
+                      gridTemplateColumns: "repeat(3, 1fr)",
+                      gap: "24px",
+                      alignItems: "start",
+                    }}
+                  >
+                    {renderSessionSection(
+                      "Active group sessions",
+                      groupActive,
+                      "No active group sessions yet.",
+                      "#fff4e5"
+                    )}
+                    {renderSessionSection(
+                      "Upcoming group sessions",
+                      groupUpcoming,
+                      "No upcoming group sessions.",
+                      "#e8f1ff"
+                    )}
+                    {renderSessionSection(
+                      "Completed group sessions",
+                      groupCompleted,
+                      "No completed group sessions yet.",
+                      "#e6f7ee"
+                    )}
                   </div>
                 </div>
               </div>
@@ -191,8 +413,14 @@ const StudySession = () => {
 
         <CreateSessionModal
           isOpen={isOpen}
-          onClose={() => setIsOpen(false)}
+          onClose={() => {
+            setIsOpen(false);
+            setSelectedSession(null);
+            setSelectedGroup(null);
+            setSessionType("personal");
+          }}
           onSave={handleSaveSession}
+          initialData={selectedSession}
           type={sessionType}
           group={selectedGroup ?? undefined}
         />

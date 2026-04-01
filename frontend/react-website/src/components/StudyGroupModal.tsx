@@ -31,7 +31,7 @@ const StudyGroupModal = ({ isOpen, onClose, onSave, initialData }: Props) => {
   if (!isOpen) return null;
 
   const handleSave = () => {
-    if (!subject || !groupName) return;
+    if (!groupName) return;
 
     onSave({
       subject,

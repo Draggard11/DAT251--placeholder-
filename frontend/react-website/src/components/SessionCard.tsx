@@ -11,6 +11,11 @@ interface Props {
 const SessionCard = ({ session, onRemove, onEdit }: Props) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  const isCompleted =
+    session.completed || new Date() > new Date(session.endTime);
+
+  const xpGained = isCompleted ? 25 : 0;
+
   return (
     <div
       style={{
@@ -20,6 +25,7 @@ const SessionCard = ({ session, onRemove, onEdit }: Props) => {
         borderRadius: "12px",
         border: "1px solid #e2e2e2",
         position: "relative",
+        textAlign: "left",
       }}
     >
       <div
@@ -82,14 +88,65 @@ const SessionCard = ({ session, onRemove, onEdit }: Props) => {
         )}
       </div>
 
-      <h3 style={{ marginTop: 0 }}>{session.subject}</h3>
-      <p style={{ margin: "8px 0 4px 0" }}>
-        {session.startTime} - {session.endTime}
+      {session.type === "group" && session.groupName && (
+        <h4
+          style={{
+            margin: "0 0 6px 0",
+            fontSize: "18px",
+            color: "#000",
+            fontWeight: 600,
+          }}
+        >
+          {session.groupName}
+        </h4>
+      )}
+
+      <h3 style={{ margin: "0 0 8px 0", fontSize: "18px" }}>
+        {session.subject}
+      </h3>
+
+      <p style={{ margin: "0 0 4px 0", fontSize: "14px", color: "#444" }}>
+        {formatDate(session.startTime)}
       </p>
-      <p style={{ margin: 0, color: "#666" }}>{session.location}</p>
+
+      <p style={{ margin: "0 0 8px 0", fontSize: "14px", color: "#444" }}>
+        {formatTime(session.startTime)} - {formatTime(session.endTime)}
+      </p>
+
+      {session.type === "group" && session.location && (
+        <p style={{ margin: "0 0 8px 0", color: "#666", fontSize: "13px" }}>
+          📍 {session.location}
+        </p>
+      )}
+
+      {isCompleted && (
+        <p
+          style={{
+            margin: 0,
+            fontSize: "13px",
+            fontWeight: 600,
+            color: "#166534",
+          }}
+        >
+          +{xpGained} XP
+        </p>
+      )}
     </div>
   );
 };
+
+const formatTime = (iso: string) =>
+  new Date(iso).toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+
+const formatDate = (iso: string) =>
+  new Date(iso).toLocaleDateString([], {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
 
 const menuItemStyle = {
   width: "100%",

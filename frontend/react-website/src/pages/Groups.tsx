@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import StudyGroupCard from "../components/CreateStudyGroupCard";
 import StudyGroupModal from "../components/StudyGroupModal";
 import type { StudyGroupData, StudyGroupItem } from "../types/studyGroupData";
@@ -14,22 +14,85 @@ const Groups = () => {
   const [selectedGroupForSession, setSelectedGroupForSession] =
     useState<StudyGroupItem | null>(null);
 
-  const handleSaveGroup = (group: StudyGroupData) => {
-    if (selectedGroup) {
-      // EDIT
-      setGroups((prev) =>
-        prev.map((g) =>
-          g.id === selectedGroup.id ? { ...group, id: g.id } : g
-        )
+  const fetchGroups = async () => {
+    try {
+      const res = await fetch("http://localhost:8080/api/studygroups");
+      const data = await res.json();
+
+      setGroups(
+        data.map((group: any) => ({
+          id: String(group.id),
+          groupName: group.name,
+          subject: "",
+          description: "",
+          link: "",
+        }))
       );
-    } else {
-      // CREATE
-      setGroups((prev) => [...prev, { ...group, id: crypto.randomUUID() }]);
+    } catch (err) {
+      console.error("Failed to fetch groups:", err);
     }
   };
 
-  const handleRemoveGroup = (id: string) => {
-    setGroups((prev) => prev.filter((group) => group.id !== id));
+  useEffect(() => {
+    fetchGroups();
+  }, []);
+
+  const handleSaveGroup = async (group: StudyGroupData) => {
+    try {
+      let res: Response;
+
+      if (selectedGroup) {
+        // EDIT
+        res = await fetch(
+          `http://localhost:8080/api/studygroups/${selectedGroup.id}`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              name: group.groupName,
+            }),
+          }
+        );
+      } else {
+        // CREATE
+        res = await fetch("http://localhost:8080/api/studygroups", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: group.groupName,
+          }),
+        });
+      }
+
+      if (!res.ok) {
+        throw new Error("Failed to save group");
+      }
+
+      await fetchGroups();
+      setIsOpen(false);
+      setSelectedGroup(null);
+    } catch (err) {
+      console.error("Failed to save group:", err);
+    }
+  };
+
+  const handleDeleteGroup = async (id: string) => {
+    try {
+      const res = await fetch(`http://localhost:8080/api/studygroups/${id}`, {
+        method: "DELETE",
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to delete group");
+      }
+      await fetchGroups();
+    } catch (err) {
+      console.error("Failed to remove group:", err);
+    }
   };
 
   const handleEditGroup = (group: StudyGroupItem) => {
@@ -97,7 +160,7 @@ const Groups = () => {
               key={group.id}
               group={group}
               onEdit={handleEditGroup}
-              onRemove={handleRemoveGroup}
+              onRemove={handleDeleteGroup}
               onCreateSession={handleCreateSession}
             />
           ))}
@@ -117,8 +180,41 @@ const Groups = () => {
       <CreateSessionModal
         isOpen={isSessionModalOpen}
         onClose={() => setIsSessionModalOpen(false)}
-        onSave={(session) => {
-          console.log("Group session created:", session);
+        onSave={async (session) => {
+          try {
+            const today = new Date().toISOString().split("T")[0];
+
+            const start = new Date(`${today}T${session.startTime}:00`);
+            const end = new Date(`${today}T${session.endTime}:00`);
+
+            const res = await fetch("http://localhost:8080/api/studySessions", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                subject: session.subject || null,
+                startTime: start.toISOString(),
+                endTime: end.toISOString(),
+                completed: false,
+                studyGroup: session.groupId
+                  ? { id: Number(session.groupId) }
+                  : null,
+              }),
+            });
+
+            if (!res.ok) {
+              throw new Error("Failed to create session");
+            }
+
+            const data = await res.json();
+            console.log("Session created:", data);
+
+            setIsSessionModalOpen(false);
+            setSelectedGroupForSession(null);
+          } catch (err) {
+            console.error("Failed to create session:", err);
+          }
         }}
         type="group"
         group={
