@@ -397,7 +397,7 @@ Gradle running tests faster after each run this could keep up with running once 
 It would lose efficiency as new tests and dependencies are added.
 
 
-\section{Agile, Scrum, and XP Practices}
+\section{Software Processes}
 
 \subsection{Scrum Practices}
 
@@ -427,6 +427,37 @@ especially when multiple team members were working in parallel.
 Testing is present through JUnit, although the testing framework is still expected to become more complete later in the project.
 Similarly, practices such as refactoring, coding standards, and small releases are relevant to the project
 and should become more important as the code base grows.
+
+\subsection{Caching up with Method and Process Practice}
+
+This paper shows that software teams seldom follow a single methodology strictly, and instead tend to combine practices from different approaches into a hybrid process. 
+t also highlights that teams can often deviate from prescribed methods, either intentionally or because of external constraints, which can negatively impact productivity.
+
+In our project, using a hybrid approach was expected.
+The assignment explicitly required us to apply both Scrum and XP practices.
+As a result, our process combined Scrum practices such as sprints and backlog management with XP practices like continuous integration.
+
+However, while we used these practices, they were not always followed consistently.
+For example, some practices were applied more informally, and others such as daily Scrum meetings, were not as often used in our workflow.
+This reflects the findings of the paper, where inconsistent use of practices can reduce their effectiveness.
+
+We also experienced that simply combining practices is not enough.
+The paper emphasizes that successful teams actively evolve and refine their hybrid process over time.
+In our case, given time constraints, we did not systematically adjust or plan how we could combine Scrum and XP 
+throughout the project, which likely limited the potential benefits.
+
+Some practices were also missing or partially implemented.
+For example, pair programming was not consistently performed, mainly due to difficulties in having the entire team available at the same time.
+As a result, we missed some of the benefits of this practice, such as improved collaboration and early feedback during development.
+
+In addition, some practices were experienced as cumbersome.
+As mentioned, maintaining strict Scrum routines like daily stand-ups or following XP practices such as pair programming required a 
+team that was consistently available, as a result, these practices were occasionally ignored or deprioritized.
+
+Overall, the paper helped us understand that while a hybrid approach is realistic, its effectiveness depends on how well 
+the practices are integrated and consistently applied, instead of simply being present in the development process.
+
+
 
 \subsection{Pair Programming}
 
@@ -530,9 +561,32 @@ Due to delays in important functional components such as the database,
 as well as connection between frontend and backend, a lot of the work was backloaded to the
 later parts of the sprint or not completed as scheduled.
 
+\subsection{How Much Up-Front?}
 
+Based on our experience in the project, we performed relatively little upfront architectural work.
+This was mainly due to time constraints, learning new technologies, and a focus on delivering working functionality early in the development
+This aligns with agile principles, where teams often aim to design “just enough” architecture to get started.
 
+However, when reflecting on the paper, our approach may have been too far towards minimal upfront design.
+The paper highlights that too little upfront planning can lead to an “accidental architecture”,
+where decisions are made reactively rather than strategically.
+While we have not yet encountered major issues caused by this,
+there are clear areas where this could become problematic in later stages of the project.
 
+For example, decisions regarding authentication and integration with external systems, such as using an existing student login solution,
+have not been planned in advance.
+Introducing such functionality later may require significant changes to both frontend and backend structure, indicating a potential architectural gap.
+
+At the same time, our project included some factors such as needing to deliver functionality early, which supports a more emergent architecture approach.
+According to the paper, this justifies reducing upfront work in order to remain flexible and responsive to change.
+
+In hindsight, a slightly higher level of upfront architectural planning would likely have been beneficial,
+especially in identifying external requirements and defining key system boundaries earlier.
+This could have reduced the risk of future refactoring while still maintaining flexibility.
+
+Overall, our architectural decisions were discussed, but not always systematically planned.
+The project reflects the trade-off described in the paper.
+Although our current approach has worked so far, a more balanced approach between upfront planning and emergent design would likely improve the system as it expands.
 
 \section{Architecture}
 
