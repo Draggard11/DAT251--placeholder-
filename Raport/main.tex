@@ -17,6 +17,8 @@
 \usepackage{hyperref}
 \usepackage{cleveref}
 
+\usepackage{float}
+
 \usepackage{titlesec}
 \titleformat{\section}{\Large\bfseries}{\thesection}{1em}{}
 \titleformat{\subsection}{\large\bfseries}{\thesubsection}{1em}{}
@@ -168,7 +170,7 @@ Environmental considerations include limiting or avoiding excessive use of resou
 \section{Domain Models}
 
 \subsection{Domain Models}
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{images/domainModel}
     \caption{Domain model of the system showing relationships between students, courses, lecturers, and study groups.}
@@ -522,7 +524,7 @@ There were also some tasks left-over from the first assignment,
 such as constructing more user-stories and concretizing our product idea.
 Other tasks included in the sprint included working on the report and presentation.
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{images/Sprint_1_-_Set-up_and_Basic_funcitonality-burndown}
     \caption{burndown chart of our first sprint}
@@ -546,7 +548,7 @@ There is therefore a large focus on the basic functionality required for a minim
 functionality in our backend classes and database, an interactive frontend, as well as connection between frontend and backend.
 Of course, related tasks such as presentations and reports are also included in the sprint.
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{images/Sprint_2_-_Functionality_and_Refactoring-burndown}
     \caption{burndown chart of our second sprint}
@@ -681,13 +683,13 @@ should generate experience with the use of the observer;
 it can be done without modifying observer parts again and can be reused.
 The single responsibility principle for the study session as it handles session and student as it handles the properties of the student.
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{images/code1}
     \caption{observer pattern}
     \label{code1}
 \end{figure}
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{images/code2}
     \caption{Exp class used in student}
