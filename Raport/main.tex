@@ -16,7 +16,6 @@
 \usepackage{enumitem}
 \usepackage{hyperref}
 \usepackage{cleveref}
-
 \usepackage{float}
 
 \usepackage{titlesec}
@@ -170,7 +169,7 @@ Environmental considerations include limiting or avoiding excessive use of resou
 \section{Domain Models}
 
 \subsection{Domain Models}
-\begin{figure}[H]
+\begin{figure}[h]
     \centering
     \includegraphics[width=0.7\textwidth]{images/domainModel}
     \caption{Domain model of the system showing relationships between students, courses, lecturers, and study groups.}
@@ -430,10 +429,10 @@ Testing is present through JUnit, although the testing framework is still expect
 Similarly, practices such as refactoring, coding standards, and small releases are relevant to the project
 and should become more important as the code base grows.
 
-\subsection{Caching up with Method and Process Practice}
+\subsection{Catching up with Method and Process Practice}
 
 This paper shows that software teams seldom follow a single methodology strictly, and instead tend to combine practices from different approaches into a hybrid process. 
-t also highlights that teams can often deviate from prescribed methods, either intentionally or because of external constraints, which can negatively impact productivity.
+It also highlights that teams can often deviate from prescribed methods, either intentionally or because of external constraints, which can negatively impact productivity.
 
 In our project, using a hybrid approach was expected.
 The assignment explicitly required us to apply both Scrum and XP practices.
@@ -526,12 +525,12 @@ Other tasks included in the sprint included working on the report and presentati
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{images/Sprint_1_-_Set-up_and_Basic_funcitonality-burndown}
+    \includegraphics[width=\textwidth]{images/Sprint_1_-_Set-up_and_Basic_funcitonality-burndown.png}
     \caption{burndown chart of our first sprint}
     \label{fig:burndown-chart-sprint1}
 \end{figure}
 
-All tasks were not finished.
+All tasks planned for the sprint were not finished:
 Mainly sufficient testing for backend as well as set-up of database.
 A lot of the delays in this period comes from difficulty with dealing with the large number of new frameworks to learn,
 especially as a large amount of the work is dependent on the project being set-up, and so delays propagate.
@@ -550,7 +549,7 @@ Of course, related tasks such as presentations and reports are also included in 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{images/Sprint_2_-_Functionality_and_Refactoring-burndown}
+    \includegraphics[width=\textwidth]{images/Sprint_2_-_Functionality_and_Refactoring-burndown}
     \caption{burndown chart of our second sprint}
     \label{fig:burndown-chart-sprint2}
 \end{figure}
@@ -742,9 +741,34 @@ and studySession coordinates the state and communication with the backend.
 It also reflects Separations of Concern, since presentation, form handling,
 and higher-level page logic are no longer mixed together to the same extent.
 
+\section{Difficulties with Agile}
+One of the main focuses of agile development is effective and iterative delivering of functional code, as well as continuous feedback from stakeholders. As we have discussed in the last few sections, we have had a strong focus on agile practices, such as scrum, workflow planning, user-story focused development and practices such as pair-programming and test-driven development. Still, we have had difficulties in multiple stages of the process. In this section we will look at some of these experiences (mainly focusing on difficulties with iteratively delivering functional code and stakeholder feedback), and examine why these occurred despite our group's attempt at trying to adhere to agile principles.
+\vspace{5mm}\\
+Using article \cite{MECKENSTOCK2024111966} ("\textit{Shedding light on the dark side - ..}."), which aims to systematically list problems related to agile methodologies, we will  investigate if our-group's problems can be attributed to agile, or if the problem is the opposite: that these are due to us \textit{not} properly adhering to agile principles.
+
+\subsection{Iterative functional code}
+A main focus of agile (and the focus of our group since the start) has been to deliver a minimal viable product that we can later expand. However, while our project is not complicated, there are still many parts to familiarize ourselves with and so process has been quite slow. We have felt that the tight structure that scrum sets, where there are clear goals, can cause issues if those goals are set under false pretenses (example: "We can do \textit{this} part by Tuesday so that we are ready for \textit{that} part on Wednesday", but then we miss Tuesday's deadline by 3 days). This is also supported as an issue in section 4.5 in the article: \textit{Planning and Estimation problems}, where teams often overestimate delivery capacity. This can have cascading effects: It reduces the effectiveness of sprint-planning, causing unnecessary overhead, and it also increases pressure - which can cascade even further, causing de-prioritizing of testing, documentation, non-functional requirements and refactoring. These are also identified in the article as issues along with multiple other related to technical debt.
+\vspace{5mm}\\
+Especially since time is a limiter, Time-related issues become pain-points. We have felt meeting-overhead taking longer than we'd like, while simultaneously feeling that we could benefit from communicating better and having more meetings.
+\vspace{5mm}\\
+\textit{Too much or too little agility?}
+
+Early meetings for planning is an inherent part of agile, and one can say it is problematic that requirements are often changing or unknowns, causing overhead. However, we could maybe adhere better to agile principles to solve the issue, such as quickly communicating the issue to the group and adapting continuously. At least a meeting makes us be aware of requirements, so that we know if they change.
+
+The article highlights another issue in lack of ownership in cases where decisions are made as a team. We could be better in assigning leadership roles during our planning, in order to, have someone with a better overview, that can organize, delegate and communicate with the other group members.
 
 
+\subsection{Stakeholder feedback}
+Sprint-planning is not the only key-component negatively affected by delays in production. Stakeholder feedback is also essential, but its effectiveness is reduced without a working prototype. From the article, this can open up another cascade of issues relating to misalignment between stakeholders' requirements and the product.
+(We hope to report deeper in this subsection for next assignments as we should have more feedback and customer interaction by then).
 
+\subsection{Non-Agile problems}
+It is also obvious that our group may have difficulties due to circumstances unrelated to agile altogether. Problems such as lack of experience with the tools we need to employ, can make feasible task take much longer time than anticipated. However, problems such as these will likely be present in future development processes we will be part of anyways (especially as students looking to enter the workforce). It is therefore worth reflecting over these agile practices and try to look at if they help mitigate these external problems or if they exacerbate them.
+
+
+%\newpage
+%\bibliographystyle{plain}
+%\bibliography{refs.bib}
 
 % ==================================================
 \newpage
