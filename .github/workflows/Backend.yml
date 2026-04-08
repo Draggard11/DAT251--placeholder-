@@ -2,6 +2,9 @@ name: ci backend
 
 on:
   push:
+    branches:
+      - main
+      - backend
 
 jobs:
   backend:
