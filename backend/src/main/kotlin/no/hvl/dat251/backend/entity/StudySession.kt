@@ -9,17 +9,19 @@ import jakarta.persistence.JoinColumn
 import jakarta.persistence.JoinTable
 import jakarta.persistence.ManyToMany
 import jakarta.persistence.ManyToOne
+import no.hvl.dat251.backend.exp.Exp
+import no.hvl.dat251.backend.exp.ExpObservervableBase
 import java.util.Date
 
 @Entity
 class StudySession(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null,
+    var id: Long? = null,
     var subject: String? = null,
     var startTime: Date? = null,
     var endTime: Date? = null,
-    var completed: Boolean = false,
+    var completed: Boolean? = false,
     @ManyToOne
     @JoinColumn(name = "studygroup_id")
     var studyGroup: StudyGroup? = null,
@@ -29,13 +31,12 @@ class StudySession(
         joinColumns = [JoinColumn(name = "session_id")],
         inverseJoinColumns = [JoinColumn(name = "student_id")]
     )
-    var attendance: MutableSet<Student> = mutableSetOf()
-) : ExpObservervableBase() {
-    var id: Long? = null
+    var attendance: MutableSet<Student> = mutableSetOf(),
+    ) : ExpObservervableBase() {
+    var maxSize: Int = 0
     var size: Int = 0
     @Transient
     private val xp: Exp = Exp(0f,0f)
-    var completed: Boolean = false
 
     fun finish() {// could also be called by study group
         completed = true

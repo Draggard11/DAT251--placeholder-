@@ -88,8 +88,6 @@ class StudentController(
         val student = studentRepository.findById(id).orElse(null)
         ?: return ResponseEntity(HttpStatus.NOT_FOUND)
         return ResponseEntity(student.studygroups, HttpStatus.OK)
-
-
     }
 
     @DeleteMapping("/{id}")
@@ -100,6 +98,11 @@ class StudentController(
         studentRepository.deleteById(id)
         return ResponseEntity(HttpStatus.NO_CONTENT)
     }
-
-
+    // exp functions
+    @GetMapping("/{id}/exp")
+    fun getStudentExp(@PathVariable("id") id : Long) : ResponseEntity<Float> {
+        val student = studentRepository.findById(id).orElse(null)
+            ?: return ResponseEntity(HttpStatus.NOT_FOUND)
+        return ResponseEntity(student.xp, HttpStatus.OK)
+    }
 }

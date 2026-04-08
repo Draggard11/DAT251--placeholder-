@@ -29,9 +29,6 @@ class StudySessionController(
     @Autowired private val studyGroupRepository: StudyGroupRepository
     
 ){
-
-    
-
     @GetMapping("")
     fun getStudySessions() : List<StudySession> =
         studySessionRepository.findAll().toList()
@@ -65,6 +62,7 @@ class StudySessionController(
         dto.attendanceIds?.let { studySession.attendance = studentRepository.findAllById(it).toMutableSet() }
         dto.studyGroupId?.let { studySession.studyGroup = studyGroupRepository.findById(it).orElse(null) }
         val updated = studySessionRepository.save(studySession)
+        if (updated.completed == true) { updated.finish() }
         return ResponseEntity.ok(updated)
     }
 
@@ -76,6 +74,4 @@ class StudySessionController(
         studySessionRepository.deleteById(id)
         return ResponseEntity(HttpStatus.NO_CONTENT)
     }
-
-
 }

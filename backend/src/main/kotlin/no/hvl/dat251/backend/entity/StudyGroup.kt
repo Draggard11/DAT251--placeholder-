@@ -18,9 +18,7 @@ class StudyGroup (
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
-
     var name : String = "Test Group",
-
     @ManyToMany
     @JoinTable(
         name = "studygroup_students",
@@ -41,11 +39,12 @@ class StudyGroup (
         this.students.remove(student)
     }
 
-    fun createSession(title: String, startTime: Date, endTime: Date, description: String?, maxSize: Int?, subject: Subject?): StudySession {
-        val session: StudySession = if (maxSize == null) {
-            StudySession(title, students.size, startTime, endTime, subject, description)
+    fun createSession(title: String, startTime: Date, endTime: Date, maxSize: Int?): StudySession {
+        val session = StudySession(subject = title, startTime = startTime, endTime = endTime, completed = false)
+        if (maxSize != null) {
+            session.maxSize = maxSize
         } else {
-            StudySession(title, maxSize, startTime, endTime, subject, description)
+            session.maxSize = students.size
         }
         studySessions.add(session)
         return session
