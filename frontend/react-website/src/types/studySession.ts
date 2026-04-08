@@ -5,6 +5,7 @@ export interface StudySessionItem {
   startTime: string;
   endTime: string;
   completed?: boolean;
+  completedAt?: string | null;
   location: string;
   type: "personal" | "group";
   groupId?: string;
