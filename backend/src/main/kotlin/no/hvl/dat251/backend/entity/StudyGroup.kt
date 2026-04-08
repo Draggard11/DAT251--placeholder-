@@ -9,9 +9,8 @@ import jakarta.persistence.JoinColumn
 import jakarta.persistence.JoinTable
 import jakarta.persistence.ManyToMany
 import jakarta.persistence.OneToMany
-import jakarta.persistence.OneToOne
 import jakarta.persistence.Table
-import no.hvl.dat251.backend.entity.Student
+import java.util.Date
 
 @Entity
 @Table(name = "Study_Group")
@@ -31,9 +30,8 @@ class StudyGroup (
     var students: MutableSet<Student> = mutableSetOf(),
 
     @OneToMany(mappedBy = "studyGroup", cascade = [CascadeType.MERGE])
-    var studySessions: MutableSet<StudySession> = mutableSetOf()
-
-
+    var studySessions: MutableSet<StudySession> = mutableSetOf(),
+    val attendance: HashSet<Student> = hashSetOf(),
 ) {
 
     fun addStudent(student: Student) {
@@ -43,4 +41,13 @@ class StudyGroup (
         this.students.remove(student)
     }
 
+    fun createSession(title: String, startTime: Date, endTime: Date, description: String?, maxSize: Int?, subject: Subject?): StudySession {
+        val session: StudySession = if (maxSize == null) {
+            StudySession(title, students.size, startTime, endTime, subject, description)
+        } else {
+            StudySession(title, maxSize, startTime, endTime, subject, description)
+        }
+        studySessions.add(session)
+        return session
+    }
 }
