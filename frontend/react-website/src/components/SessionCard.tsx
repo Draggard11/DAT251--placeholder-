@@ -1,20 +1,53 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MoreHorizontal } from "lucide-react";
 import type { StudySessionItem } from "../types/studySession";
+import SessionProgressBar from "./SessionProgressBar";
 
 interface Props {
   session: StudySessionItem;
   onRemove: (id: string) => void;
   onEdit: (session: StudySessionItem) => void;
+  onComplete: (id: string) => void;
 }
 
-const SessionCard = ({ session, onRemove, onEdit }: Props) => {
+const SessionCard = ({ session, onRemove, onEdit, onComplete }: Props) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const isCompleted =
-    session.completed || new Date() > new Date(session.endTime);
+  const isCompleted = session.completed;
 
-  const xpGained = isCompleted ? 25 : 0;
+  const now = new Date();
+  const start = new Date(session.startTime);
+  const originalEnd = new Date(session.endTime);
+
+  const effectiveEnd =
+    isCompleted && session.completedAt
+      ? new Date(session.completedAt)
+      : originalEnd;
+
+  const totalMs = originalEnd.getTime() - start.getTime();
+
+  const elapsedMs = isCompleted
+    ? Math.max(0, Math.min(effectiveEnd.getTime() - start.getTime(), totalMs))
+    : Math.max(0, Math.min(now.getTime() - start.getTime(), totalMs));
+
+  let progress = 0;
+  let color = "#2563eb";
+
+  if (isCompleted) {
+    color = "#16a34a";
+    progress = totalMs > 0 ? (elapsedMs / totalMs) * 100 : 100;
+  } else if (now < start) {
+    progress = 0;
+    color = "#3b82f6";
+  } else if (now >= start && now <= originalEnd) {
+    color = "#f59e0b";
+    progress = totalMs > 0 ? (elapsedMs / totalMs) * 100 : 0;
+  } else {
+    progress = 100;
+    color = "#f59e0b";
+  }
+
+  const xpGained = Math.round(progress);
 
   return (
     <div
@@ -62,15 +95,28 @@ const SessionCard = ({ session, onRemove, onEdit }: Props) => {
               minWidth: "120px",
             }}
           >
-            <button
-              onClick={() => {
-                onEdit(session);
-                setIsMenuOpen(false);
-              }}
-              style={menuItemStyle}
-            >
-              Edit
-            </button>
+            {!session.completed && (
+              <button
+                onClick={() => {
+                  onComplete(session.id);
+                  setIsMenuOpen(false);
+                }}
+                style={menuItemStyle}
+              >
+                Mark as completed
+              </button>
+            )}
+            {!session.completed && (
+              <button
+                onClick={() => {
+                  onEdit(session);
+                  setIsMenuOpen(false);
+                }}
+                style={menuItemStyle}
+              >
+                Edit
+              </button>
+            )}
 
             <button
               onClick={() => {
@@ -110,7 +156,12 @@ const SessionCard = ({ session, onRemove, onEdit }: Props) => {
       </p>
 
       <p style={{ margin: "0 0 8px 0", fontSize: "14px", color: "#444" }}>
-        {formatTime(session.startTime)} - {formatTime(session.endTime)}
+        {formatTime(session.startTime)} -{" "}
+        {formatTime(
+          session.completed && session.completedAt
+            ? session.completedAt
+            : session.endTime
+        )}
       </p>
 
       {session.type === "group" && session.location && (
@@ -119,18 +170,9 @@ const SessionCard = ({ session, onRemove, onEdit }: Props) => {
         </p>
       )}
 
-      {isCompleted && (
-        <p
-          style={{
-            margin: 0,
-            fontSize: "13px",
-            fontWeight: 600,
-            color: "#166534",
-          }}
-        >
-          +{xpGained} XP
-        </p>
-      )}
+      <SessionProgressBar progress={progress} color={color} />
+
+      {isCompleted && <p style={xpText}>+{xpGained} XP</p>}
     </div>
   );
 };
@@ -156,6 +198,13 @@ const menuItemStyle = {
   textAlign: "left" as const,
   cursor: "pointer",
   fontSize: "14px",
+};
+
+const xpText = {
+  margin: "8px 0 0 0",
+  fontSize: "13px",
+  fontWeight: 600,
+  color: "#166534",
 };
 
 export default SessionCard;

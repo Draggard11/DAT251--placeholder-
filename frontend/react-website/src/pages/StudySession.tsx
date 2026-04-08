@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import CreateSessionModal from "../components/CreateSessionModal";
 import SessionCard from "../components/SessionCard";
 import type { StudySessionItem } from "../types/studySession";
+import confetti from "canvas-confetti";
 
 const StudySession = () => {
   const [selectedSession, setSelectedSession] =
@@ -17,6 +18,16 @@ const StudySession = () => {
     subject: string;
   }>(null);
 
+  useEffect(() => {
+    fetchSessions();
+
+    const interval = setInterval(() => {
+      fetchSessions();
+    }, 10000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   const fetchSessions = async () => {
     try {
       const res = await fetch("http://localhost:8080/api/studySessions");
@@ -30,6 +41,7 @@ const StudySession = () => {
           startTime: session.startTime,
           endTime: session.endTime,
           completed: session.completed ?? false,
+          completedAt: session.completedAt ?? null,
           location: session.location ?? "",
           type: session.studyGroup ? "group" : "personal",
           groupId: session.studyGroup
@@ -43,18 +55,13 @@ const StudySession = () => {
     }
   };
 
-  useEffect(() => {
-    fetchSessions();
-  }, []);
-
   const getSessionStatus = (session: StudySessionItem) => {
     const now = new Date();
     const start = new Date(session.startTime);
-    const end = new Date(session.endTime);
 
-    if (session.completed || now > end) return "completed";
-    if (now >= start && now <= end) return "active";
-    return "upcoming";
+    if (session.completed) return "completed";
+    if (now < start) return "upcoming";
+    return "active";
   };
 
   const personalSessions = sessions.filter((s) => s.type === "personal");
@@ -100,7 +107,7 @@ const StudySession = () => {
               startTime: start.toISOString(),
               endTime: end.toISOString(),
               location: newSession.location,
-              completed: false,
+              completed: selectedSession?.completed ?? false,
               studyGroupId: newSession.groupId
                 ? Number(newSession.groupId)
                 : null,
@@ -169,6 +176,34 @@ const StudySession = () => {
     setIsOpen(true);
   };
 
+  const handleCompleteSession = async (id: string) => {
+    try {
+      const res = await fetch(`http://localhost:8080/api/studySessions/${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          completed: true,
+        }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to complete session");
+      }
+
+      confetti({
+        particleCount: 80,
+        spread: 70,
+        origin: { y: 0.6 },
+      });
+
+      await fetchSessions();
+    } catch (err) {
+      console.error("Failed to complete session:", err);
+    }
+  };
+
   const gridStyle = {
     display: "flex",
     flexDirection: "column" as const,
@@ -214,6 +249,7 @@ const StudySession = () => {
               session={session}
               onEdit={handleEditSession}
               onRemove={handleRemoveSession}
+              onComplete={handleCompleteSession}
             />
           ))}
         </div>

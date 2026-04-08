@@ -1,5 +1,6 @@
 package no.hvl.dat251.backend.controller
 
+import org.springframework.web.bind.annotation.CrossOrigin
 import no.hvl.dat251.backend.dto.StudyGroupUpdateDTO
 import no.hvl.dat251.backend.entity.Student
 import no.hvl.dat251.backend.repository.StudentRepository
@@ -23,7 +24,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
-
+@CrossOrigin(origins = ["http://localhost:5173"])
 @RestController
 @RequestMapping("api/studygroups")
 class StudyGroupsController(
@@ -105,6 +106,16 @@ class StudyGroupsController(
 
             studyGroupRepository.save(group)
             return ResponseEntity.ok(student)
+        }
+
+        @DeleteMapping("/{id}")
+        fun deleteStudyGroupById(@PathVariable id: Long): ResponseEntity<Void> {
+            if (!studyGroupRepository.existsById(id)) {
+                return ResponseEntity.notFound().build()
+            }
+
+            studyGroupRepository.deleteById(id)
+            return ResponseEntity.noContent().build()
         }
 
 

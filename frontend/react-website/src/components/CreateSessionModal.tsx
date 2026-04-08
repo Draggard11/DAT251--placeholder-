@@ -30,6 +30,8 @@ const CreateSessionModal = ({
   const [endTime, setEndTime] = useState("");
   const [date, setDate] = useState("");
   const [location, setLocation] = useState("");
+  const [mode, setMode] = useState<"scheduled" | "now">("scheduled");
+  const [durationMinutes, setDurationMinutes] = useState("60");
 
   useEffect(() => {
     if (initialData) {
@@ -38,18 +40,57 @@ const CreateSessionModal = ({
       setEndTime(toTimeInputValue(initialData.endTime));
       setDate(initialData.date || toDateInputValue(initialData.startTime));
       setLocation(initialData.location || "");
+      setMode("scheduled");
+      setDurationMinutes("60");
     } else {
       setSubject("");
       setStartTime("");
       setEndTime("");
       setDate("");
       setLocation("");
+      setMode("scheduled");
+      setDurationMinutes("60");
     }
   }, [initialData, isOpen]);
 
   if (!isOpen) return null;
 
   const handleSave = () => {
+    if (type === "personal" && !subject) {
+      console.log("Missing subject");
+      return;
+    }
+
+    if (type === "group" && !group) {
+      console.log("Missing group object");
+      return;
+    }
+
+    if (type === "group" && !location) {
+      console.log("Missing location for group session");
+      return;
+    }
+
+    if (mode === "now") {
+      const now = new Date();
+      const end = new Date(now.getTime() + Number(durationMinutes) * 60000);
+
+      onSave({
+        id: initialData?.id ?? crypto.randomUUID(),
+        subject: type === "group" ? group!.subject : subject,
+        startTime: toTimeString(now),
+        endTime: toTimeString(end),
+        date: toDateInputValue(now.toISOString()),
+        location,
+        type,
+        groupId: group?.id,
+        groupName: group?.name,
+      });
+
+      onClose();
+      return;
+    }
+
     if (!date) {
       console.log("Missing date");
       return;
@@ -67,21 +108,6 @@ const CreateSessionModal = ({
 
     if (endTime <= startTime) {
       console.log("End time must be after start time");
-      return;
-    }
-
-    if (type === "personal" && !subject) {
-      console.log("Missing subject");
-      return;
-    }
-
-    if (type === "group" && !location) {
-      console.log("Missing location for group session");
-      return;
-    }
-
-    if (type === "group" && !group) {
-      console.log("Missing group object");
       return;
     }
 
@@ -112,6 +138,41 @@ const CreateSessionModal = ({
           </button>
         </div>
 
+        <div style={{ display: "flex", gap: "8px", marginBottom: "16px" }}>
+          <button
+            type="button"
+            onClick={() => setMode("scheduled")}
+            style={{
+              flex: 1,
+              padding: "10px",
+              borderRadius: "8px",
+              border:
+                mode === "scheduled" ? "2px solid #1f2d3d" : "1px solid #ccc",
+              backgroundColor: mode === "scheduled" ? "#eef2f7" : "white",
+              cursor: "pointer",
+              fontWeight: 600,
+            }}
+          >
+            Schedule
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setMode("now")}
+            style={{
+              flex: 1,
+              padding: "10px",
+              borderRadius: "8px",
+              border: mode === "now" ? "2px solid #1f2d3d" : "1px solid #ccc",
+              backgroundColor: mode === "now" ? "#eef2f7" : "white",
+              cursor: "pointer",
+              fontWeight: 600,
+            }}
+          >
+            Start now
+          </button>
+        </div>
+
         <div style={formStyle}>
           {type === "personal" && (
             <div style={fieldStyle}>
@@ -131,39 +192,59 @@ const CreateSessionModal = ({
             </div>
           )}
 
-          <div style={fieldStyle}>
-            <label style={labelStyle}>Date</label>
-            <input
-              type="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-              style={inputStyle}
-            />
-          </div>
+          {mode === "scheduled" ? (
+            <>
+              <div style={fieldStyle}>
+                <label style={labelStyle}>Date</label>
+                <input
+                  type="date"
+                  value={date}
+                  onChange={(e) => setDate(e.target.value)}
+                  style={inputStyle}
+                />
+              </div>
 
-          <div style={timeRowStyle}>
-            <div style={fieldStyle}>
-              <label style={labelStyle}>Start Time</label>
-              <input
-                type="time"
-                value={startTime}
-                onChange={(e) => setStartTime(e.target.value)}
-                style={inputStyle}
-                step={900}
-              />
-            </div>
+              <div style={timeRowStyle}>
+                <div style={fieldStyle}>
+                  <label style={labelStyle}>Start Time</label>
+                  <input
+                    type="time"
+                    value={startTime}
+                    onChange={(e) => setStartTime(e.target.value)}
+                    style={inputStyle}
+                    step={900}
+                  />
+                </div>
 
+                <div style={fieldStyle}>
+                  <label style={labelStyle}>End Time</label>
+                  <input
+                    type="time"
+                    value={endTime}
+                    onChange={(e) => setEndTime(e.target.value)}
+                    style={inputStyle}
+                    step={900}
+                  />
+                </div>
+              </div>
+            </>
+          ) : (
             <div style={fieldStyle}>
-              <label style={labelStyle}>End Time</label>
-              <input
-                type="time"
-                value={endTime}
-                onChange={(e) => setEndTime(e.target.value)}
+              <label style={labelStyle}>Duration</label>
+              <select
+                value={durationMinutes}
+                onChange={(e) => setDurationMinutes(e.target.value)}
                 style={inputStyle}
-                step={900}
-              />
+              >
+                <option value="30">30 minutes</option>
+                <option value="0.5">30 seconds</option>
+                <option value="45">45 minutes</option>
+                <option value="60">60 minutes</option>
+                <option value="90">90 minutes</option>
+                <option value="120">120 minutes</option>
+              </select>
             </div>
-          </div>
+          )}
 
           <div style={fieldStyle}>
             <label style={labelStyle}>Location</label>
@@ -287,6 +368,11 @@ const toDateInputValue = (value: string) => {
 
 const toTimeInputValue = (value: string) => {
   const date = new Date(value);
+  const hours = String(date.getHours()).padStart(2, "0");
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+  return `${hours}:${minutes}`;
+};
+const toTimeString = (date: Date) => {
   const hours = String(date.getHours()).padStart(2, "0");
   const minutes = String(date.getMinutes()).padStart(2, "0");
   return `${hours}:${minutes}`;
