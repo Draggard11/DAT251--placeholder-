@@ -1,4 +1,5 @@
 package no.hvl.dat251.backend.controller
+import org.springframework.web.bind.annotation.CrossOrigin
 
 import no.hvl.dat251.backend.dto.StudentUpdateDTO
 import no.hvl.dat251.backend.entity.Student
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
+@CrossOrigin(origins = ["http://localhost:5173"])
 @RestController
 @RequestMapping("api/students")
 class StudentController(

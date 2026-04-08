@@ -12,6 +12,7 @@ import jakarta.persistence.OneToMany
 import jakarta.persistence.OneToOne
 import jakarta.persistence.Table
 import no.hvl.dat251.backend.entity.Student
+import com.fasterxml.jackson.annotation.JsonIgnore
 
 @Entity
 @Table(name = "Study_Group")
@@ -30,6 +31,7 @@ class StudyGroup (
     )
     var students: MutableSet<Student> = mutableSetOf(),
 
+    @JsonIgnore
     @OneToMany(mappedBy = "studyGroup", cascade = [CascadeType.MERGE])
     var studySessions: MutableSet<StudySession> = mutableSetOf()
 

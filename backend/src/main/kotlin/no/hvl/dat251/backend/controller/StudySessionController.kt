@@ -1,6 +1,6 @@
 package no.hvl.dat251.backend.controller
 
-
+import org.springframework.web.bind.annotation.CrossOrigin
 import no.hvl.dat251.backend.dto.StudySessionUpdateDTO
 import no.hvl.dat251.backend.entity.StudySession
 import no.hvl.dat251.backend.entity.StudyGroup
@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
+@CrossOrigin(origins = ["http://localhost:5173"])
 @RestController
 @RequestMapping("api/studySessions")
 class StudySessionController(
@@ -30,7 +31,6 @@ class StudySessionController(
     
 ){
 
-    
 
     @GetMapping("")
     fun getStudySessions() : List<StudySession> =
@@ -62,6 +62,7 @@ class StudySessionController(
         dto.endTime?.let { studySession.endTime = it }
         dto.completed?.let { studySession.completed = it }
         dto.startTime?.let { studySession.startTime = it }
+        dto.location?.let { studySession.location = it }
         dto.attendanceIds?.let { studySession.attendance = studentRepository.findAllById(it).toMutableSet() }
         dto.studyGroupId?.let { studySession.studyGroup = studyGroupRepository.findById(it).orElse(null) }
         val updated = studySessionRepository.save(studySession)

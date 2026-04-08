@@ -19,10 +19,12 @@ class StudySession(
     var subject: String? = null,
     var startTime: Date? = null,
     var endTime: Date? = null,
+    var location: String? = null,
     var completed: Boolean = false,
     @ManyToOne
     @JoinColumn(name = "studygroup_id")
     var studyGroup: StudyGroup? = null,
+
     @ManyToMany
     @JoinTable(
         name = "session_attendance",
