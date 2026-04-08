@@ -43,7 +43,7 @@ class StudySessionController(
     }
 
     @GetMapping("/{id}")
-    fun getSudentById(@PathVariable("id") id : Long) : ResponseEntity<StudySession> {
+    fun getStudySessionById(@PathVariable("id") id : Long) : ResponseEntity<StudySession> {
         val StudySession = studySessionRepository.findById(id).orElse(null)
             ?: return ResponseEntity(HttpStatus.NOT_FOUND)
         return ResponseEntity(StudySession, HttpStatus.OK)
