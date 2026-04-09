@@ -3,6 +3,7 @@ import StudyGroupCard from "../components/CreateStudyGroupCard";
 import StudyGroupModal from "../components/StudyGroupModal";
 import type { StudyGroupData, StudyGroupItem } from "../types/studyGroupData";
 import CreateSessionModal from "../components/CreateSessionModal";
+import DemoPool from "../components/DemoPool";
 
 const Groups = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -152,6 +153,8 @@ const Groups = () => {
             Create Group
           </button>
         </div>
+        
+        <DemoPool/>
 
         {/* CARDS */}
         <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
