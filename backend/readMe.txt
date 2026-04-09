@@ -22,4 +22,4 @@ build container with app. use command
 runing the procject:
     docker compose up kotlinapp
 
-now the tha appliasion is runing and you can conact and interact with th db
+now the tha appliasion is runing and you can conact and interact with the db
