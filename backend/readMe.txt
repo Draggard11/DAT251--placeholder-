@@ -1,14 +1,24 @@
-make sure docker is runing.
+Backend Setup Guide
+===================
 
-run database container.
+Before you start, make sure Docker is running.
+
+1) Start the database
+---------------------
+
+Run the PostgreSQL container:
+
     docker compose up -d db
 
-check if it is up and runing:
-    docker compose logs
-and
-   docker ps -a
+Check that it is running:
 
-You can create a new connection using the following parameters:
+    docker compose logs db
+    docker ps -a
+
+2) Database connection settings
+-------------------------------
+
+Use these values when creating a database connection:
 
     Host: localhost
     Port: 5432
@@ -16,10 +26,24 @@ You can create a new connection using the following parameters:
     User: postgres
     Password: postgres
 
-build container with app. use command
-   docker compose build
+3) Build the application container
+----------------------------------
 
-runing the procject:
+    docker compose build
+
+4) Run the backend application
+------------------------------
+
     docker compose up kotlinapp
 
-now the tha appliasion is runing and you can conact and interact with the db
+The application should now be running and connected to the database.
+
+5) Reset the database
+---------------------
+
+If you need to reset the database completely (remove all data and recreate it):
+
+    docker compose down -v
+    docker compose up -d db
+
+Warning: `docker compose down -v` deletes database volumes and all stored data.
