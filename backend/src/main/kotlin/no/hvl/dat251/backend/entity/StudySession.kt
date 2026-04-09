@@ -22,6 +22,7 @@ class StudySession(
     var startTime: Date? = null,
     var endTime: Date? = null,
     var completed: Boolean? = false,
+    var location: String? = null,
     @ManyToOne
     @JoinColumn(name = "studygroup_id")
     var studyGroup: StudyGroup? = null,

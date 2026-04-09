@@ -21,12 +21,16 @@
   display: flex;
   list-style: none;
   gap: 1.5rem;
+  /*This changes the space between the links in the nav bar*/
+  justify-content: space-evenly;
 }
 
 .nav-links a {
   text-decoration: none;
   color: white;
   transition: color 0.2s ease;
+  /*This changes the nav bar items size*/
+  font-size: large;
 }
 
 .nav-links a:hover {
