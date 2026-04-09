@@ -32,7 +32,6 @@ class StudyGroup (
     @JsonIgnore
     @OneToMany(mappedBy = "studyGroup", cascade = [CascadeType.MERGE])
     var studySessions: MutableSet<StudySession> = mutableSetOf(),
-    val attendance: HashSet<Student> = hashSetOf(),
 ) {
 
     fun addStudent(student: Student) {
