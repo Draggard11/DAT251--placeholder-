@@ -63,7 +63,7 @@ export const updateStudent = async (id: string, updatedData: Partial<Student>): 
 
 // adding subjects
 export const addSubjectToStudent = async (studentId: number, subjectId: number): Promise<Subject> => {
-  const response = await fetch(`/api/students/${studentId}/subjects`, {
+  const response = await fetch(`http://localhost:8080/api/students/${studentId}/subjects`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -80,7 +80,7 @@ export const addSubjectToStudent = async (studentId: number, subjectId: number):
 
 // get the students studygroup
 export const getStudyGroups = async (studentId: number): Promise<StudyGroup> => {
-  const response = await fetch(`http://localhost:8080/api/stundents/${studentId}/studygroups`, {
+  const response = await fetch(`http://localhost:8080/api/students/${studentId}/studygroups`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json'
@@ -92,3 +92,15 @@ export const getStudyGroups = async (studentId: number): Promise<StudyGroup> => 
   return await response.json();
 };
 
+export const getExp = async (studentId: number): Promise<number> => {
+    const response = await fetch(`http://localhost:8080/api/students/${studentId}/exp`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return await response.json();
+}

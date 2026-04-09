@@ -1,10 +1,25 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import ProgressBar from "../components/ProgressBar";
 import StreakCard from "../components/StreakCard";
+import {getExp} from "../services/StudentService.tsx";
 
 const Stats = () => {
-  const progress = 67;
-  const level = 3;
+  const [progress, setProgress] = useState(0);
+  const maxExp = 10;
+  const [level, setLevel] = useState(0);
+
+  useEffect(() => {
+    const fetchExp = async () => {
+      try {
+        const exp = await getExp(1);// add your student id here
+          setLevel(Math.floor(exp / maxExp));
+          setProgress(exp % maxExp);
+      } catch (error) {
+        console.error("Error fetching EXP:", error);
+      }
+    };
+    fetchExp().then(() => console.log("Fetched EXP successfully"));
+  }, []);
 
   return (
     <div>
