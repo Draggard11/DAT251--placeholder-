@@ -30,16 +30,16 @@ class StudySession(
     @JoinTable(
         name = "session_attendance",
         joinColumns = [JoinColumn(name = "session_id")],
-        inverseJoinColumns = [JoinColumn(name = "student_id")]
+        inverseJoinColumns = [JoinColumn(name = "student_id")],
     )
     var attendance: MutableSet<Student> = mutableSetOf(),
-    ) : ExpObservervableBase() {
-    var maxSize: Int = 0
-    var size: Int = 0
+    var maxSize: Int = 1,
+    var size: Int = 0,
+) : ExpObservervableBase() {
     @Transient
-    private val xp: Exp = Exp(0f,0f)
+    private val xp: Exp = Exp(100f, 0f)
 
-    fun finish() {// could also be called by study group
+    fun finish() { // could also be called by study group
         completed = true
         this.notifyObservers(xp.calculate())
     }
@@ -54,6 +54,7 @@ class StudySession(
         // mby increase xpModifier for each student that joins
         this.register(student)
     }
+
     fun deregisterStudent(student: Student) {
         if (size == 0) {
             return

@@ -39,6 +39,10 @@ class StudySessionController(
     @PostMapping("")
     fun creatStudySession(@RequestBody studySession: StudySession) : ResponseEntity<StudySession> {
         val savedStudySession = studySessionRepository.save(studySession)
+        // hardcoded user
+        studentRepository.findById(1).ifPresent {
+            savedStudySession.registerStudent(studentRepository.findById(1).orElse(null))
+        }
         return ResponseEntity.ok(savedStudySession)
     }
 
