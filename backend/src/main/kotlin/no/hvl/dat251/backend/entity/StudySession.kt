@@ -9,6 +9,7 @@ import jakarta.persistence.JoinColumn
 import jakarta.persistence.JoinTable
 import jakarta.persistence.ManyToMany
 import jakarta.persistence.ManyToOne
+import jakarta.transaction.Transactional
 import no.hvl.dat251.backend.exp.Exp
 import no.hvl.dat251.backend.exp.ExpObservervableBase
 import java.util.Date
@@ -37,10 +38,11 @@ class StudySession(
     var size: Int = 0,
 ) : ExpObservervableBase() {
     @Transient
-    private val xp: Exp = Exp(100f, 0f)
+    private val xp: Exp = Exp(50f, 0f)
 
     fun finish() { // could also be called by study group
         completed = true
+        xp.xpModifier = size / maxSize + 0.0f
         this.notifyObservers(xp.calculate())
     }
 
@@ -50,7 +52,6 @@ class StudySession(
             return
         }
         size += 1
-        xp.xpModifier += 1 / maxSize
         // mby increase xpModifier for each student that joins
         this.register(student)
     }
@@ -60,7 +61,6 @@ class StudySession(
             return
         }
         size -= 1
-        xp.xpModifier -= 1 / maxSize
         this.deregister(student)
     }
 }

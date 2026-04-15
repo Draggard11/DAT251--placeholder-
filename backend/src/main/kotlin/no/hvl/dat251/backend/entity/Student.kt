@@ -14,6 +14,7 @@ import jakarta.persistence.OneToMany
 import jakarta.persistence.OneToOne
 import jakarta.persistence.Table
 import jakarta.persistence.Transient
+import jakarta.transaction.Transactional
 import no.hvl.dat251.backend.exp.Exp
 import no.hvl.dat251.backend.exp.ExpObserver
 import java.time.LocalDate
@@ -48,10 +49,10 @@ class Student(
         activeSubjects.add(subject)
     }
 
+    @Transactional
     override fun update(xp: Float) {
         // we can notify the user from the backend
         // it would be best to let frontend deal with notifying the user and use GET if a session is claimed finished
-        this.xp = this.xp + xp
+        this.xp += xp
     }
 }
-
