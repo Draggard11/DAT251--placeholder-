@@ -1,0 +1,113 @@
+\section{CI Pipeline}
+For the CI pipeline, we chose GitHub Actions.
+This was a practical choice because GitHub Actions is both familiar and widely used, and our project is already hosted on GitHub.
+As a result, the pipeline was relatively easy to set up and integrates naturally with the rest of our workflow.
+
+At the current stage, the main purpose of the pipeline is to automate building and testing whenever code is pushed.
+This allows us to detect problems earlier and gives us better insight into when a particular commit may have introduced an error.
+Since multiple team members are working on the project simultaneously, this is important for debugging and coordination.
+Without automated feedback, it can become difficult to identify where a problem originated.
+
+The pipeline is also useful for release preparation.
+Running builds and tests before or during merges gives a faster indication of whether the code base is
+stable enough to move toward a release.
+At a later stage, the pipeline can be extended with additional features such as test coverage reporting and artifact generation.
+When the frontend and backend are more mature, deployable artifacts can also be produced so that others can
+test the system more easily and releases can be tracked more systematically.
+
+\subsection{Choice of Languages and Frameworks}
+
+For backend development, we chose Kotlin.
+One reason for this decision is that the group is already familiar with Java,
+and Kotlin works within the same ecosystem.
+Since Spring is a very common framework and Kotlin integrates well with it, this combination was a natural choice.
+Kotlin also provides a more modern syntax while retaining access to mature Java-based libraries and tools.
+
+For backend testing and web services, we use Spring Web together with JUnit.
+This provides a familiar testing environment and supports the development of backend functionality in a structured way.
+
+For the frontend, we use React with TypeScript.
+React was selected because it supports component-based design and is widely used in web application development.
+TypeScript helps improve code quality and maintainability through stronger type checking.
+We also use React Router in order to structure the application into pages and make navigation easier to manage.
+
+At the current stage, the frontend and backend are still being developed somewhat independently in their own development environments.
+This means that some integration remains unfinished, and in some cases mocking or partial functionality
+may be necessary until the systems are connected more fully.
+
+\subsection{Git Workflow and Version Control}
+
+We use Git for version control so that work can be saved, tracked, edited, and reversed when necessary.
+Since both frontend and backend are developed in parallel, version control is essential for managing changes
+across the system and coordinating team contributions.
+
+Our current workflow uses a main or master branch for stable and project-wide changes,
+such as CI updates and release-related work.
+In addition, we maintain separate frontend and backend branches where ongoing development in each area can continue more independently.
+For larger pieces of functionality, smaller branches may also be created from these development branches.
+
+This workflow makes it possible to work on frontend and backend at the same time without forcing all
+changes into the same branch immediately.
+Merging becomes necessary when functionality spans both parts of the system and before releases.
+At a later stage, this workflow should be strengthened further with clearer release tagging and release notes.
+
+\subsection{Implemented User Stories and Current Functionality}
+
+The current development work is based on user stories defined from the perspectives of students and lecturers.
+These stories reflect the main goals of the project, which are to improve student engagement, support participation,
+and create a more motivating study experience.
+
+The user stories currently guiding the project include:
+
+\begin{itemize}[leftmargin=1.5em]
+    \item As a Student, I want to see my current level and progress in a course without relying on grades.
+    \item As a Student, I want to ask anonymous questions without feeling stupid.
+    \item As a Lecturer, I want to see the students engage in the subject by asking questions.
+    \item As a Student, I want streaks for weekly engagement so I do not lose consistency.
+    \item As a Student, I want to participate in study groups so I can interact with other students.
+    \item As a Student, I want to find study groups with similar goals.
+    \item As a Student, I want to receive feedback if my participation drops.
+    \item As a shy student, I want the option to compete anonymously so that I feel safe.
+    \item As a distracted student, I want a timed focus mode so that I avoid interruptions.
+    \item As a motivated student, I want to maintain a study streak so that I build consistent habits.
+\end{itemize}
+
+These user stories show that the project is not only about academic administration, but also about motivation, engagement, and participation. Some stories focus on individual self-regulation, such as progress tracking, streaks, and focus mode. Others focus on social and interactive aspects, such as study groups, anonymous questions, and lecturer insight into engagement.
+
+At this stage, not all of these stories have been fully implemented.
+Some are still being developed, and some may currently exist only as partial functionality, prototype logic, or planned features.
+However, they provide a clear structure for prioritization and sprint work.
+
+\subsection{CI Pipeline Reflection}
+
+The pipeline started out simple and easy to configure and scale as needed.
+With Kotlin it looked exactly the same as with previous java projects.
+Over time, a lot of short-lived feature branches was made and a change in the pipeline was needed.
+Because our budget had to be controlled and the short-lived feature branches could be tested locally.
+A pipeline that ran builds, artifacts and tests only in main development branches
+(frontend, main, backend) we can get feedback on PRs and have a check before pushing a release.
+With the use of short-lived branches and frequent merges into and from main development branches.
+This helps doing quick checks on features and running tests on these locally and in development branches.
+The Taming googles large scale CI paper had a somewhat same problem as they needed to reduce time
+on testing and rather only run tests which is prone to find faults rather than running tests that always come out true.
+For our case we cut down on CI run time and put more effort in that developers should thoroughly
+check their code on their feature.
+The paper gave a similar message to those affected by faulty code
+
+Issues with react testing as automating it and doing integration testing seems difficult to do using the pipeline.
+The development is right now at a small scale, so making integration testing has not been prioritized as getting
+a MVP is number one priority, but at a larger scale this doing as much automated testing as possible is beneficial
+for quicker releases and feedback.
+
+Google's large scale CI pipeline started from a small scale thinking and was able to make adequate changes
+to the pipeline and version control, so it could handle the scalability problems it faced.
+At the start they had no idea of how it would massive it would scale.
+
+When looking at Google's choices for version control and pipeline setup, we can make better plans for future growth.
+One approach is to design a pipeline that accounts for potential scaling from the beginning, with an extra buffer
+to handle increased load.
+
+When scaling our pipeline to enterprise levels a lot of problems would occur.
+One part that would hold it the unit testing using a spesialised database and with
+Gradle running tests faster after each run this could keep up with running once a day.
+It would lose efficiency as new tests and dependencies are added.

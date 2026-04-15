@@ -1,0 +1,47 @@
+\section{Architecture}
+
+\subsection{System Architecture Overview}
+
+The system follows a client-server architecture:
+
+\begin{itemize}
+    \item The frontend is implemented using React and TypeScript
+    \item The backend is implemented using Kotlin and Spring
+    \item Communication occurs through REST APIs
+\end{itemize}
+
+At the current stage, the system is partially integrated, with some components still under development.
+
+\subsection{Architectural Concerns}
+In our project we don’t have a defined software architect.
+Instead we share the responsibility across the team, where everyone is expected to reflect on whether what they implement fits the system.
+The paper “What do software architects really do?” suggests that architectural work includes both an “inwards” and “outwards” focus,
+and that there should be a balance between them.
+
+After the first assignment we did interviews and created personas, which helped us understand user needs.
+This matches the inwards focus from the paper.
+We then had a meeting to plan a solution and started building a basic frontend and backend.
+We also spent time defining data structures and setting up an API, which shows some focus on architecture design.
+
+The paper suggests a 50:25:25 split between internal design work, getting input, and communicating the architecture outwards.
+However, we likely didn’t have an ideal balance, especially in the short term.
+
+One of the biggest challenges we experienced is what the paper describes as “firefighting”,
+where immediate problems take priority over larger architectural concerns.
+Some decisions (like simple data structures and API design) were made quickly to get a working prototype.
+While this helped progress, it can introduce technical debt and make future scaling or changes harder.
+
+Looking at the project over time, our focus has shifted.
+In the beginning, most of the work was external,
+since we needed input to understand the problem.
+In later sprints, the focus has been more internal,
+since we needed to implement functionality.
+However, this also meant less continuous feedback from stakeholders,
+which could lead to misalignment with user needs.
+
+Overall, we did consider architectural concerns, but not in a fully balanced way.
+We might be slightly leaning towards the absent architect antipattern, since architectural responsibility is
+shared and sometimes overshadowed by implementation work or firefighting.
+
+It should also be noted that the 50:25:25 split is based on experience and not necessarily a strict rule.
+For a team like ours, with less experience and shared responsibilities, a different balance may be more ideal

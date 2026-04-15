@@ -1,0 +1,103 @@
+\section{Technical Debt, Refactoring, and Future-Proofing}
+\subsection{Technical Debt}
+
+In our project, technical debt mainly appeared due to a high focus on delivering working functionality within limited time.
+As a result of this, several decisions were made quickly without prioritizing long term maintainability.
+
+The most obvious source for technical debt is related to how data is handled at the frontend.
+Currently, there is no form for authentication, meaning that all users can access the same data regardless of ownership.
+While this simplifies development in the short term, it creates clear limitations when introducing user-specific features or scaling the system.
+
+Another area of technical debt is the structure of frontend components. 
+Some components combine UI rendering and state management, which reduces clarity and makes the code harder to maintain and extend.
+
+This is why the need for refactoring is necessary. 
+Separating concerns, for example by isolating state management from presentation logic, would improve readability.
+
+When considering technology gaps, one of the bigger issues is hosting the service and scaling it to many users. 
+At the moment, we don’t have a message broker that can handle a high throughput of user interactions.
+
+This can be seen as a form of technical debt, where we have chosen a simpler solution to be able to develop a working prototype faster. 
+While this works for now, it limits how well the system can scale.
+
+If we want to support a large number of active users in the future, we will need to revisit our architecture and likely do a larger refactoring. 
+This shows that some architectural concerns have been postponed, rather than fully addressed, which is a trade-off we made due to time constraints.
+
+\subsection{Code quality and refactoring}
+
+When a student completes a study session, their total XP should be increased.
+This interaction suits the Observer pattern: the StudySession (subject) notifies its registered observers when it finishes,
+calling update(xp) so each Student (observer) can add the earned XP to their total.
+When talking about xp or experience we are abstracting a way for the user to look at their progression and time used on studying.
+
+
+By extracting interface and method and separating Student and StudySession with an Observer pattern(Two interfaces for the observer and observable).
+In addition an Xp data class was made to make the xp gain different and configurable for each class with xp.
+“A study session where more than 50\% of the total size did register there should be an extra xp added to each participant”.
+
+
+Applied design principles are Dependency inversion as StudySession uses the observer abstraction instead of interacting with the
+student class decoupling the two classes.
+Open-closed principle as new student or experience related classes can be added to the StudySession or other parts that
+should generate experience with the use of the observer;
+it can be done without modifying observer parts again and can be reused.
+The single responsibility principle for the study session as it handles session and student as it handles the properties of the student.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{images/code1}
+    \caption{observer pattern}
+    \label{code1}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{images/code2}
+    \caption{Exp class used in student}
+    \label{code2}
+\end{figure}
+
+
+Since the priority was just producing code, a consequence of this was that the parent components, such as: StudySession or StudyGroup, would quickly become huge and tightly coupled. As a result of this, sometimes clarity of the code was almost non-existent. 
+
+
+One of the refactoring in our project was splitting a larger frontend page into smaller components with more specific responsibilities. 
+
+Before:
+
+\begin{itemize}
+\item Functionality for displaying sessions and handling session creation/editing was mainly in control of StudySession.
+
+
+\end{itemize}
+
+After:
+
+The was split into smaller components:
+
+\begin{itemize}
+\item SessionCard for displaying a single study session
+
+\item CreateSessionModal for handling form input and save logic.
+
+\end{itemize}
+
+SessionCard was created to handle the presentation of a single study session.
+Including details such as subject, time, location, and actions like remove and edit.
+CreateSessionModal was also created to handle the creation and editing of study sessions,
+including form state, input handling, and validation logic.
+This reduced the amount of responsibility that the frontend page studySession had.
+
+
+This refactoring improved code quality by making the structure more modular and easier to understand.
+Instead of having one large component responsible for fetching data, grouping sessions, rendering the full page,
+displaying individual sessions, and handling form interaction, these responsibilities were distributed
+more clearly across smaller components.
+Which made the code easier to understand and maintain.
+Since changes to the smaller components wouldn't affect the parent.
+
+
+This refactoring reflects the Single Responsibility Principle, since each component has a more focused role.
+SessionCard is responsible for displaying a session, CreateSessionModal is responsible for session input and editing,
+and studySession coordinates the state and communication with the backend.
+It also reflects Separations of Concern, since presentation, form handling,
+and higher-level page logic are no longer mixed together to the same extent.
