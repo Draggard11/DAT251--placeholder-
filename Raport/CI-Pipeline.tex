@@ -88,7 +88,7 @@ A pipeline that ran builds, artifacts and tests only in main development branche
 (frontend, main, backend) we can get feedback on PRs and have a check before pushing a release.
 With the use of short-lived branches and frequent merges into and from main development branches.
 This helps doing quick checks on features and running tests on these locally and in development branches.
-The Taming googles large scale CI paper had a somewhat same problem as they needed to reduce time
+The Taming googles large scale CI \cite{GoogleTesting} paper had a somewhat same problem as they needed to reduce time
 on testing and rather only run tests which is prone to find faults rather than running tests that always come out true.
 For our case we cut down on CI run time and put more effort in that developers should thoroughly
 check their code on their feature.
@@ -103,7 +103,7 @@ Google's large scale CI pipeline started from a small scale thinking and was abl
 to the pipeline and version control, so it could handle the scalability problems it faced.
 At the start they had no idea of how it would massive it would scale.
 
-When looking at Google's choices for version control and pipeline setup, we can make better plans for future growth.
+When looking at Google's choices for version control and pipeline setup\cite{GoogleRepo}, we can make better plans for future growth.
 One approach is to design a pipeline that accounts for potential scaling from the beginning, with an extra buffer
 to handle increased load.
 
