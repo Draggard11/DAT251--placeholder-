@@ -1,19 +1,45 @@
 \section{CI Pipeline}
-For the CI pipeline, we chose GitHub Actions.
-This was a practical choice because GitHub Actions is both familiar and widely used, and our project is already hosted on GitHub.
-As a result, the pipeline was relatively easy to set up and integrates naturally with the rest of our workflow.
 
-At the current stage, the main purpose of the pipeline is to automate building and testing whenever code is pushed.
-This allows us to detect problems earlier and gives us better insight into when a particular commit may have introduced an error.
-Since multiple team members are working on the project simultaneously, this is important for debugging and coordination.
-Without automated feedback, it can become difficult to identify where a problem originated.
+This section will discuss our a CI pipeline from start to end of the project and how our pipeline was used to improve efficiency. 
+In this section we will describe how our CI pipeline works, what benefits it provides, what limitations it has, and areas where it could potentially be improved.
+In addition to the technical details of the pipeline, we will discuss how the pipeline impacted the project and code deployment. We will highlight key milestones and improvements made during the pipeline's implementation.
 
-The pipeline is also useful for release preparation.
-Running builds and tests before or during merges gives a faster indication of whether the code base is
-stable enough to move toward a release.
-At a later stage, the pipeline can be extended with additional features such as test coverage reporting and artifact generation.
-When the frontend and backend are more mature, deployable artifacts can also be produced so that others can
-test the system more easily and releases can be tracked more systematically.
+\subsection{CI Pipeline Overview}
+
+At the beginning of the development process we choice a simple pipeline with GitHub Actions as development is ongoing in a GitHub repository. The team were doing small checks before pushing like static code analysis and building.
+In the hopes of catching unseen errors and issues we designed the pipeline as follows: 
+Skeleton for the pipeline was from gradle, but these steps were added:
+\begin{itemize}
+  \item On each pull to repository
+  \item Build using Gradle
+  \item Run tests using JUnit
+\end{itemize}
+It will in addition give feedback connected to each commit. The feedback involves all stages and messages that have been made from building or testing. With it being connected to each commit we can rollback or identity the issue quickly. 
+Looking into adding more steps as testing and integration evolves. In addition as development want to be released we need generation of artifacts that have been through the pipeline and ready for release. As of now we are doing creation of artifacts manually on each release. 
+
+% later version
+%\subsection{placeholder The pipeline}
+%For the CI pipeline, we chose GitHub Actions.
+%This was a practical choice because GitHub Actions is both familiar and widely used, and our project is already hosted on GitHub.
+%As a result, the pipeline was relatively easy to set up and integrates naturally with the rest of our workflow.
+
+%At the current stage, the main purpose of the pipeline is to automate building and testing whenever code is pushed.
+%This allows us to detect problems earlier and gives us better insight into when a particular commit may have introduced an error.
+%Since multiple team members are working on the project simultaneously, this is important for debugging and coordination.
+%Without automated feedback, it can become difficult to identify where a problem originated.
+
+%The pipeline is also useful for release preparation.
+%Running builds and tests before or during merges gives a faster indication of whether the code base is
+%stable enough to move toward a release.
+%At a later stage, the pipeline can be extended with additional features such as test coverage reporting and artifact generation.
+%When the frontend and backend are more mature, deployable artifacts can also be produced so that others can
+%test the system more easily and releases can be tracked more systematically. 
+
+\section{System Architecture} \subsection{HighLevel Design}
+
+The system consists of a frontend application and a backend service that communicates with the frontend
+via HTTP/JSON. The backend exposes RESTful APIs which the frontend makes requests to in order to retrieve data.
+A relational database (PostgreSQL) is used to store all persistent
 
 \subsection{Choice of Languages and Frameworks}
 
