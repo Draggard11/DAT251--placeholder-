@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import java.util.Date
 
 @CrossOrigin(origins = ["http://localhost:5173"])
 @RestController
@@ -33,8 +34,25 @@ class StudySessionController(
 
 
     @GetMapping("")
-    fun getStudySessions() : List<StudySession> =
-        studySessionRepository.findAll().toList()
+    fun getStudySessions(): List<StudySession> {
+        val sessions = studySessionRepository.findAll().toList()
+        val now = Date()
+        var changed = false
+
+        sessions.forEach { session ->
+            if (!session.completed && session.endTime != null && now.after(session.endTime)) {
+                session.completed = true
+                session.completedAt = session.endTime ?: now
+                changed = true
+            }
+        }
+
+        if (changed) {
+            studySessionRepository.saveAll(sessions)
+        }
+
+    return sessions
+    }
 
     @PostMapping("")
     fun creatStudySession(@RequestBody studySession: StudySession) : ResponseEntity<StudySession> {
@@ -60,11 +78,21 @@ class StudySessionController(
 
         dto.subject?.let { studySession.subject = it }
         dto.endTime?.let { studySession.endTime = it }
-        dto.completed?.let { studySession.completed = it }
         dto.startTime?.let { studySession.startTime = it }
         dto.attendanceIds?.let { studySession.attendance = studentRepository.findAllById(it).toMutableSet() }
         dto.location?.let { studySession.location = it }
         dto.studyGroupId?.let { studySession.studyGroup = studyGroupRepository.findById(it).orElse(null) }
+
+        dto.completed?.let { newCompleted ->
+            if (newCompleted && !studySession.completed) {
+                studySession.completed = true
+                studySession.completedAt = Date()
+            } else if (!newCompleted) {
+                studySession.completed = false
+                studySession.completedAt = null
+            }
+        }
+
         val updated = studySessionRepository.save(studySession)
         if (updated.completed == true) { updated.finish() }
         return ResponseEntity.ok(updated)
