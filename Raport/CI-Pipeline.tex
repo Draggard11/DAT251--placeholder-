@@ -20,85 +20,6 @@ additionally, it will provide feedback linked to each commit. By being connceted
 We plan to add more steps as testing and integration evolves. additionally as development progresses towards a release, we need reliable generation of artifacts that have passed the pipeline and ready for release. 
 Currently, we create artifacts manually for release of now we are doing creation of artifacts manually on each release.
 
-% later version
-%\subsection{placeholder The pipeline}
-%For the CI pipeline, we chose GitHub Actions.
-%This was a practical choice because GitHub Actions is both familiar and widely used, and our project is already hosted on GitHub.
-%As a result, the pipeline was relatively easy to set up and integrates naturally with the rest of our workflow.
-
-%At the current stage, the main purpose of the pipeline is to automate building and testing whenever code is pushed.
-%This allows us to detect problems earlier and gives us better insight into when a particular commit may have introduced an error.
-%Since multiple team members are working on the project simultaneously, this is important for debugging and coordination.
-%Without automated feedback, it can become difficult to identify where a problem originated.
-
-%The pipeline is also useful for release preparation.
-%Running builds and tests before or during merges gives a faster indication of whether the code base is
-%stable enough to move toward a release.
-%At a later stage, the pipeline can be extended with additional features such as test coverage reporting and artifact generation.
-%When the frontend and backend are more mature, deployable artifacts can also be produced so that others can
-%test the system more easily and releases can be tracked more systematically. 
-
-\section{System Architecture} \subsection{HighLevel Design}
-
-The system consists of a frontend application and a backend service that communicates with the frontend
-via HTTP/JSON. The backend exposes RESTful APIs which the frontend makes requests to in order to retrieve data.
-A relational database (PostgreSQL) is used to store all persistent
-\section{CI Pipeline and Frameworks}
-
-\subsection{CI Pipeline}
-For the CI pipeline, we chose GitHub Actions.
-This was a practical choice because GitHub Actions is both familiar and widely used, and our project is already hosted on GitHub.
-As a result, the pipeline was relatively easy to set up and integrates naturally with the rest of our workflow.
-
-At the current stage, the main purpose of the pipeline is to automate building and testing whenever code is pushed.
-This allows us to detect problems earlier and gives us better insight into when a particular commit may have introduced an error.
-Since multiple team members are working on the project simultaneously, this is important for debugging and coordination.
-Without automated feedback, it can become difficult to identify where a problem originated.
-
-The pipeline is also useful for release preparation.
-Running builds and tests before or during merges gives a faster indication of whether the code base is
-stable enough to move toward a release.
-At a later stage, the pipeline can be extended with additional features such as test coverage reporting and artifact generation.
-When the frontend and backend are more mature, deployable artifacts can also be produced so that others can
-test the system more easily and releases can be tracked more systematically.
-
-\subsection{Choice of Languages and Frameworks}
-%TODO place here or in architecture.
-
-For backend development, we chose Kotlin.
-One reason for this decision is that the group is already familiar with Java,
-and Kotlin works within the same ecosystem.
-Since Spring is a very common framework and Kotlin integrates well with it, this combination was a natural choice.
-Kotlin also provides a more modern syntax while retaining access to mature Java-based libraries and tools.
-% use latex tools to show stack in a list or diagram
-This is our entire stack.
-\begin{itemize}
-    \item Kotlin for the programming language
-    \item Spring Framework for backend development
-    \item PostgreSQL for databases
-    \item Docker for container management and orchestration
-    \item React and TypeScript for frontend development
-\end{itemize}
-The Spring Framework has multiple additions like security, web server and JPA for ORM that makes it a good choice for developing a REST api for our frontend.
-
-Docker is essential for ensuring that our application runs in an isolated environment, 
-regardless of the underlying infrastructure. This makes it easy to 
-To ensure the
-
-For backend testing and web services, we use Spring Web together with JUnit.
-This provides a familiar testing environment and supports the development of backend functionality in a structured way.
-
-For the frontend, we use React with TypeScript.
-React was selected because it supports component-based design and is widely used in web application development.
-TypeScript helps improve code quality and maintainability through stronger type checking.
-We also use React Router in order to structure the application into pages and make navigation easier to manage.
-
-At the current stage, the frontend and backend are still being developed somewhat independently in their own development environments.
-This means that some integration remains unfinished, and in some cases mocking or partial functionality
-may be necessary until the systems are connected more fully.
-During prototyping, the frontend and backend have been developed somewhat independently in their own development environments.
-This means that some integration remained unfinished, and in some cases mocking or partial functionality were necessary during development. %TODO move somewhere or delete
-
 \subsection{Git Workflow and Version Control}
 
 We use Git for version control so that work can be saved, tracked, edited, and reversed when necessary.
@@ -115,32 +36,6 @@ This workflow makes it possible to work on different features for frontend or ba
 Merging becomes necessary when functionality spans both parts of the system and immediately before releases.
 At a later stage, this workflow should be strengthened further with clearer tagging to each feature and version tagging.
 
-\subsection{Implemented User Stories and Current Functionality}
-
-The current development work is based on user stories defined from the perspectives of students and lecturers.
-These stories reflect the main goals of the project, which are to improve student engagement, support participation,
-and create a more motivating study experience.
-This workflow makes it possible to work on frontend and backend at the same time without forcing all
-changes into the same branch immediately.
-Merging becomes necessary when functionality spans both parts of the system and before releases.
-At a later stage, this workflow should be strengthened further with clearer release tagging and release notes.
-
-The user stories currently guiding the project include:
-
-\begin{itemize}[leftmargin=1.5em]
-    \item As a Student, I want to see my current level and progress in a course without relying on grades.
-    \item As a Student, I want to ask anonymous questions without feeling stupid.
-    \item As a Lecturer, I want to see the students engage in the subject by asking questions.
-    \item As a Student, I want streaks for weekly engagement so I do not lose consistency.
-    \item As a Student, I want to participate in study groups so I can interact with other students.
-    \item As a Student, I want to find study groups with similar goals.
-    \item As a Student, I want to receive feedback if my participation drops.
-    \item As a shy student, I want the option to compete anonymously so that I feel safe.
-    \item As a distracted student, I want a timed focus mode so that I avoid interruptions.
-    \item As a motivated student, I want to maintain a study streak so that I build consistent habits.
-\end{itemize}
-
-These user stories show that the project is not only about academic administration, but also about motivation, engagement, and participation. Some stories focus on individual self-regulation, such as progress tracking, streaks, and focus mode. Others focus on social and interactive aspects, such as study groups, anonymous questions, and lecturer insight into engagement.
 \subsection{CI Pipeline Reflection} %TODO skrive om på denne. Forsiktig med å sammenligne oss selv med google. Hvis papers ikke er relevant for oss må vi kunne si det som det er. Også litt gramatikk og bruk av forkortelser som MVP og PR. Se assignment 3 for oppgave-beskrivelse- vi skal tenke mer what-if.
 
 At this stage, not all of these stories have been fully implemented.

@@ -1,26 +1,55 @@
 \section{Architecture}
 
-\subsection*{System Architecture Overview}
+\subsection*{Choice of Languages and Frameworks}
 
-The system follows a client-server architecture:
-
+For backend development, we chose Kotlin.
+One reason for this decision is that the group is already familiar with Java,
+and Kotlin works within the same ecosystem.
+Since Spring is a very common framework and Kotlin integrates well with it, this combination was a natural choice.
+Kotlin also provides a more modern syntax while retaining access to mature Java-based libraries and tools.
+% use latex tools to show stack in a list or diagram
+The technology stack used in the project is as follows:
 \begin{itemize}
-    \item The frontend is implemented using React and TypeScript
-    \item The backend is implemented using Kotlin and Spring
-    \item Communication occurs through REST APIs
+    \item Kotlin for the programming language
+    \item Spring Framework for backend development
+    \item PostgreSQL for databases
+    \item Docker for container management and orchestration
+    \item React and TypeScript for frontend development
 \end{itemize}
+The Spring Framework provides integrated support for web services, security,
+and data persistence (through JPA),
+making it a suitable choice for developing a REST API for the frontend.
+%TODO look at
+
+Docker is used to ensure that the application runs in a consistent and isolated environment,
+independent of the underlying infrastructure.
+This reduces issues related to environment differences between development and deployment,
+and simplifies setup for team members.
+For backend testing and web services, we use Spring Web together with JUnit.
+This provides a familiar testing environment and supports the development of backend functionality in a structured way.
+
+For the frontend, we use React with TypeScript.
+React was selected because it supports component-based design and is widely used in web application development.
+TypeScript helps improve code quality and maintainability through stronger type checking.
+We also use React Router in order to structure the application into pages and make navigation easier to manage.
+
+At the current stage, the frontend and backend are still being developed partly independently.
+As a result, some integration remains incomplete, and in certain cases mocking or partial functionality
+has been necessary during development.
 
 
 \subsection{How Much Up-Front?} %TODO endre tittel?  
 Based on our experience in the project, we performed relatively little upfront architectural work.
-This was mainly due to time constraints, learning new technologies, and a focus on delivering working functionality early in the development
+This was mainly due to time constraints, learning new technologies, and a focus on delivering working functionality early in the development process.
 This aligns with agile principles, where teams often aim to design “just enough” architecture to get started.
 
 However, when reflecting on the paper\cite{UpFront}, our approach may have been leaning too far towards minimal upfront design.
 The paper highlights that too little upfront planning can lead to an “accidental architecture”,
 where decisions are made reactively rather than strategically.
-While we have not yet encountered major issues caused by this,
-there are clear areas where this could become problematic in later stages of the project.
+Although we have not yet encountered major issues caused by this,
+it introduces a risk of architectural inconsistencies as the system grows.
+there are clear areas where this could become problematic, particularly as new
+features are introduced.
 
 For example, decisions regarding authentication and integration with external systems, such as using an existing student login solution,
 have not been planned in advance.
@@ -39,7 +68,7 @@ Although our current approach has worked so far, a more balanced approach betwee
 
 
 \subsection{Architectural Concerns}
-In our project we don’t have a defined software architect.
+In our project we do not have a formally assigned software architect.
 Instead we share the responsibility across the team, where everyone is expected to reflect on whether what they implement fits the system.
 The paper “\textit{What do software architects really do?}”\cite{SoftwareArchitectsReallyDo} suggests that architectural work includes both an “inwards” and “outwards” focus,
 and that there should be a balance between them.
@@ -50,7 +79,7 @@ We then had a meeting to plan a solution and started building a basic frontend a
 We also spent time defining data structures and setting up an API, which shows some focus on architecture design.
 
 The paper suggests a 50:25:25 split between internal design work, getting input, and communicating the architecture outwards.
-However, we likely didn’t have an ideal balance, especially in the short term.
+However, we likely did not achieve an ideal balance, especially in the short term.
 
 One of the biggest challenges we experienced is what the paper describes as “firefighting”,
 where immediate problems take priority over larger architectural concerns.
