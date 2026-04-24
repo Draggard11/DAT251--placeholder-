@@ -1,3 +1,5 @@
+\usepackage{rotating}
+
 \section{Requirements}
 
 \subsection{Overview}
@@ -58,5 +60,74 @@ The project will explore possibilities for making the solution freely available.
 No physical production is planned.
 
 Environmental considerations include limiting or avoiding excessive use of resource intensive AI technologies, as high computational usage may have negative environmental impacts.
+%TODO maybe compine thess sections, add artifacts
+\subsection{Sustainability Assessment and Artefacts}
 
+\begin{sidewaysfigure}[p]
+    \centering
+    \includegraphics[width=0.9\textheight, height=0.9\textheight, keepaspectratio]{images/SAF_Decision_map}
+    \label{fig:SAF desision map}
+    \caption{Systemic impact map of the system}
+\end{sidewaysfigure}
+
+\newgeometry{margin=1cm}
+
+\begin{figure}[p]
+    \centering
+
+    \includegraphics[width=\textwidth,height=0.22\textheight]{images/SAF_kpi_1}
+
+    \vspace{0.2cm}
+
+    \includegraphics[width=\textwidth,height=0.22\textheight]{images/SAF_kpi_2}
+
+    \vspace{0.2cm}
+
+    \includegraphics[width=\textwidth,height=0.22\textheight]{images/SAF_kpi_3}
+
+    \vspace{0.2cm}
+
+    \includegraphics[width=\textwidth,height=0.22\textheight]{images/SAF_kpi_4}
+
+    \caption{Key Performance Indicators related to motivation, social interaction, and sustainability.}
+    \label{fig:kpi_all}
+\end{figure}
+
+\clearpage
+\restoregeometry
+\begin{sidewaysfigure}
+    \centering
+    \includegraphics[width=\textheight]{images/SAF_SQ_model}
+    \caption{Software quality model}
+    \label{fig:SQ_model}
+\end{sidewaysfigure}
+\clearpage
+
+To evaluate the broader impact of our system, we applied principles from the sustainability
+assessment framework presented in\cite{SAF-Toolkit}.
+This framework emphasizes analyzing software systems across multiple dimensions,
+including technical, environmental, economic, and social aspects.
+
+
+As a result, several artefacts were developed.
+
+First, a systemic impact map was created to visualize how the system influences different
+stakeholders and resources.
+This made it possible to identify both positive effects,
+such as increased student motivation and social interaction, and potential negative effects,
+such as increased server load and energy consumption.
+
+Second, a set of quality attributes was defined, linking system features to sustainability
+dimensions and measurable indicators.
+This provided a structured way to reason about trade-offs,
+for example between usability and performance, or between richer functionality and environmental impact.
+
+Finally, key performance indicators (KPIs) were established to evaluate whether the system
+achieves its intended goals over time.
+These include indicators related to student engagement,
+participation in study groups, and system resource usage.
+
+Overall, the use of the SAF framework contributed to a more holistic understanding of the system.
+It supported more informed design decisions and highlighted areas where future improvements are needed,
+particularly in balancing scalability, performance, and environmental impact as the system grows.
 %TODO: Add figure of canvas board from disc.
