@@ -1,5 +1,31 @@
 We can mention here that we have used some AI, but at many points have we AVOIDED use of AI, in order to better learn the frameworks we are dealing with.
-Learning React, REST, How to set up databases, Kotlin, etc. are not "part" of the course, but still something we have prioritized. This does, however, take time and leads to time-constraints. 
-We can also draw parallels here that using AI-tools for these foundational tasks has many similarities to Technical Debt- a simple solution now, can cause larger problems down the line.
+Learning React, REST, How to set up databases, Kotlin, etc. are not "part" of the course, but still something we have prioritized. This does, however, take time and leads to time-constraints.
+
+After finishing coding the experience system there was need to check for errors.
+At the start there was sent a few question to an AI (qwen-coder-2.7) in order for him to check naming, function structures and for logic.
+He said everything looked good and that there were no errors.
+However, when doing testing and manual testing, we found some errors.
+First error came with testing, and it found that experience was not added correctly.
+The manual testing was done to check the database and api.
+Quickly figured out that the function which was adding xp to each student was not updating the database.
+So, AI did not figure out two easy to check errors and was not part of generating the code and fixing errors before initial testing.
+It did not cause any technical dept. \cite{Study_of_AI}
+
+%Paper: "Agentic Refactoring: An Empirical Study of AI Coding Agents"
+%• The paper contrasts agentic refactoring with human-typical refactorings. Did
+%your team perform refactorings typical of humans, agentic refactorings, or a mix
+%of the two?
+%• If you used AI for refactoring, how did its output compare to the agentic
+%refactorings described in the paper?
+%• After reading the paper, will you use AI for refactoring in the future? For what
+%purposes? We can also draw parallels here that using AI-tools for these foundational tasks has many similarities to Technical Debt- a simple solution now, can cause larger problems down the line.
+
+% Reflections on AI Use
+% • Some of you have used AI in your project work, while others may not have.
+%o If you used AI, explain how you integrated it into your development process(e.g., for code generation, debugging, documentation, etc.).
+%o If you did not use AI, reflect on why not.
+%• The paper "Agentic Refactoring: An Empirical Study of AI Coding Agents", studies the use of AI in refactoring.
+%Discuss if the findings are relevant for other parts of the development process: Early phase design decisions, architectural considerations and future maintainability
 
 % TODO: Write this part. 
+
