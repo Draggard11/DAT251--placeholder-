@@ -1,7 +1,55 @@
 \section{Software Processes}
 
-\subsection{Scrum Practices}
+\subsection{Sprint 1}
+The timeframe for this sprint was the time between assignment 1 and 2.
+08. February - 08. March
 
+Goals:
+The main goal for this sprint was to get started with creating the project.
+This included setting up a CI-pipeline, deciding tools, such as languages and frameworks for coding and testing,
+as well as cooperation methods such as project boards and git-workflow.
+We also set the goal of creating some basic functionality for the code such as a few working classes
+and tests for backend as well as homepage and navigation bar for frontend.
+
+There were also some tasks left-over from the first assignment,
+such as constructing more user-stories and concretizing our product idea. Other tasks such as working on the report and presentation were also part of this sprint and in the burndown-chart below \ref{fig:burndown-chart-sprint1}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/Sprint_1_-_Set-up_and_Basic_funcitonality-burndown.png}
+    \caption{burndown chart of our first sprint}
+    \label{fig:burndown-chart-sprint1}
+\end{figure}
+
+Not all of the tasks planned for the sprint were finished:
+Mainly, sufficient testing for backend as well as set-up of database.
+A lot of the delays in this period comes from difficulty with dealing with the large number of new frameworks to learn,
+especially as a large amount of the work is dependent on the project being set-up, and so delays propagate.
+
+\subsubsection{Implemented User Stories and Current Functionality}
+The first task of this sprint was refining user-stories from the insights of students and lecturers we gained during our pre-study \ref{pre-study-interviews}.
+These stories reflect the main goals of the project, which are to improve student engagement, support participation,
+and create a more motivating study experience.
+
+The user stories currently guiding the project include:
+
+\begin{itemize}[leftmargin=1.5em]
+    \item As a Student, I want to see my current level and progress in a course without relying on grades.
+    \item As a Student, I want to ask anonymous questions without feeling stupid.
+    \item As a Lecturer, I want to see the students engage in the subject by asking questions.
+    \item As a Student, I want streaks for weekly engagement so I do not lose consistency.
+    \item As a Student, I want to participate in study groups so I can interact with other students.
+    \item As a Student, I want to find study groups with similar goals.
+    \item As a Student, I want to receive feedback if my participation drops.
+    \item As a shy student, I want the option to compete anonymously so that I feel safe.
+    \item As a distracted student, I want a timed focus mode so that I avoid interruptions.
+    \item As a motivated student, I want to maintain a study streak so that I build consistent habits.
+\end{itemize}
+
+These user stories show that the project is not only about academic administration, but also about motivation, engagement, and participation. Some stories focus on individual self-regulation, such as progress tracking, streaks, and focus mode. Others focus on social and interactive aspects, such as study groups, anonymous questions, and lecturer insight into engagement.
+These user stories provide a clear structure for prioritization and sprint work.
+
+\subsubsection{Scrum Practices}
 The project is being organized using ideas from Scrum, especially through iterative work, prioritization of tasks,
 and the use of user stories.
 The GitHub project board functions as a shared place for tasks and progress, and it helps the team keep track of ongoing work.
@@ -11,11 +59,12 @@ One of the most important lessons so far is that Scrum practices only work when 
 If communication is weak, development becomes fragmented and some team members may end up waiting for others.
 
 Because this is a student project, scheduling can also be difficult.
-This makes it even more important to have visible tasks, frequent communication, and a shared understanding of current priorities.
+This makes it even more important to have visible tasks, frequent communication, and a shared understanding of current priorities. 
+%TODO: Legg inn bilde av Product Board
+%TODO: Write short about how we did scrum roles (or how we didn't)
+\subsubsection{XP Practices}
 
-\subsection{XP Practices}
-
-The project also applies several ideas from Extreme Programming(XP).
+The project also applies several ideas from Extreme Programming (XP).
 These include continuous integration, automated testing, pair programming, and an emphasis on incremental development.
 Not all XP practices are equally developed at this stage, but several are already visible in our workflow.
 
@@ -29,8 +78,60 @@ Testing is present through JUnit, although the testing framework is still expect
 Similarly, practices such as refactoring, coding standards, and small releases are relevant to the project
 and should become more important as the code base grows.
 
-\subsection{Catching up with Method and Process Practice}
 
+\subsubsection{Pair Programming}
+
+We have been using pair programming from the start of the project.
+In the beginning, this led to some difficulties.
+When both members of a pair are inexperienced and unfamiliar with the framework they are working in,
+pair programming can feel inefficient and somewhat unproductive.
+Progress may appear slower than if both worked independently.
+
+However, after working with it for some time, the workflow improved.
+Although implementation may still be somewhat slower in the short term,
+pair programming increases learning for both participants.
+It allows knowledge to be shared more directly, solutions to be discussed before implementation,
+and the code base to be understood more collectively.
+Our experience shows an increase in learning from team members,
+but we are aware that it is hard to show concrete proof of thees findings.
+
+Overall, our experience is broadly consistent with the paper \textit{On the Effectiveness of Pair Programming}\cite{Effectiveness_of_Pair_Programming}.
+While pair programming may require more effort and can initially feel slower, we found that it improved learning,
+knowledge sharing, and collaboration within the team. 
+% TODO litt mer spesifikke beskrivelser av hva som vi er enig med i paperen. Denne section kan være lengre.
+
+\subsubsection{Test-Driven Development}
+For this sprint, we focused on using test-driven development (TDD) when implementing our basic functionality for the backend. Our experience with JUnit testing framework made this a reasonably effective way of doing development while also ensuring that our program is working as intended. For frontend, we had less experience with the frameworks used for testing, so it was not prioritized, as we wanted to quickly develop a simple prototype.
+
+The paper "\textit{A Controlled Experiment...}"\cite{TDD}, discusses how crucial task description granularity affects the outcome of TDD.
+It compares coarse-grained tasks with more detailed, step-by-step descriptions.
+The results show that more granular task descriptions significantly improve software quality.
+It improves in both correctness and completeness.
+
+In our project, we did not conduct a formal experiment on task description granularity.
+However, we experienced similar effects in practice.
+Tasks were often implicitly divided into smaller steps, especially when working with user stories.
+For example, a broad user story such as displaying a student’s level and progress had to be
+broken down into smaller implementation steps, such as first creating a simple hardcoded solution,
+and then gradually refining it.
+However, this process was not done in a structured or consistent way.
+
+We observed that tasks became easier to implement when they were broken down into smaller parts,
+while larger tasks required more effort and planning.
+This aligns with the findings of the paper, which suggest that well-defined, granular tasks improve development outcomes.
+
+The use of TDD in our project was partially aligned with these findings.
+When tasks were clearly broken down, it was easier to follow the incremental process of TDD.
+However, due to time constraints, TDD was not always consistently applied.
+In some cases, instead of following TDD, tasks were still divided into smaller steps,
+but without writings test first.
+This suggest that while we applied the idea of working in smaller increments, we did not fully utilize the benefits of TDD.
+
+%TODO: Få avsnittene til å flyte bedre. Reflektere mer? Vi burde hatt flere tester for å teste edge-caser. 
+
+
+\subsubsection{Catching up with Method and Process Practice}
+% TODO: flyttes til sprint 3 eller til der vi snakker om ideal. Skriv om litt og legg til citation \cite{CatchingUpWithMethods}
 This paper shows that software teams seldom follow a single methodology strictly, and instead tend to combine practices from different approaches into a hybrid process. 
 It also highlights that teams can often deviate from prescribed methods, either intentionally or because of external constraints, which can negatively impact productivity.
 
@@ -58,84 +159,11 @@ team that was consistently available, as a result, these practices were occasion
 Overall, the paper helped us understand that while a hybrid approach is realistic, its effectiveness depends on how well 
 the practices are integrated and consistently applied, instead of simply being present in the development process.
 
+% TODO: Some papers are missing  and should be discussed in this section, noe er i assignment 2 draft i google docen og andre steder. Finn passende steder å sette inn - De er del av assignment 2 (sprint 1), men MÅ ikke være her om det ikke passer.
 
-
-\subsection{Pair Programming}
-
-We have been using pair programming from the start of the project.
-In the beginning, this led to some difficulties.
-When both members of a pair are inexperienced and unfamiliar with the framework they are working in,
-pair programming can feel inefficient and somewhat unproductive.
-Progress may appear slower than if both worked independently.
-
-However, after working with it for some time, the workflow improved.
-Although implementation may still be somewhat slower in the short term,
-pair programming increases learning for both participants.
-It allows knowledge to be shared more directly, solutions to be discussed before implementation,
-and the code base to be understood more collectively.
-Our experience shows a increase in learning from team members,
-but we are aware that it is hard to show concrete proof of thees findings.
-
-Overall, our experience is broadly consistent with the paper \textit{On the Effectiveness of Pair Programming}.
-While pair programming may require more effort and can initially feel slower, we found that it improved learning,
-knowledge sharing, and collaboration within the team.
-
-\subsection{Test-Driven Development}
-
-The paper discusses how crucial task description granularity affects the outcome of TDD.
-It compares coarse-grained tasks with more detailed, step-by-step descriptions.
-The results show that more granular task descriptions significantly improve software quality.
-It improves in both correctness and completeness.
-
-In our project, we did not conduct a formal experiment on task description granularity.
-However, we experienced similar effects in practice.
-Tasks were often implicitly divided into smaller steps, especially when working with user stories.
-For example, a broad user story such as displaying a student’s level and progress had to be
-broken down into smaller implementation steps, such as first creating a simple hardcoded solution,
-and then gradually refining it.
-However, this process was not done in a structured or consistent way.
-
-We observed that tasks became easier to implement when they were broken down into smaller parts,
-while larger tasks required more effort and planning.
-This aligns with the findings of the paper, which suggest that well-defined, granular tasks improve development outcomes.
-
-The use of TDD in our project was partially aligned with these findings.
-When tasks were clearly broken down, it was easier to follow the incremental process of TDD.
-However, due to time constraints, TDD was not always consistently applied.
-In some cases, instead of following TDD, tasks were still divided into smaller steps,
-but without writings test first.
-This suggest that while we applied the idea of working in smaller increments, we did not fully utilize the benefits of TDD.
-
-
-\subsection{Sprint 1}
-
-The timeframe for this sprint was the time between assignment 1 and 2.
-08. February - 08. March
-
-Goals:
-The main goal for this sprint was to get started with creating the project.
-This included setting up a CI-pipeline, deciding tools, such as languages and frameworks for coding and testing,
-as well as cooperation methods such as project boards and git-workflow.
-We also set the goal of creating some basic functionality for the code such as a few working classes
-and tests for backend as well as homepage and navigation bar for frontend.
-
-There were also some tasks left-over from the first assignment,
-such as constructing more user-stories and concretizing our product idea.
-Other tasks included in the sprint included working on the report and presentation.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{images/Sprint_1_-_Set-up_and_Basic_funcitonality-burndown.png}
-    \caption{burndown chart of our first sprint}
-    \label{fig:burndown-chart-sprint1}
-\end{figure}
-
-All tasks planned for the sprint were not finished:
-Mainly sufficient testing for backend as well as set-up of database.
-A lot of the delays in this period comes from difficulty with dealing with the large number of new frameworks to learn,
-especially as a large amount of the work is dependent on the project being set-up, and so delays propagate.
-
-
+%TODO: ABC paper og Design Science (sammenligne de to), 
+%TODO: evidence for lean, (discuss value stream mapping). 
+%TODO: Vi må også gjøre refleksjoner rundt Software product line og bruke SPLTrends for å diskutere shortcomings.
 \subsection{Sprint 2}
 
 The timeframe for this sprint was the time between assignment 2 and 3.
@@ -162,29 +190,32 @@ Due to delays in important functional components such as the database,
 as well as connection between frontend and backend, a lot of the work was backloaded to the
 later parts of the sprint or not completed as scheduled.
 
-\subsection{How Much Up-Front?}
+\subsection*{Difficulties with Agile}
+One of the main focuses of agile development is effective and iterative delivering of functional code, as well as continuous feedback from stakeholders. As we have discussed in the last few sections, we have had a strong focus on agile practices, such as scrum, workflow planning, user-story focused development and practices such as pair-programming and test-driven development. Still, we have had difficulties in multiple stages of the process. In this section we will look at some of these experiences (mainly focusing on difficulties with iteratively delivering functional code and stakeholder feedback), and examine why these occurred despite our group's attempt at trying to adhere to agile principles.
+\vspace{5mm}\\
+Using article \cite{DarkSide} ("\textit{Shedding light on the dark side - ..}."), which aims to systematically list problems related to agile methodologies, we will  investigate if our-group's problems can be attributed to agile, or if the problem is the opposite: that these are due to us \textit{not} properly adhering to agile principles.
 
-Based on our experience in the project, we performed relatively little upfront architectural work.
-This was mainly due to time constraints, learning new technologies, and a focus on delivering working functionality early in the development
-This aligns with agile principles, where teams often aim to design “just enough” architecture to get started.
+% TODO Add picture from this paper (the big model with all problems) and highlight our problems. This should probably be added to appendix and referenced here. Focus on readability.
 
-However, when reflecting on the paper, our approach may have been too far towards minimal upfront design.
-The paper highlights that too little upfront planning can lead to an “accidental architecture”,
-where decisions are made reactively rather than strategically.
-While we have not yet encountered major issues caused by this,
-there are clear areas where this could become problematic in later stages of the project.
+\subsubsection*{Iterative functional code}
+A main focus of agile (and the focus of our group since the start) has been to deliver a minimal viable product that we can later expand. However, while our project is not complicated, there are still many parts to familiarize ourselves with and so process has been quite slow. We have felt that the tight structure that scrum sets, where there are clear goals, can cause issues if those goals are set under false pretenses (example: "We can do \textit{this} part by Tuesday so that we are ready for \textit{that} part on Wednesday", but then we miss Tuesday's deadline by 3 days). This is also supported as an issue in section 4.5 in the article\cite{DarkSide}: \textit{Planning and Estimation problems}, where teams often overestimate delivery capacity. This can have cascading effects: It reduces the effectiveness of sprint-planning, causing unnecessary overhead, and it also increases pressure - which can cascade even further, causing de-prioritizing of testing, documentation, non-functional requirements and refactoring. These are also identified in the article as issues, along with multiple other related to technical debt.
 
-For example, decisions regarding authentication and integration with external systems, such as using an existing student login solution,
-have not been planned in advance.
-Introducing such functionality later may require significant changes to both frontend and backend structure, indicating a potential architectural gap.
+Especially since time is a limitation, Time-related issues become pain-points. We have felt meeting-overhead taking longer than we'd like, while simultaneously feeling that we could benefit from communicating better and having more meetings.
 
-At the same time, our project included some factors such as needing to deliver functionality early, which supports a more emergent architecture approach.
-According to the paper, this justifies reducing upfront work in order to remain flexible and responsive to change.
+\textit{Too much or too little agility?}
 
-In hindsight, a slightly higher level of upfront architectural planning would likely have been beneficial,
-especially in identifying external requirements and defining key system boundaries earlier.
-This could have reduced the risk of future refactoring while still maintaining flexibility.
+Early meetings for planning is an inherent part of agile, and one can say it is problematic that requirements are often changing or unknowns, causing overhead. However, we could maybe adhere better to agile principles to solve the issue, such as quickly communicating the issue to the group and adapting continuously. At least a meeting makes us be aware of requirements, so that we know if they change.
 
-Overall, our architectural decisions were discussed, but not always systematically planned.
-The project reflects the trade-off described in the paper.
-Although our current approach has worked so far, a more balanced approach between upfront planning and emergent design would likely improve the system as it expands.
+The article highlights another issue in lack of ownership in cases where decisions are made as a team. We could be better in assigning leadership roles during our planning, in order to have someone with a better overview, that can organize, delegate and communicate with the other group members.
+
+
+\subsubsection*{Stakeholder feedback}
+Sprint-planning is not the only key-component negatively affected by delays in production. Stakeholder feedback is also essential, but its effectiveness is reduced without a working prototype. From the article\cite{DarkSide}, this can open up another cascade of issues relating to misalignment between stakeholders' requirements and the product.
+This is reported on further in next section (sprint 3) as more feedback is gathered then.
+
+\subsubsection*{Non-Agile problems}
+It is also obvious that our group may have difficulties due to circumstances unrelated to agile altogether. Problems such as lack of experience with the tools we need to employ, can make feasible task take much longer time than anticipated. However, problems such as these will likely be present in future development processes we will be part of anyways (especially as students looking to enter the workforce). It is therefore worth reflecting over these agile practices and try to look at if they help mitigate these external problems or if they exacerbate them.
+
+% TODO sections for "reflections from last sprint".
+% TODO : add missing paper reflections from assignment 2.
+%TODO: subsection for sprint 3.

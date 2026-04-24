@@ -1,6 +1,6 @@
 \section{Architecture}
 
-\subsection{System Architecture Overview}
+\subsection*{System Architecture Overview}
 
 The system follows a client-server architecture:
 
@@ -10,12 +10,38 @@ The system follows a client-server architecture:
     \item Communication occurs through REST APIs
 \end{itemize}
 
-At the current stage, the system is partially integrated, with some components still under development.
+
+\subsection{How Much Up-Front?} %TODO endre tittel?  
+Based on our experience in the project, we performed relatively little upfront architectural work.
+This was mainly due to time constraints, learning new technologies, and a focus on delivering working functionality early in the development
+This aligns with agile principles, where teams often aim to design “just enough” architecture to get started.
+
+However, when reflecting on the paper\cite{UpFront}, our approach may have been leaning too far towards minimal upfront design.
+The paper highlights that too little upfront planning can lead to an “accidental architecture”,
+where decisions are made reactively rather than strategically.
+While we have not yet encountered major issues caused by this,
+there are clear areas where this could become problematic in later stages of the project.
+
+For example, decisions regarding authentication and integration with external systems, such as using an existing student login solution,
+have not been planned in advance.
+Introducing such functionality later may require significant changes to both frontend and backend structure, indicating a potential architectural gap.
+
+At the same time, our project included some factors such as needing to deliver functionality early, which supports a more emergent architecture approach.
+According to the paper, this justifies reducing upfront work in order to remain flexible and responsive to change. 
+
+In hindsight, a slightly higher level of upfront architectural planning would likely have been beneficial,
+especially in identifying external requirements and defining key system boundaries earlier.
+This could have reduced the risk of future refactoring while still maintaining flexibility.
+
+Overall, our architectural decisions were discussed, but not always systematically planned.
+The project reflects the trade-off described in the paper.
+Although our current approach has worked so far, a more balanced approach between upfront planning and emergent design would likely improve the system as it expands.
+
 
 \subsection{Architectural Concerns}
 In our project we don’t have a defined software architect.
 Instead we share the responsibility across the team, where everyone is expected to reflect on whether what they implement fits the system.
-The paper “What do software architects really do?” suggests that architectural work includes both an “inwards” and “outwards” focus,
+The paper “\textit{What do software architects really do?}”\cite{SoftwareArchitectsReallyDo} suggests that architectural work includes both an “inwards” and “outwards” focus,
 and that there should be a balance between them.
 
 After the first assignment we did interviews and created personas, which helped us understand user needs.
@@ -44,4 +70,4 @@ We might be slightly leaning towards the absent architect antipattern, since arc
 shared and sometimes overshadowed by implementation work or firefighting.
 
 It should also be noted that the 50:25:25 split is based on experience and not necessarily a strict rule.
-For a team like ours, with less experience and shared responsibilities, a different balance may be more ideal
+For a team like ours, with less experience and shared responsibilities, a different balance may be more ideal.

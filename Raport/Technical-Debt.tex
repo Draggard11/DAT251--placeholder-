@@ -1,6 +1,9 @@
 \section{Technical Debt, Refactoring, and Future-Proofing}
 \subsection{Technical Debt}
 
+%TODO : Skriv om - vi må kunne refere til en paper \cite{TechnicalDebtTheoryAndPractice}
+%TODO : Manglende funksjonalitet er ikke technical debt tror jeg. Slik som at vi ikke har authentification er ikke technical debt, så dette burde skrives om
+
 In our project, technical debt mainly appeared due to a high focus on delivering working functionality within limited time.
 As a result of this, several decisions were made quickly without prioritizing long term maintainability.
 
@@ -24,7 +27,8 @@ If we want to support a large number of active users in the future, we will need
 This shows that some architectural concerns have been postponed, rather than fully addressed, which is a trade-off we made due to time constraints.
 
 \subsection{Code quality and refactoring}
-
+Throughout this project, refactoring has occurred naturally during development instead of being separate steps of a commit. In this section we highlight some examples where we have used design principles and patterns to improve code quality.
+% TODO : Should have an introduction for this example.
 When a student completes a study session, their total XP should be increased.
 This interaction suits the Observer pattern: the StudySession (subject) notifies its registered observers when it finishes,
 calling update(xp) so each Student (observer) can add the earned XP to their total.
@@ -91,9 +95,9 @@ This reduced the amount of responsibility that the frontend page studySession ha
 This refactoring improved code quality by making the structure more modular and easier to understand.
 Instead of having one large component responsible for fetching data, grouping sessions, rendering the full page,
 displaying individual sessions, and handling form interaction, these responsibilities were distributed
-more clearly across smaller components.
-Which made the code easier to understand and maintain.
-Since changes to the smaller components wouldn't affect the parent.
+more clearly across smaller components,
+which made the code easier to understand and maintain,
+since changes to the smaller components wouldn't affect the parent.
 
 
 This refactoring reflects the Single Responsibility Principle, since each component has a more focused role.
