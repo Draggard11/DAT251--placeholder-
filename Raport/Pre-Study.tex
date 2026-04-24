@@ -11,13 +11,13 @@ By maintaining a wide domain at the beginning, it becomes possible to refine and
 on empirical insights rather than assumptions.
 
 To better understand the domain, we have followed the guidelines for design thinking\cite{DesignThinking},
-\textit{empathizing} with our user-base through conducting interviews both students and teachers across a wide range of
+\textit{empathizing} with our user base through conducting interviews with both students and teachers across a wide range of
 educational levels and ages.
 Through these interviews we captured perceived challenges related to learning, motivation, and engagement in educational settings.
-These findings helped us in \textit{defining} our user-base and pain-points, and importantly, \textit{why} these are problems,
-helping us put this information into a broader context.
+These findings helped us in \textit{defining} our user base and pain points, and importantly, \textit{why} these are problems,
+helping us place these insights within a broader context.
 
-\subsection{Interview highlights}\label{pre-study-interviews} %TODO ref should maybe go to building personas
+\subsection{Interview highlights}\label{pre-study-interviews}
 
 Recurring themes were identified from interviews and personas. %TODO forbedre denne
 
@@ -45,10 +45,12 @@ Potential solutions are not defined at this stage.
 Instead, the focus remains on understanding the motivations behind the identified challenges. 
 These motivations may later be addressed during ideating, prototyping and focusing phases.
 
-\subsection{Building Personas}
-Based on the interview data, three personas were developed from a total of seven interviews. 
-The personas represent key user groups and capture common patterns in experiences, motivations, and challenges. 
-These personas are included in the appendix and are used as analytical tools throughout the project to ensure 
+\subsection{Building Personas}\label{building-personas}
+
+Based on the interview data, three personas were developed to represent
+key user groups and synthesize recurring patterns in experiences, motivations,
+and challenges.These personas are included in the appendix and are used
+as analytical tools throughout the project to ensure
 that subsequent design decisions remain grounded in user needs.
 
 \subsection{Domain Models}
@@ -58,16 +60,16 @@ that subsequent design decisions remain grounded in user needs.
     \caption{This is a descriptive Domain model of the system showing relationships between students, courses, lecturers, and study groups.}
     \label{fig:domain-model}
 \end{figure}
-The domain model shown in Figure~\ref{fig:domain-model} is a descriptive model\cite{Descriptive_vs_prescriptive},
-represents the key entities and relationships within the system.
+
+The domain model shown in Figure~\ref{fig:domain-model} is a descriptive model~\cite{Descriptive_vs_prescriptive}
+that represents the key entities and relationships within the system.
 It includes the entities \textit{Lecturer}, \textit{Course}, \textit{Enrollment},
 \textit{Student}, \textit{StudyGroup}, and \textit{University}.
-In the context of model-driven engineering, this domain model can be considered a \textit{descriptive model},
-as discussed by Heldal et al.~\cite{Descriptive_vs_prescriptive}.
-Descriptive models aim to represent how a system
-or domain currently exists, rather than defining how it should be implemented.
+In the context of model-driven engineering, the model can be classified as descriptive,
+meaning that it captures how the domain currently exists rather than
+prescribing how the system should be implemented~\cite{Descriptive_vs_prescriptive}.
 
-Our model focuses on capturing the structure of the academic environment based on insights from interviews and personas.
+The model captures the structure of the academic environment based on insights derived from interviews and personas.
 It reflects real-world relationships between students, lecturers, and courses, and is therefore useful for understanding
 the problem domain and communicating with stakeholders.
 
@@ -82,12 +84,12 @@ and progress tracking that are central to several of the user stories.
 However, introducing such an entity also raises questions about detail: the group still needs to decide whether study
 activity should be modeled in a simple way or whether finer-grained information is necessary.
 
-
-
-
 \subsection{Design-Thinking Perspective}
-In this pre-study we have followed the design thinking process \cite{DesignThinking}. The focus has primarily been on the early stages of design-thinking, namely empathizing
+In this pre-study we have followed the design thinking process \cite{DesignThinking}.
+The focus has primarily been on the early stages of design-thinking, namely empathizing
 with the target demographic and transitioning this understanding toward defining specific problem characteristics.
+This phase ensured that the problem formulation was grounded in user needs,
+reducing the risk of developing solutions based on assumptions rather than empirical insight.
 
 \subsubsection{Empathizing}
 As all group members have personal experience as students, it was important to acknowledge and actively mitigate potential bias. 
@@ -99,7 +101,8 @@ To capture these perspectives, the interviews emphasized exploratory questions f
 Asking “why” questions helped elicit deeper insights into participants’ motivations, challenges, and perceptions.
 
 \subsubsection{Define}
-To catch a broad perspective of our problem domain, we searched for diversity among our interview subjects.
+
+To obtain a broad perspective on the problem domain, we aimed for diversity among interview participants.
 Students differed in age, motivation, and learning preferences, 
 while teachers operated in highly diverse contexts, ranging from primary education to university level teaching. 
 To move toward a more concrete problem formulation, common challenges were identified across interviews and synthesized into personas.
@@ -108,8 +111,12 @@ These personas serve as abstractions of key user groups and help clarify the cor
 Throughout the project, they will be used to evaluate and validate proposed ideas and prototypes, ensuring alignment with the needs of the target demographic.
 
 \subsubsection{Ideation}
-Based on the results of empathizing and defining phases, we were now ready to decide on a specific target demographic and problem domain.
-As a result from our group's brainstorming, we settled on focusing on university students and improving motivation and social attendance through gamification.
+
+Based on the insights gathered during the empathize and define phases, we proceeded to the ideation phase,
+where we narrowed the focus to a specific target demographic and problem domain.
+As a result from our group's brainstorming, we settled on focusing on university
+students and improving motivation and social attendance through gamification.
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.5\linewidth]{images/brainstorming.png}
@@ -117,7 +124,9 @@ As a result from our group's brainstorming, we settled on focusing on university
     \label{brainstorming}
 \end{figure}
 
-This concludes the parts of design-thinking relevant to the pre-study section of this report. Later on in the report we will further elaborate on our experiences with the cycles of prototyping and testing.
+
+This concludes the design-thinking activities relevant to the pre-study phase of this report.
+Later on in the report we will further elaborate on our experiences with the cycles of prototyping and testing.
 
 \subsection{Context and Design Science}
 The pre-study addresses a relevant real world problem faced by university students, including challenges related to 
@@ -137,19 +146,21 @@ The final report is intended to be accessible both to students and administrator
 a more technology-oriented audience.
 
 \subsection{Abstraction Reflection}
-% TODO: Change order here or rewrite..
-At the start of the project, the group struggled with abstraction by prematurely committing to a concrete solution. 
+At the start of the project,
+the group initially struggled with abstraction by prematurely committing to a concrete solution.
 The initial idea was to develop a system that gamifies studying. 
-After discussing this approach with the course 
-instructor, it became clear that the focus needed to shift away from implementation and toward understanding the problem domain.
+After discussing this approach with the course instructor, it became clear that
+the focus needed to shift away from implementation and toward understanding the problem domain.
 
-As described by Kramer\cite{AbstractionKey}, poor abstraction often leads to solutions that replicate complexity or address surface level symptoms rather than capturing the essence of a problem. 
+As described by Kramer\cite{AbstractionKey}, poor abstraction often
+leads to solutions that replicate complexity or address surface level
+symptoms rather than capturing the essence of a problem.
 In response, we refocused on identifying and abstracting 
 the core challenges within the domain. 
-Structured interviews were conducted to explore why students and teachers experience 
+Semi-structured interviews were conducted to explore why students and teachers experience
 difficulties related to motivation, engagement, and learning.
 
-This process required removing solution specific assumptions and instead generalizing across interview data to identify 
+This process required removing solution-specific assumptions and instead generalizing across interview data to identify
 recurring patterns and needs. 
 In line with Kramer’s discussion\cite{AbstractionKey}, this transition represented a move from concrete thinking 
 toward a more abstract problem formulation, emphasizing an understanding of what the problem is before determining how it 
@@ -157,5 +168,6 @@ should be addressed.
 This experience reinforced the importance of abstraction as a prerequisite for developing production 
 designs that are both meaningful and fit for purpose.
 
+Overall, this phase ensured that subsequent design decisions were grounded in empirically observed user needs rather than initial assumptions.
 
 
