@@ -51,9 +51,10 @@ it introduces a risk of architectural inconsistencies as the system grows.
 there are clear areas where this could become problematic, particularly as new
 features are introduced.
 
-For example, decisions regarding authentication and integration with external systems, such as using an existing student login solution,
-have not been planned in advance.
-Introducing such functionality later may require significant changes to both frontend and backend structure, indicating a potential architectural gap.
+For example, decisions regarding authentication and integration with external systems,
+such as institutional login solutions, have not been planned in advance.
+Introducing such functionality at a later stage may require significant restructuring
+of both frontend and backend components, highlighting a potential architectural gap.
 
 At the same time, our project included some factors such as needing to deliver functionality early, which supports a more emergent architecture approach.
 According to the paper, this justifies reducing upfront work in order to remain flexible and responsive to change. 
@@ -69,8 +70,10 @@ Although our current approach has worked so far, a more balanced approach betwee
 
 \subsection{Architectural Concerns}
 In our project we do not have a formally assigned software architect.
-Instead we share the responsibility across the team, where everyone is expected to reflect on whether what they implement fits the system.
-The paper “\textit{What do software architects really do?}”\cite{SoftwareArchitectsReallyDo} suggests that architectural work includes both an “inwards” and “outwards” focus,
+Instead, architectural responsibility is shared across the team,
+with each member expected to consider how their contributions fit into the overall system.
+The paper “\textit{What do software architects really do?}”\cite{SoftwareArchitectsReallyDo}
+suggests that architectural work includes both an “inwards” and “outwards” focus,
 and that there should be a balance between them.
 
 After the first assignment we did interviews and created personas, which helped us understand user needs.
@@ -81,10 +84,11 @@ We also spent time defining data structures and setting up an API, which shows s
 The paper suggests a 50:25:25 split between internal design work, getting input, and communicating the architecture outwards.
 However, we likely did not achieve an ideal balance, especially in the short term.
 
-One of the biggest challenges we experienced is what the paper describes as “firefighting”,
-where immediate problems take priority over larger architectural concerns.
+One of the main challenges we experienced is what the paper describes as “firefighting”,
+where immediate implementation issues take priority over long-term architectural considerations.
 Some decisions (like simple data structures and API design) were made quickly to get a working prototype.
-While this helped progress, it can introduce technical debt and make future scaling or changes harder.
+While this approach enabled rapid progress, it also increases the risk of technical debt
+and may make future scaling or modifications more difficult.
 
 Looking at the project over time, our focus has shifted.
 In the beginning, most of the work was external,
@@ -94,9 +98,14 @@ since we needed to implement functionality.
 However, this also meant less continuous feedback from stakeholders,
 which could lead to misalignment with user needs.
 
-Overall, we did consider architectural concerns, but not in a fully balanced way.
-We might be slightly leaning towards the absent architect antipattern, since architectural responsibility is
-shared and sometimes overshadowed by implementation work or firefighting.
+Overall, architectural concerns were considered throughout the project,
+but not always addressed in a systematic or balanced way.
+The lack of a clearly defined architectural role, combined with time constraints,
+led to a stronger focus on implementation than long-term design.
 
-It should also be noted that the 50:25:25 split is based on experience and not necessarily a strict rule.
-For a team like ours, with less experience and shared responsibilities, a different balance may be more ideal.
+This suggests that our process may partially resemble the “absent architect” antipattern,
+where architectural responsibility is diffused and occasionally overshadowed by short-term priorities.
+
+While the 50:25:25 distribution proposed in the paper is not a strict rule,
+our experience indicates that a more deliberate allocation of architectural responsibilities
+could improve decision-making, reduce technical debt, and support future system evolution.
