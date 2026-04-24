@@ -1,11 +1,9 @@
 \section{Software Processes}
 
 \subsection{Sprint 1}
-The timeframe for this sprint was the time between assignment 1 and 2.
-08. February - 08. March
-
-Goals:
-The main goal for this sprint was to get started with creating the project.
+\textbf{Timeframe:} 08. February - 08. March
+\\
+\textbf{Goals:} The main goal for this sprint was to get started with creating the project.
 This included setting up a CI-pipeline, deciding tools, such as languages and frameworks for coding and testing,
 as well as cooperation methods such as project boards and git-workflow.
 We also set the goal of creating some basic functionality for the code such as a few working classes
@@ -20,7 +18,7 @@ in the burndown-chart below (Figure~\ref{fig:burndown-chart-sprint1})
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{images/Sprint_1_-_Set-up_and_Basic_funcitonality-burndown.png}
-    \caption{burndown chart of our first sprint}
+    \caption{Burndown Chart - Sprint 1}
     \label{fig:burndown-chart-sprint1}
 \end{figure}
 
@@ -168,13 +166,11 @@ the practices are integrated and consistently applied, instead of simply being p
 %TODO: ABC paper og Design Science (sammenligne de to), 
 %TODO: evidence for lean, (discuss value stream mapping). 
 %TODO: Vi må også gjøre refleksjoner rundt Software product line og bruke SPLTrends for å diskutere shortcomings.
+\newpage
 \subsection{Sprint 2}
-
-The timeframe for this sprint was the time between assignment 2 and 3.
-08. March - 01. April
-
-Goals:
-The main goal of the second sprint is to make something that could ideally be presented to our target audience for evaluation and feedback.
+\textbf{Timeframe:} 08. March - 01. April
+\\
+\textbf{Goals:} The main goal of the second sprint is to make something that could ideally be presented to our target audience for evaluation and feedback.
 There is therefore a large focus on the basic functionality required for a minimal viable product such as
 functionality in our backend classes and database, an interactive frontend, as well as connection between frontend and backend.
 Of course, related tasks such as presentations and reports are also included in the sprint.
@@ -182,7 +178,7 @@ Of course, related tasks such as presentations and reports are also included in 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{images/Sprint_2_-_Functionality_and_Refactoring-burndown}
-    \caption{burndown chart of our second sprint}
+    \caption{Burndown chart - Sprint 2}
     \label{fig:burndown-chart-sprint2}
 \end{figure}
 
@@ -201,7 +197,7 @@ Using article \cite{DarkSide} ("\textit{Shedding light on the dark side - ..}.")
 
 % TODO Add picture from this paper (the big model with all problems) and highlight our problems. This should probably be added to appendix and referenced here. Focus on readability.
 
-\subsubsection*{Iterative functional code}
+\subsubsection{Iterative functional code}
 A main focus of agile (and the focus of our group since the start) has been to deliver a minimal viable product that we can later expand. However, while our project is not complicated, there are still many parts to familiarize ourselves with and so process has been quite slow. We have felt that the tight structure that scrum sets, where there are clear goals, can cause issues if those goals are set under false pretenses (example: "We can do \textit{this} part by Tuesday so that we are ready for \textit{that} part on Wednesday", but then we miss Tuesday's deadline by 3 days). This is also supported as an issue in section 4.5 in the article\cite{DarkSide}: \textit{Planning and Estimation problems}, where teams often overestimate delivery capacity. This can have cascading effects: It reduces the effectiveness of sprint-planning, causing unnecessary overhead, and it also increases pressure - which can cascade even further, causing de-prioritizing of testing, documentation, non-functional requirements and refactoring. These are also identified in the article as issues, along with multiple other related to technical debt.
 
 Especially since time is a limitation, Time-related issues become pain-points. We have felt meeting-overhead taking longer than we'd like, while simultaneously feeling that we could benefit from communicating better and having more meetings.
@@ -213,13 +209,51 @@ Early meetings for planning is an inherent part of agile, and one can say it is 
 The article highlights another issue in lack of ownership in cases where decisions are made as a team. We could be better in assigning leadership roles during our planning, in order to have someone with a better overview, that can organize, delegate and communicate with the other group members.
 
 
-\subsubsection*{Stakeholder feedback}
+\subsubsection{Stakeholder feedback}
 Sprint-planning is not the only key-component negatively affected by delays in production. Stakeholder feedback is also essential, but its effectiveness is reduced without a working prototype. From the article\cite{DarkSide}, this can open up another cascade of issues relating to misalignment between stakeholders' requirements and the product.
 This is reported on further in next section (sprint 3) as more feedback is gathered then.
 
-\subsubsection*{Non-Agile problems}
+\subsubsection{Non-Agile problems}
 It is also obvious that our group may have difficulties due to circumstances unrelated to agile altogether. Problems such as lack of experience with the tools we need to employ, can make feasible task take much longer time than anticipated. However, problems such as these will likely be present in future development processes we will be part of anyways (especially as students looking to enter the workforce). It is therefore worth reflecting over these agile practices and try to look at if they help mitigate these external problems or if they exacerbate them.
 
 % TODO sections for "reflections from last sprint".
 % TODO : add missing paper reflections from assignment 2.
 %TODO: subsection for sprint 3.
+\newpage
+\subsection{Sprint 3}
+\textbf{Timeframe:} 01. April - 01. May.
+\\
+\textbf{Goals:} The goal for the third sprint was to get feedback on our prototype, and rapidly iterate and improve our product based on the feedback. Much of the work this sprint was also delegated to finishing the report and reflecting on how we have developed as a group, and how the workflow has been working for us.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/Burndown3.png}
+    \caption{Burndown chart - Sprint 3}
+    \label{burndown - 3}
+\end{figure}
+
+\subsubsection{Revisiting Stakeholder feedback}
+Throughout sprints 1 and 2, we had little continuous communication with stakeholders as we were developing a prototype, causing a large risk of putting effort where it wouldn't have to be. As part of this sprint, we were able to gather some feedback on the prototype we developed from our initial interview subjects.
+
+\subsubsection*{Feedback highlights}
+\begin{itemize}
+    \item Feedback on already developed features were mostly positive, but some stakeholders would have appreciated if we prioritized certain missing functionality that was important to them. 
+    \item Feedback suggested that layout and design was overall intuitive, but that many of our sub-pages were lacking content and displayed poor/boring use of color. This is understandable since design was not our main focus for a prototype and all features we have planned are not yet implemented. Still, we may have underestimated the importance of design in a final product.
+    \item Many good ideas for future features was suggested, giving us a lot of valuable guidance towards future development, and increasing our domain understanding.
+    \item Feedback also provided us better understanding of the "value" of our product - and if our stakeholders would be willing to use the product and if they would pay.
+\end{itemize}
+
+\subsubsection{Feature feedback}
+We can split feedback on developed features into three parts: Gamification features, Social features and Study-tools features.
+\subsubsection*{Gamification}
+The gamification features implemented for the initial prototype was levels and progress tracking as well as streaks. Our stakeholder feedback suggested that these were viewed positively, but that there was a difference in how important these elements were to our users. Among the users who appreciated these features for the competition aspect it could provide among friends, gave feedback that they were missing a way of viewing their friends progress, levels and streaks.
+
+\subsubsection*{Study-tools}
+The prototype had two feature we describe as study-tools: Subject related quizzes and tools for creating dedicated study sessions. The idea behind quizzes is that student and/or teachers can make quizzes which can award experience points upon completion while also giving feedback on a student's understanding of the subject. The study session tool is an organizational tool used within study-groups to create dedicated sessions which also awards experience points upon completion. These were viewed very positively, but we were also given feedback on other tools that users would like to be prioritized, such as flash cards.
+
+\subsubsection*{Social-tools}
+Our prototype also has the functionality of creating groups to incentivize collaboration. There are different ways of creating these groups, such as by direct invitation, or sampled either by randomness or by a preferation-system. We were also given feedback that it would be nice to have more ways of creating groups such as by similar interests or goals.
+\vspace{7mm}\\
+
+As a response to the feedback, the development we have focused on this sprint was the implementation of more optionality when creating groups, improve design, and implement the option of creating flash cards.
+
+In hindsight, it could have been beneficial to get more quantifiable feedback. %TODO skriv om denne linjen eller slett.
