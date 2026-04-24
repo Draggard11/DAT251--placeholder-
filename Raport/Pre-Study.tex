@@ -1,7 +1,7 @@
 \section{Pre-study}
 This section presents the project’s domain and describes how the domain is gradually refined into a 
-problem statement through interviews and persona development. 
-The work conducted in this phase corresponds to the empathize and define stages of the design thinking process\cite{DesignThinking}, 
+problem statement through interviews and persona development.
+The work conducted in this phase corresponds to the empathize and define stages of the design thinking process\cite{DesignThinking},
 with the goal of understanding users’ experiences, challenges, and needs before proposing any concrete solutions.
 
 \subsection{Building understanding of the domain and users}
@@ -10,10 +10,12 @@ This broad framing was chosen deliberately in order to avoid premature narrowing
 By maintaining a wide domain at the beginning, it becomes possible to refine and specify the focus based 
 on empirical insights rather than assumptions.
 
-To better understand the domain, we have followed the guidelines for design thinking\cite{DesignThinking}, \textit{empathizing} with our user-base through conducting interviews both students and teachers across a wide range of
+To better understand the domain, we have followed the guidelines for design thinking\cite{DesignThinking},
+\textit{empathizing} with our user-base through conducting interviews both students and teachers across a wide range of
 educational levels and ages.
-
-Through these interviews we captured perceived challenges related to learning, motivation, and engagement in educational settings. These findings helped us in \textit{defining} our user-base and pain-points, and importantly, \textit{why} these are problems, helping us put this information into a broader context.
+Through these interviews we captured perceived challenges related to learning, motivation, and engagement in educational settings.
+These findings helped us in \textit{defining} our user-base and pain-points, and importantly, \textit{why} these are problems,
+helping us put this information into a broader context.
 
 \subsection{Interview highlights}
 
@@ -53,23 +55,26 @@ that subsequent design decisions remain grounded in user needs.
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{images/domainModel}
-    \caption{Domain model of the system showing relationships between students, courses, lecturers, and study groups.}
+    \caption{This is a descriptive Domain model of the system showing relationships between students, courses, lecturers, and study groups.}
     \label{fig:domain-model}
 \end{figure}
-The current domain model Figure \ref{fig:domain-model} includes the entities \textit{Lecturer}, \textit{Course},
-\textit{Enrollment}, \textit{Student}, \textit{StudyGroup}, and \textit{University}.
-Relationships have been modeled with multiplicities in order to clarify how these entities connect to one another.
-Examples include lecturers teaching courses, students enrolling in courses, students participating in study groups, and students attending a university.
+The domain model shown in Figure~\ref{fig:domain-model} is a descriptive model\cite{Descriptive_vs_prescriptive},
+represents the key entities and relationships within the system.
+It includes the entities \textit{Lecturer}, \textit{Course}, \textit{Enrollment},
+\textit{Student}, \textit{StudyGroup}, and \textit{University}.
+In the context of model-driven engineering, this domain model can be considered a \textit{descriptive model},
+as discussed by Heldal et al.~\cite{Descriptive_vs_prescriptive}.
+Descriptive models aim to represent how a system
+or domain currently exists, rather than defining how it should be implemented.
 
-This domain model captures many of the structural and administrative elements of the academic environment.
-It shows how students, lecturers, courses, and institutions are connected, and it provides a foundation for modeling participation and organization within the system.
+Our model focuses on capturing the structure of the academic environment based on insights from interviews and personas.
+It reflects real-world relationships between students, lecturers, and courses, and is therefore useful for understanding
+the problem domain and communicating with stakeholders.
 
-At the same time, the model also reveals a limitation in relation to the project's broader goal.
-Since the system aims to support gamification of studying, it is not enough to model only the academic structure around the student.
-The actual act of studying is not currently represented explicitly in the model.
-For this reason, we considered whether it would be beneficial to add an entity such as \textit{StudySession}.
-%TODO Fixe disse avsnittene
-%TODO HUSK REF TIL DESCRIPTIVE AND PRESCRIPTIVE
+At this stage of the project, a descriptive model is appropriate, as the goal is to explore and understand the domain
+before committing to specific design or implementation decisions.
+In later stages, the model could evolve into a more
+\textit{prescriptive model}, guiding the system architecture and implementation.
 
 A \textit{StudySession} entity could help represent studying as an activity rather than only as enrollment or membership.
 This would make it easier to support features such as focus mode, streaks, participation feedback,
