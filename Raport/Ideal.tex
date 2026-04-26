@@ -1,5 +1,20 @@
 \section{Ideal workflow design}
 
+
+Designing an ideal software development process is inherently challenging,
+as no single approach guarantees success across all projects.
+Software teams vary in size, experience, technical complexity, and goals,
+meaning that processes must be adapted to their specific context rather than adopted blindly.
+As discussed in the lectures, many methodologies address different challenges,
+but no single framework fits all situations.
+
+Our project experience reflected this in practice.
+We encountered challenges related to communication, inconsistent schedules,
+different work routines, and uncertainty regarding which practices created value.
+Some practices improved collaboration and productivity,
+while others introduced overhead without clear benefits.
+This suggests that a more structured and tailored process could have improved outcomes.
+
 \subsection{Coordinator Role}
 
 In our project, we did not assign a clearly defined leadership role responsible for
@@ -94,8 +109,17 @@ Iteration and validation requires time, and we can not necessarily assume we hav
 
 \subsection{Our Ideal Workflow}
 
-In an ideal workflow, we would introduce a clearly defined coordinating role,
+
+If the project were to be conducted again,
+we would adopt a hybrid development process combining elements of Scrum, Kanban, and XP,
+with the goal of balancing flexibility and structure.
+
+
+First, we would introduce a clearly defined coordinating role,
 similar to a Scrum Master.
+This role would act as a facilitator responsible for maintaining task overview,
+ensuring balanced workload distribution, and resolving blockers early.
+
 This role would act as a facilitator responsible for:
 \begin{itemize}
     \item maintaining an overview of tasks and progress
@@ -104,22 +128,58 @@ This role would act as a facilitator responsible for:
     \item identifying and resolving blockers early
 \end{itemize}
 
-To improve meetings, we would introduce more structure and clearer outcomes.
-This includes preparing agendas in advance,
-ensuring that decisions are explicitly made,
-and documenting results in short meeting reports.
+Second, we would use shorter iterations, such as weekly planning cycles,
+instead of longer sprint periods.
+This would allow the team to adapt more easily to changing schedules
+and maintain steady progress.
 
-We would also strengthen communication between meetings,
-ensuring that all team members are informed of important decisions.
+Third, we would introduce structured meetings.
+Short stand-up meetings would be held at least twice per week,
+with a clear focus on progress, blockers, and next steps.
+All meetings would have predefined agendas and result in documented decisions.
 
-XP practices would be applied more consistently but pragmatically.
-Pair programming could be used for complex tasks,
-while TDD could be applied where correctness is critical.
-Rather than enforcing XP strictly, practices would be used where they provide the most value.
+From XP, we would retain practices that improve code quality.
+All code changes should be submitted through pull requests
+and reviewed by at least one team member.
+Continuous integration should remain in place to detect issues early.
+Practices such as pair programming and TDD would be applied selectively,
+focusing on complex or critical parts of the system.
 
-Similarly, design thinking would be used as a flexible tool rather than a rigid framework,
-allowing adaptation to project constraints.
+Design thinking would be used as a flexible tool rather than a strict process,
+supporting idea generation and stakeholder understanding when appropriate.
 
-Overall, the ideal workflow would balance structure and flexibility,
-ensuring coordination and clarity while maintaining team autonomy.
+
+
+\subsection{Evaluation of the Proposed Workflow}
+
+To evaluate whether the improved workflow is effective,
+both quantitative and qualitative measures should be used.
+
+Quantitative measures include:
+\begin{itemize}
+    \item number of completed tasks per iteration
+    \item frequency of merge conflicts
+    \item adherence to planned deadlines
+    \item meeting participation rates
+\end{itemize}
+
+Qualitative measures include:
+\begin{itemize}
+    \item perceived communication quality
+    \item workload balance
+    \item stress level
+    \item confidence in project progress
+\end{itemize}
+
+Regular retrospective meetings would allow the team to reflect on these factors
+and continuously adjust the process.
+
+\subsection{Conclusion}
+
+The ideal workflow for this project is not a strict implementation of a single methodology,
+but a hybrid approach adapted to the realities of a student development team.
+By combining structured coordination, lightweight communication,
+and selected engineering practices,
+the team can achieve better alignment, improved code quality,
+and a more effective development process.
 
