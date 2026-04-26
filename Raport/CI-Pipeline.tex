@@ -1,5 +1,6 @@
 \section{Continous Integration and development process}
-Based on pre-study and requirements choices an starting architecture and pipeline was designed. For the architecture choice a web app was chosen due to its accessibility and scalability.
+Based on pre-study and requirements choices a starting architecture and pipeline was designed.
+For the architecture choice a web app was chosen due to its accessibility and scalability.
 To support development of the platform developing a pipeline to give feedback and quality. 
 At the start it was prioritized to have a pipeline that gives us automated feedback on our implementations.
 Technical details about the platform and pipeline and discussion about how they impacted the project. 
@@ -8,7 +9,7 @@ Technical details about the platform and pipeline and discussion about how they 
 With the project work on GitHub it was considered using GitHub Actions to design the pipeline.
 As the team was working on modern IDE which did small checks before pushing like static code analysis.
 Building the application was also done frequently locally. 
-As a lot of checks was done before pushing, but in the cases where it was not a pipeline was create to catch these errors.
+As a lot of checks was done before pushing, but in the cases where it was not a pipeline was created to catch these errors.
 In the hopes of catching unseen errors and issues we designed the pipeline as follows: 
 The skeleton for the pipeline was from gradle and these steps were added:
 \begin{itemize}
@@ -16,8 +17,10 @@ The skeleton for the pipeline was from gradle and these steps were added:
   \item Build using Gradle
   \item Run tests using JUnit
 \end{itemize}
-additionally, it will provide feedback linked to each commit. By being connceted to each commit and getting feedback, we can proactiviely address any issues that arise during the build and test process.
-We plan to add more steps as testing and integration evolves. additionally as development progresses towards a release, we need reliable generation of artifacts that have passed the pipeline and ready for release. 
+additionally, it will provide feedback linked to each commit.
+By being connected to each commit and getting feedback, we can proactively address any issues that arise during the build and test process.
+We plan to add more steps as testing and integration evolves.
+additionally as development progresses towards a release, we need reliable generation of artifacts that have passed the pipeline and ready for release.
 Currently, we create artifacts manually for release of now we are doing creation of artifacts manually on each release.
 
 \subsection{Git Workflow and Version Control}
@@ -46,23 +49,21 @@ During development a lot of short-lived feature branches was created and the pip
 Because our budget had to be controlled and the short-lived feature branches was being tested locally.
 A pipeline change was discussed as it could run builds, artifacts and tests only in main development branches (frontend, main, backend) to get feedback on each feature when merging is done. 
 
-React testing as automating it and doing integration testing seems difficult to do using the pipeline.
-The development is right now at a small scale, so making integration testing has not been prioritized as getting
-a minimal viable product is number one priority, but at a larger scale this doing as much automated testing as possible is beneficial
-for quicker releases and feedback.
-
-Google's initial large-scale CI setup evolved as it faced scalability issues. It tried to optimize it where it was possible and make it more and more efficient. \cite{GoogleTesting}
-Our pipeline went through an optimization as well, because the building stage was done at even small commits and it was time and token consuming. 
+Google's initial large-scale CI setup evolved as it faced scalability issues.
+It tried to optimize it where it was possible and make it more and more efficient. \cite{GoogleTesting}
+Our pipeline went through an optimization as well, because the building stage was done at even small commits, and it was time and token consuming.
 The main development branches where code was commited after features were added was a good point to add the pipeline, so it could do a check for each feature when it is done.
 This made the pipeline more effective and optimized, but it does not give feedback to the developer when working in their branch.
-The feedback is valuable and it is then important that each developer does adequate checks before merging, so the pipeline has a less chance of failing.
+The feedback is valuable, and it is then important that each developer does adequate checks before merging, so the pipeline has a less chance of failing.
 This was addressed as modern developer tools typically check for code quality before commiting or pushing changes to remote branches. 
-This approach forces developers to take care on the quality of the code they are producing. Also, building and testing as necessary as if that where to fail then the pipeline would as well.
+This approach forces developers to take care on the quality of the code they are producing.
+Also, building and testing as necessary as if that where to fail then the pipeline would as well.
 
 When scaling our pipeline to enterprise levels a lot of problems would occur.
 Google's case for having one repository for everything is an example of that it is possible to scale even if the design says it should be impossible and should be done another way. \cite{GoogleRepo}
 Our testing only has automated unit testing and everything else is done manually. 
 The pipeline will only do unit testing and there would be a lot of manual testing. 
 By making integration testing and some automated release testing based on features, so user story based testing would work well with the pipeline.
-As it would add more dependencies to building the application, manual building would be too time consuming for production. And the pipeline would need probably run building in parallel on different branches to handle different features and remove unused dependencies.
+As it would add more dependencies to building the application, manual building would be too time-consuming for production.
+And the pipeline would need probably run building in parallel on different branches to handle different features and remove unused dependencies.
 
