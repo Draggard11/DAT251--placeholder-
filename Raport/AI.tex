@@ -1,57 +1,78 @@
 \section{Use of AI in the project}
+
 During the project, our group used AI as a support tool rather than as a replacement for developer responsibility.
 AI was mainly used for understanding errors, debugging, receiving code suggestions, improving documentation, and helping with report writing and LaTeX formatting. 
 For example, when we encountered technical issues in the backend and frontend, AI was useful for breaking down error messages and suggesting possible causes. 
 This helped us understand problems related to areas such as CORS, serialization, API routing, and database updates.
 
-At the same time, we deliberately avoided using AI too much for foundational learning. Many of the technologies used in the project, 
-such as React, REST APIs, database setup, Kotlin, Spring Boot, and frontend--backend communication, were not the main focus of the course. 
-However, learning these technologies was still important for us as developers. If we had relied too heavily on AI to generate solutions,
+At the same time, we deliberately avoided using AI too much for foundational learning.
+Many of the technologies used in the project, such as React, REST APIs, database setup, Kotlin,
+Spring Boot, and frontend--backend communication, were not the main focus of the course.
+However, learning these technologies was still important for us as developers.
+If we had relied too heavily on AI to generate solutions,
 we might have completed some tasks faster, but we would also have learned less about the frameworks and the structure of our own system. 
 This choice took more time and contributed to some time constraints, but it also gave us a better understanding of the project.
 
-We did not treat AI-generated answers as automatically correct. AI suggestions still had to be checked, adapted, and tested against our own codebase. 
-This was important because AI often gives general solutions that may not fully match the architecture, dependencies, or implementation details of a specific project. In this sense, AI worked best as a learning assistant and debugging partner, not as an autonomous developer.
+We did not treat AI-generated answers as automatically correct.
+AI suggestions still had to be checked, adapted, and tested against our own codebase.
+This was important because AI often gives general solutions that may not fully match the architecture, dependencies, or implementation details of a specific project.
+In this sense, AI worked best as a learning assistant and debugging partner, not as an autonomous developer.
 
-A concrete example of this happened after implementing the experience system. After the coding was mostly finished, we asked an AI tool, 
-Qwen Coder 2.7, to review parts of the implementation. The goal was to check naming, function structure, and possible logic errors. 
-The AI response suggested that the code looked correct and did not identify any major problems. However, later testing and manual inspection showed that this was not fully true. 
+A concrete example of this happened after implementing the experience system.
+After the coding was mostly finished, we asked an AI tool,
+Qwen Coder 2.7, to review parts of the implementation.
+The goal was to check naming, function structure, and possible logic errors.
+The AI response suggested that the code looked correct and did not identify any major problems.
+However, later testing and manual inspection showed that this was not fully true.
 One test revealed that experience points were not added correctly. 
 Manual testing of the database and API then showed that the function responsible for adding experience to each student did not properly update the database. 
 This showed us that AI could miss relatively simple errors, especially when it did not have full understanding of the runtime behavior of the system. 
-In this case, AI did not generate the original code and it also did not fix the error before testing. Therefore, it did not directly introduce technical debt, 
+In this case, AI did not generate the original code and it also did not fix the error before testing.
+Therefore, it did not directly introduce technical debt,
 but the example showed why AI output must always be verified through testing.
 
-The paper \textit{Agentic Refactoring: An Empirical Study of AI Coding Agents} is relevant to our experience because it shows that AI agents are increasingly used as collaborative coding tools, 
-especially for maintenance and refactoring. The paper found that agentic refactoring appeared in 26.1\% of agentic Java commits, which indicates that AI is not only used for generating new code, but also for restructuring and improving existing code \cite{Study_of_AI}. The paper also found that agentic refactoring is mostly focused on internal quality, especially maintainability and readability \cite{Study_of_AI}.
+The paper \textit{Agentic Refactoring: An Empirical Study of AI Coding Agents} is relevant to our
+experience because it shows that AI agents are increasingly used as collaborative coding tools, 
+especially for maintenance and refactoring.
+The paper found that agentic refactoring appeared in 26.1\% of agentic Java commits, which indicates that AI is not only used for generating new code,
+but also for restructuring and improving existing code \cite{Study_of_AI}.
+The paper also found that agentic refactoring is mostly focused on internal quality, especially maintainability and readability \cite{Study_of_AI}.
 
-This is similar to how we used AI in our project. We mostly used it for localized improvements, such as understanding code, improving readability, 
-debugging smaller problems, and suggesting cleaner structure. We did not rely on AI for major architectural decisions. 
+This is similar to how we used AI in our project.
+We mostly used it for localized improvements, such as understanding code, improving readability,
+debugging smaller problems, and suggesting cleaner structure.
+We did not rely on AI for major architectural decisions.
 The paper suggests that AI agents often perform lower-level refactorings, such as renaming variables, changing types, and improving consistency, 
-while humans are still more suited for high-level design changes that require architectural and contextual understanding \cite{Study_of_AI}. 
+while humans are still more suited for high-level design changes that require architectural and contextual understanding \cite{Study_of_AI}.
 This supports our experience that AI is useful for routine cleanup and explanation, but that larger decisions about system structure should remain human-led.
 
-The findings from the paper are also relevant beyond refactoring. In early phase design decisions, AI can help generate ideas, compare alternatives, 
-and explain trade-offs. However, it may not fully understand stakeholder needs, long-term project goals, or the social context of the team. In our project, 
-design choices had to be based on interviews, personas, stakeholder needs, group discussions, and the scope of the MVP. 
+The findings from the paper are also relevant beyond refactoring.
+In early phase design decisions, AI can help generate ideas, compare alternatives,
+and explain trade-offs.
+However, it may not fully understand stakeholder needs, long-term project goals, or the social context of the team.
+In our project, design choices had to be based on interviews, personas, stakeholder needs, group discussions, and the scope of the MVP.
 AI could help us formulate ideas and improve explanations, but it could not replace validation with real users or stakeholders.
 
 For architectural considerations, the paper makes us more cautious about AI use. 
 Since current AI agents appear to be stronger at localized improvements than larger architectural restructuring, 
-AI suggestions should not be accepted blindly. Architecture affects maintainability, scalability, and future development. 
+AI suggestions should not be accepted blindly.
+Architecture affects maintainability, scalability, and future development.
 A suggestion that looks clean in isolation may still introduce unnecessary complexity or inconsistency if it does not fit the rest of the system. 
 Therefore, architectural decisions should be reviewed carefully by the team and connected to the actual goals of the project.
 
-For future maintainability, AI can still be valuable if used carefully. It can help explain unfamiliar code, suggest refactorings, improve naming, and produce documentation. 
+For future maintainability, AI can still be valuable if used carefully.
+It can help explain unfamiliar code, suggest refactorings, improve naming, and produce documentation.
 However, the paper also warns that AI refactoring does not necessarily remove deeper design or implementation problems \cite{Study_of_AI}. 
-This means maintainability should not only be evaluated by whether the code looks cleaner. It should also be evaluated through tests, code reviews, 
+This means maintainability should not only be evaluated by whether the code looks cleaner.
+It should also be evaluated through tests, code reviews,
 clear architecture, and whether future developers can understand and extend the system.
 
 Our experience suggests that AI is most useful when it is used inside a human-controlled development process. 
 It can improve productivity and support learning, especially for debugging, documentation, and small refactorings. 
 However, the team must still take responsibility for verifying correctness, preserving behavior, making architectural decisions, 
 and ensuring that the final software meets stakeholder needs. 
-If we were to continue the project, we would still use AI, but with clearer rules: AI suggestions should be reviewed, tested, and separated from major feature changes so that the team can understand exactly what changed and why.
+If we were to continue the project, we would still use AI, but with clearer rules: AI suggestions should be reviewed, tested,
+and separated from major feature changes so that the team can understand exactly what changed and why.
 
 
 %Paper: "Agentic Refactoring: An Empirical Study of AI Coding Agents"
