@@ -1,14 +1,27 @@
 \section{Architecture}
 
-\subsection*{Choice of Languages and Frameworks}
+\subsection*{Overview of Technologies}
 
-For backend development, we chose Kotlin.
-One reason for this decision is that the group is already familiar with Java,
-and Kotlin works within the same ecosystem.
-Since Spring is a very common framework and Kotlin integrates well with it, this combination was a natural choice.
-Kotlin also provides a more modern syntax while retaining access to mature Java-based libraries and tools.
-% use latex tools to show stack in a list or diagram
-The technology stack used in the project is as follows:
+At the start we did not have any preference of technologies to chose and how to go about the architecture. In the first sprint this is what we had planned.
+Member in the team were familiar with Java, Gradle, maven and wanted to try out Kotlin because it is a language that is more modern and popular to learn than Java.
+Some member also had previous experience in developing a simple REST application and this can be designed to our requirements we choice this architecture at the start. This is the choices of technologies we did and a little few toughts on architecture design.
+
+The backend is developed with Spring as it has web services, web security,
+and data persistence, making it a suitable choice for developing a REST API.
+For unit testing Junit is used as we are familiar with it and it is widely used in gradle applications.
+
+Docker is used to ensure that the backend application runs in a consistent and isolated environment,
+independent of the underlying infrastructure.
+This reduces issues related to environment differences between development and deployment,
+and simplifies setup for team members. 
+
+For the frontend, we use React with TypeScript.
+React was selected because it is widely used in web application development.
+TypeScript was chosen over Javascript as it helps improve code quality and maintainability through stronger type checking.
+React Router was used in addition to structure the application into pages and make navigation and architecture easier to manage.
+
+% this could be a diagram or picture
+The technologies used in the project is as follows:
 \begin{itemize}
     \item Kotlin for the programming language
     \item Spring Framework for backend development
@@ -16,26 +29,10 @@ The technology stack used in the project is as follows:
     \item Docker for container management and orchestration
     \item React and TypeScript for frontend development
 \end{itemize}
-The Spring Framework provides integrated support for web services, security,
-and data persistence (through JPA),
-making it a suitable choice for developing a REST API for the frontend.
-%TODO look at
 
-Docker is used to ensure that the application runs in a consistent and isolated environment,
-independent of the underlying infrastructure.
-This reduces issues related to environment differences between development and deployment,
-and simplifies setup for team members.
-For backend testing and web services, we use Spring Web together with JUnit.
-This provides a familiar testing environment and supports the development of backend functionality in a structured way.
-
-For the frontend, we use React with TypeScript.
-React was selected because it supports component-based design and is widely used in web application development.
-TypeScript helps improve code quality and maintainability through stronger type checking.
-We also use React Router in order to structure the application into pages and make navigation easier to manage.
-
-At the current stage, the frontend and backend are still being developed partly independently.
-As a result, some integration remains incomplete, and in certain cases mocking or partial functionality
-has been necessary during development.
+%At the current stage, the frontend and backend are still being developed partly independently.
+%As a result, some integration remains incomplete, and in certain cases mocking or partial functionality
+%has been necessary during development.
 
 
 \subsection{How Much Up-Front?} %TODO endre tittel?  
