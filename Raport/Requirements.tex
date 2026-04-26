@@ -68,43 +68,78 @@ Environmental considerations include limiting or avoiding excessive use of resou
 
 \begin{sidewaysfigure}[p]
     \centering
-    \includegraphics[width=0.9\textheight, height=0.9\textheight, keepaspectratio]{images/SAF_Decision_map}
+    \makebox[\textwidth][c]
+    {\includegraphics[width=1.1\textheight, height=1.1\textheight, keepaspectratio]{images/SAF_Decision_map}}
     \label{fig:SAF_desision_map}
     \caption{Systemic impact map of the system}
 \end{sidewaysfigure}
 
-\newgeometry{margin=1cm}
+%\newgeometry{margin=2cm}
 
 \begin{figure}[p]
     \centering
-
-    \includegraphics[width=\textwidth,height=0.21\textheight]{images/SAF_kpi_1}
-
-    \vspace{0.2cm}
-
-    \includegraphics[width=\textwidth,height=0.21\textheight]{images/SAF_kpi_2}
+     \makebox[\textwidth][c]{\includegraphics[width=1.1\textwidth,height=0.22\textheight]{images/SAF_kpi_1}}%
 
     \vspace{0.2cm}
-
-    \includegraphics[width=\textwidth,height=0.21\textheight]{images/SAF_kpi_3}
+    \centering
+     \makebox[\textwidth][c]
+    {\includegraphics[width=1.1\textwidth,height=0.22\textheight]{images/SAF_kpi_2}}
 
     \vspace{0.2cm}
+    \centering
+     \makebox[\textwidth][c]
+    {\includegraphics[width=1.1\textwidth,height=0.22\textheight]{images/SAF_kpi_3}}
 
-    \includegraphics[width=\textwidth,height=0.21\textheight]{images/SAF_kpi_4}
+    \vspace{0.2cm}
+    \centering
+     \makebox[\textwidth][c]
+    {\includegraphics[width=1.1\textwidth,height=0.22\textheight]{images/SAF_kpi_4}}
 
     \caption{Key Performance Indicators related to motivation, social interaction, and sustainability.}
     \label{fig:kpi_all}
 \end{figure}
 
 \clearpage
-\restoregeometry
-\begin{sidewaysfigure}
-    \centering
-    \includegraphics[width=\textheight]{images/SAF_SQ_model}
-    \caption{Software quality model}
-    \label{fig:SQ_model}
-\end{sidewaysfigure}
-\clearpage
+    \begin{table}[]
+
+
+    \makebox[\textwidth][c]{
+    \begin{tabular}{p{40mm}|p{60mm}|p{30mm}|p{40mm}}
+       Quality Attribute  & Definition &  Category & Metric \\
+       \hline
+       \hline
+        Host Server & Infrastructure for hosting application
+        & Technical & Mean Time Between Failures \\
+        \hline
+        Host Server & The capability of the software to use appropriate amounts of energy
+        & Economic & kWh per transaction \\
+        \hline
+        Improve Motivation & The ease with which a software system or component can be modified to correct faults, improve performance or adapt to a changed environment
+        & Social & Change Impact Analysis Score \\
+        \hline
+        Social Interaction & A platform for students to interact with others based on similar interests
+        & Social & Group sessions \\
+        \hline
+        Running ads & A solution for maintaining costs & Economic & Gain (NOK) \\
+        \hline
+        Interaction with teachers &
+        &  &  \\
+        \hline
+        Generation of tasks & Teacher and lecturer can give students tasks on our application rather than on paper
+        & Environmental & Reduction in paper waste \\
+        \hline
+        Reduction of AI use & Our platform does not support AI use for quizzes and want to reduce the need for it
+        & Environmental & Amount of academic questions asked on forum \\
+        \hline
+
+        \end{tabular}
+
+    }
+    \caption{Software quality}
+        \label{tab:placeholder}
+    \end{table}
+
+
 
 To evaluate the broader impact of our system, we applied principles from the sustainability
 assessment framework presented in\cite{SAF-Toolkit}.
