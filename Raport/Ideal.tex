@@ -1,28 +1,126 @@
 \section{Ideal workflow design}
 
-% TODO : Tenker naturlig struktur på dette kan være å gruppere inn i seksjoner, så skrive reflections på hva vi har gjort og opplevd, og hva vi tenker ville vært ideelt - per seksjon. Til slutt kan vi ha en oppsummering av en ideal workflow basert på disse seksjonene
-
-\subsection{Arbeidsfordeling/Leder-roller}
+\subsection{Coordinator Role}
 
 
-\subsection{Scrum}
-% Gruppekontakt, Standups, Kommunikasjon og kommunikasjonskanaler
+In our project, we did not assign a clearly defined leadership role responsible for
+coordinating tasks, tracking progress, and ensuring alignment across the team.
+Instead, responsibility was shared among all members, which initially seemed flexible
+and aligned with the collaborative nature of agile development.
+
+However, this approach also introduced challenges.
+Without a dedicated role overseeing task distribution and progress,
+it became difficult to maintain a consistent overview of what had been completed,
+what was in progress, and what remained.
+This sometimes led to uneven workload distribution, duplicated efforts,
+and delays when tasks depended on work from others.
+
+From a Scrum perspective, this can be related to the absence of a clearly defined
+\textit{Scrum Master} role.
+In Scrum, the Scrum Master is responsible for facilitating the process,
+removing obstacles, and ensuring that the team follows agreed practices.
+While this role does not function as a traditional manager,
+it plays an important part in maintaining structure and flow within the team.
+
+In our case, some Scrum practices were applied informally,
+but without a person explicitly responsible for maintaining them,
+they were not always followed consistently.
+For example, task tracking and coordination depended heavily on individual initiative,
+rather than a shared and continuously maintained overview.
+
+\subsection{Meetings}
+
+One of the main challenges we encountered during our meetings was the lack of clear outcomes.
+We often scheduled longer meetings (e.g., two hours) to discuss problems and make decisions.
+While discussions were productive, they did not always result in concrete decisions by the end of the meeting.
+
+In addition, there were periods of limited communication over time,
+which resulted in decisions not being clearly communicated to all team members.
+This created misunderstandings and inconsistencies in how tasks were carried out.
+
+These issues highlight the importance of structured meetings,
+clear decision-making processes, and proper documentation of outcomes.
 
 \subsection{XP}
-% TDD, Pair programming (kanskje ikke disse hvis det blir veldig gjentagende)
+
+We applied several practices inspired by Extreme Programming (XP), including continuous integration,
+incremental development, and occasional pair programming.
+These practices contributed positively to development by enabling faster feedback
+and improving collaboration between team members.
+
+Continuous integration, in particular, helped detect errors early and reduced integration issues when merging code.
+This aligns well with XP principles of frequent integration and rapid feedback.
+
+However, XP practices were not applied consistently.
+Pair programming was used only in certain situations, mainly due to scheduling difficulties.
+Similarly, test-driven development (TDD) was not systematically followed,
+as time constraints often led to writing tests after implementation rather than before.
+
+This reflects a common challenge in adopting XP practices:
+while they provide clear benefits, they require discipline and coordination to be effective.
 
 \subsection{Design Thinking}
-Overall, we followed many of the principles of design-thinking quite closely, especially in the starting phase of the project. We found the "\textit{introduction to design thinking}"\cite{DesignThinking} to give some good ideas on how to go about handling the non-trivial task to design software for other users than yourself, in a domain you have limited knowledge about. We really tried to understand the intent (the "why's") behind the responses we got in the interview. And when we were trying to condense the insights gathered from interviews, we found it useful with open-minded brainstorming. 
+Overall, we followed many of the principles of design-thinking quite closely, especially in the starting phase of the project.
+We found the "\textit{introduction to design thinking}"\cite{DesignThinking} to give some good ideas on how to go about handling
+the non-trivial task to design software for other users than yourself, in a domain you have limited knowledge about.
+We really tried to understand the intent (the "why's") behind the responses we got in the interview.
+And when we were trying to condense the insights gathered from interviews, we found it useful with open-minded brainstorming.
 
-The review article "\textit{Design Thinking was supposed to fix the world...}"\cite{fix_the_world} brings up a lot of valid criticism towards Design Thinking, but a lot of the focus on the article is about issues in how Design Thinking has been marketed, and how it over-promises on fixing problems that are admittedly hard. Certain organizations (IDEO is brought up in the review) makes money on selling Design Thinking as a miracle cure, allowing designers to quickly become experts in any field, while the practices it highlights are really quite basic. Empathizing, Brainstorming and Prototyping are not novel ideas, and are used plentifully in other scenarios, and was not invented by these organizations who popularized and packaged them. 
+The review article "\textit{Design Thinking was supposed to fix the world...}"\cite{fix_the_world}
+brings up a lot of valid criticism towards Design Thinking, but a lot of the focus on the article is
+about issues in how Design Thinking has been marketed, and how it over-promises on fixing problems that are admittedly hard.
+Certain organizations (IDEO is brought up in the review) makes money on selling Design Thinking as a miracle cure, allowing designers
+to quickly become experts in any field, while the practices it highlights are really quite basic.
+Empathizing, Brainstorming and Prototyping are not novel ideas, and are used plentifully in other scenarios, and was not invented by these organizations who popularized and packaged them.
 
-We don't hold the design thinking process in such a negative view as can be interpreted from the article, but we believe this is due to how design thinking was presented to us. We were not "sold" design thinking as something that would solve all our problems, but rather an initial framework on how to start working in a software development process. The article does not mainly criticize the general practices, but rather misuse of these practices, and limitations in the approach when applied to large and complex systems. Of course, no one would disagree that empathizing or prototyping and feedback is good, but although trivial, for beginner developers such as us, a framework like this is a useful guiding structure. 
+We don't hold the design thinking process in such a negative view as can be interpreted from the article, but we believe this is due to how design thinking was presented to us.
+We were not "sold" design thinking as something that would solve all our problems, but rather an initial framework on how to start working in a software development process.
+The article does not mainly criticize the general practices, but rather misuse of these practices, and limitations in the approach when applied to large and complex systems.
+Of course, no one would disagree that empathizing or prototyping and feedback is good, but although trivial, for beginner developers such as us, a framework like this is a useful guiding structure.
 
-The criticism of the paper towards how design thinking has been marketed and misused, are not problems we have that much insight to, as we are still beginner developers and have not seen many such examples in practice. We used prototyping as a practical way to deliver something that could provide feedback and work as proof of concept for ourselves, our stakeholders, and as a deliverable for the project, not simply for the sake of prototyping. Although we mainly focused on a single prototype rather than continuously providing smaller iterations, contrasting the approach in the framework slightly.
+The criticism of the paper towards how design thinking has been marketed and misused, are not problems we have that much insight to,
+as we are still beginner developers and have not seen many such examples in practice.
+We used prototyping as a practical way to deliver something that could provide feedback and work as proof of concept for ourselves, our stakeholders,
+and as a deliverable for the project, not simply for the sake of prototyping.
+Although we mainly focused on a single prototype rather than continuously providing smaller iterations, contrasting the approach in the framework slightly.
 
-Similarly for gathering stakeholder insights, we did not superficially empathize, nor did we claim to be experts afterwards. Rather we used the framework as pointers to how to go about interviewing, since none of us had particular experience with that from before. 
+Similarly for gathering stakeholder insights, we did not superficially empathize, nor did we claim to be experts afterwards.
+Rather we used the framework as pointers to how to go about interviewing, since none of us had particular experience with that from before.
 
-We also found that design thinking did not really help us with what we struggled with most, which was time constraints. Had we been more diligent with following the framework (such as making cardboard prototypes or pausing development to get feedback on individual features) or had been forced to repeat the process each sprint, it would likely worsen this problem as well. Iteration and validation requires time, and we can not necessarily assume we have time to spare.
+We also found that design thinking did not really help us with what we struggled with most, which was time constraints.
+Had we been more diligent with following the framework (such as making cardboard prototypes or pausing development to get feedback on individual features)
+or had been forced to repeat the process each sprint, it would likely worsen this problem as well.
+Iteration and validation requires time, and we can not necessarily assume we have time to spare.
 
-\subsubsection*{Ideal Workflow}
-For an ideal future workflow we would likely want to incorporate elements of design thinking as we generally view them as positive. We would however view them more in line in the same way we view pair-programming and test-driven development: As tools in a toolbox, rather than a rigid framework where every point must be followed exactly, as we think this would invite the issues highlighted in the review article. 
+
+\subsection{Our Ideal Workflow}
+
+In an ideal workflow, we would introduce a clearly defined coordinating role,
+similar to a Scrum Master.
+This role would act as a facilitator responsible for:
+\begin{itemize}
+    \item maintaining an overview of tasks and progress
+    \item ensuring balanced workload distribution
+    \item facilitating communication and coordination
+    \item identifying and resolving blockers early
+\end{itemize}
+
+To improve meetings, we would introduce more structure and clearer outcomes.
+This includes preparing agendas in advance,
+ensuring that decisions are explicitly made,
+and documenting results in short meeting reports.
+
+We would also strengthen communication between meetings,
+ensuring that all team members are informed of important decisions.
+
+XP practices would be applied more consistently but pragmatically.
+Pair programming could be used for complex tasks,
+while TDD could be applied where correctness is critical.
+Rather than enforcing XP strictly, practices would be used where they provide the most value.
+
+Similarly, design thinking would be used as a flexible tool rather than a rigid framework,
+allowing adaptation to project constraints.
+
+Overall, the ideal workflow would balance structure and flexibility,
+ensuring coordination and clarity while maintaining team autonomy.
+
