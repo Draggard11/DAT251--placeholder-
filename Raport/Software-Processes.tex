@@ -60,8 +60,9 @@ Sprint planning has been used to determine which user stories and tasks should b
 One of the most important lessons so far is that Scrum practices only work when coordination is taken seriously.
 If communication is weak, development becomes fragmented and some team members may end up waiting for others.
 
-Because this is a student project, scheduling can also be difficult.
+Because this is a student project, scheduling was difficult as team members had other work scheduled.
 This makes it even more important to have visible tasks, frequent communication, and a shared understanding of current priorities. 
+
 %TODO: Legg inn bilde av Product Board
 %TODO: Write short about how we did scrum roles (or how we didn't)
 \subsubsection{XP Practices}
@@ -74,11 +75,11 @@ Not all XP practices are equally developed at this stage, but several are alread
 Continuous integration, described earlier, supports the XP principle of frequent integration
 and early detection of errors.
 In our project, this reduced integration problems and improved confidence when merging changes,
-especially when multiple team members were working in parallel.
+especially when multiple team members were working on different features.
 
 Testing is present through JUnit, although the testing framework is still expected to become more complete later in the project.
 Similarly, practices such as refactoring, coding standards, and small releases are relevant to the project
-and should become more important as the code base grows.
+and should become more important as the code base grows. 
 
 
 \subsubsection{Pair Programming}
@@ -166,7 +167,50 @@ the practices are integrated and consistently applied, instead of simply being p
 %TODO: ABC paper og Design Science (sammenligne de to), 
 %TODO: evidence for lean, (discuss value stream mapping). 
 %TODO: Vi må også gjøre refleksjoner rundt Software product line og bruke SPLTrends for å diskutere shortcomings.
-\newpage
+%
+\subsection{Software product line}
+The Agile approach was chosen earlier in the project, but an alternative approach is the Software Product Line (SPL) methodology. 
+SPL emphasizes systematic reuse: it enables producing multiple product versions while sharing a common code base. 
+It separates domain engineering as it makes a reusable core, whereas application engineering uses the core to develop multiple products using the same codebase. \cite{Product_Lines}
+
+This approach introduces a lot of workload and manpower as the need to generate both of these would take a lot of time and cost.
+For our team which does not have the time and team size to make this possible.
+Agile is more suitable as it aims at delivering a product in smaller pieces at a time and keeping ourselves close to stakeholders, so that their needs are met.
+
+Looking at the paper \cite{Software_Variability} another important aspect is the challenge of managing variability in SPL. Instead of only focusing on reuse, SPL requires explicitly identifying common functionality and defining where and how the system can vary across products. In our project, this would mean structuring features like study sessions and XP systems as reusable components, while defining clear variation points for how these features can be adapted or extended.
+
+However, this would have introduced additional complexity. The paper \cite{Software_Variability} highlights that managing variability can become difficult due to dependencies between variants, and the increasing number of variations points over time. Given that we already experienced challenges with code structure and technical depth, applying an SPL approach could have made it harder to track how changes in one feature would affect related components, especially if several variants depended on the same underlying functionality. 
+
+
+Our project with SPL would be possible as products and software for learning is widely developed.
+A "clone and modify" of a similar product may work as a good start. \cite{Product_Lines}
+Generating a solution from these similar products might be beneficial and can be done in a smaller time.
+but then we would need to adhere to practices introduced by these products.
+The freedom that agile gives will be more beneficial as it gives flexibility for each iteration to make decisions.
+Overall, while SPL could be beneficial in systems with multiple product variants, it introduces a level of complexity and upfront structure that is not well suited for our project. Given our limited team size, time constraints and focus on developing a single evolving system, the overhead of managing variability would likely outweigh the benefits. Therefore, an Agile approach makes more sense as it allows us to prioritize flexibility, continuous improvement and step by step delivery.
+\iffalse
+How would the software development process differ if we utilised a Software Product Line,
+as discussed in the lecture, instead of the more agile approach we are currently employing in
+this project? Would your project be a better fit for the Software Product Line methodology?
+Why or why not? If it is not a good fit, what type of software product would better align with
+a Software Product Line?
+
+The Agile approach was chosen earlier in the project, but an alternative approach is the Software Product Line (SPL) methodology. 
+SPL emphasizes systematic reuse: it enables producing multiple product versions while sharing a common code base. 
+It separates domain engineering as it makes a reusable core, whereas application engineering uses the core to develop multiple products using the same codebase. \cite{Product_Lines}
+
+This approach introduces a lot of workload and manpower as the need to generate both of these would take a lot of time and cost.
+For our team which does not have the time and team size to make this possible.
+Agile is more suitable as it aims at delivering a product in smaller pieces at a time and keeping ourselves close to stakeholders, so that their needs are met.
+
+look at the next paper that introduces challanges
+Our project with SPL would be possible as products and software for learning is widely developed.
+A "clone and modify" of a similar product may work as a good start. \cite{Product_Lines}
+Generating a solution from these similar products might be beneficial and can be done in a smaller time.
+but then we would need to adhere to practices introduced by these products.
+The freedom that agile gives will be more beneficial as it gives flexibility for each iteration to make decisions.
+\fi
+
 \subsection{Sprint 2}
 \textbf{Timeframe:} 08. March - 01. April
 \\
