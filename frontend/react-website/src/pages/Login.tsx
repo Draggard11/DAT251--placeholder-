@@ -1,16 +1,20 @@
-import {useState} from "react";
+import { useState } from "react";
 
-import userIcon from '../assets/profile-icon.jpg';
+import userIcon from "../assets/profile-icon.jpg";
 import "../components/Login.css";
 import SignUpModal from "../components/SignUpModal.tsx";
 
 const Login = () => {
   const [showSignUp, setShowSignUp] = useState(false);
   return (
-
-    <div className="login-page">
+    <div
+      className="login-page"
+      style={{
+        backgroundColor: "var(--color-background)",
+        color: "var(--color-text)",
+      }}
+    >
       <div className="login-box">
-
         <img src={userIcon} alt="User icon" className="login-icon" />
 
         <h1>Sign In</h1>
@@ -34,7 +38,7 @@ const Login = () => {
         <p className="signup-text">
           Don’t have an account?{" "}
           <span className="signup-link" onClick={() => setShowSignUp(true)}>
-          Sign Up
+            Sign Up
           </span>
         </p>
       </div>
