@@ -23,7 +23,7 @@ class StudySession(
     var subject: String? = null,
     var startTime: Date? = null,
     var endTime: Date? = null,
-    var completed: Boolean? = false,
+    var completed: Boolean = false,
     var location: String? = null,
 
     @Temporal(TemporalType.TIMESTAMP)
