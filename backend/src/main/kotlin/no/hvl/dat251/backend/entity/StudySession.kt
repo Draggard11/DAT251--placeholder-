@@ -13,6 +13,8 @@ import jakarta.transaction.Transactional
 import no.hvl.dat251.backend.exp.Exp
 import no.hvl.dat251.backend.exp.ExpObservervableBase
 import java.util.Date
+import jakarta.persistence.Temporal
+import jakarta.persistence.TemporalType
 
 @Entity
 class StudySession(
@@ -22,8 +24,12 @@ class StudySession(
     var subject: String? = null,
     var startTime: Date? = null,
     var endTime: Date? = null,
-    var completed: Boolean? = false,
+    var completed: Boolean = false,
     var location: String? = null,
+
+    @Temporal(TemporalType.TIMESTAMP)
+    var completedAt: Date? = null,
+
     @ManyToOne
     @JoinColumn(name = "studygroup_id")
     var studyGroup: StudyGroup? = null,

@@ -16,7 +16,9 @@ const Groups = () => {
 
   const fetchGroups = async () => {
     try {
-      const res = await fetch("http://localhost:8080/api/studygroups");
+      const res = await fetch("http://localhost:8080/api/studygroups", {
+        credentials: "include",
+      });
       const data = await res.json();
 
       setGroups(
@@ -47,6 +49,7 @@ const Groups = () => {
           `http://localhost:8080/api/studygroups/${selectedGroup.id}`,
           {
             method: "PATCH",
+            credentials: "include",
             headers: {
               "Content-Type": "application/json",
             },
@@ -59,6 +62,7 @@ const Groups = () => {
         // CREATE
         res = await fetch("http://localhost:8080/api/studygroups", {
           method: "POST",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
           },
@@ -84,6 +88,7 @@ const Groups = () => {
     try {
       const res = await fetch(`http://localhost:8080/api/studygroups/${id}`, {
         method: "DELETE",
+        credentials: "include",
       });
 
       if (!res.ok) {
@@ -189,6 +194,7 @@ const Groups = () => {
 
             const res = await fetch("http://localhost:8080/api/studySessions", {
               method: "POST",
+              credentials: "include",
               headers: {
                 "Content-Type": "application/json",
               },

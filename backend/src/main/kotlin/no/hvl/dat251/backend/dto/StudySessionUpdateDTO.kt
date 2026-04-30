@@ -8,6 +8,7 @@ data class StudySessionUpdateDTO (
     val endTime: Date? = null,
     val location: String? = null,
     val completed: Boolean? = null,
+    val completedAt: Date? = null,
     val studyGroupId: Long? = null,
     var attendanceIds: MutableSet<Long>? = null
 )
