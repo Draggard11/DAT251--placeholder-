@@ -1,6 +1,8 @@
 package no.hvl.dat251.backend.entity
 
 import jakarta.persistence.*
+import org.springframework.security.core.GrantedAuthority
+import org.springframework.security.core.userdetails.UserDetails
 import java.time.LocalDate
 
 @Entity
@@ -11,9 +13,15 @@ class Student(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null,
 
-    var name: String,
+    @Column(nullable = false)
+    var name: String = "",
 
-    var email: String? = null,
+    @Column(unique = true, nullable = false)
+    var email: String = "", // spring uses it as username
+
+    @Column(nullable = false)
+    var passwordHash: String = "",
+
     var dateOfBirth: LocalDate? = null,
     var enrollmentDate: LocalDate? = null,
     @ManyToMany(cascade = [(CascadeType.MERGE)])
@@ -23,7 +31,18 @@ class Student(
     @OneToMany(cascade = [(CascadeType.MERGE)])
     var studygroups: MutableSet<StudyGroup> = mutableSetOf()
 
-) {
+) : UserDetails {
+
+    override fun getAuthorities(): MutableCollection<out GrantedAuthority> = mutableListOf()
+
+    override fun isAccountNonExpired() = true
+    override fun isAccountNonLocked() = true
+    override fun isCredentialsNonExpired() = true
+    override fun isEnabled() = true
+
+    override fun getUsername(): String = email
+    override fun getPassword(): String? = passwordHash
+
     fun addStudyGroup(studyGroup: StudyGroup) {
         studygroups.add(studyGroup)
     }
