@@ -1,6 +1,9 @@
 package no.hvl.dat251.backend.entity
 
 import jakarta.persistence.*
+import no.hvl.dat251.backend.exp.ExpObserver
+import org.springframework.security.core.GrantedAuthority
+import org.springframework.security.core.userdetails.UserDetails
 import java.time.LocalDate
 
 @Entity
@@ -26,7 +29,6 @@ class Student(
     var studygroups: MutableSet<StudyGroup> = mutableSetOf(),
     var xp: Float = 0f,
 ) : ExpObserver, UserDetails {
-    var studygroups: MutableSet<StudyGroup> = mutableSetOf()
 
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> = mutableListOf()
 
@@ -48,7 +50,6 @@ class Student(
         activeSubjects.add(subject)
     }
 
-    @Transactional
     override fun update(xp: Float) {
         // we can notify the user from the backend
         // it would be best to let frontend deal with notifying the user and use GET if a session is claimed finished
