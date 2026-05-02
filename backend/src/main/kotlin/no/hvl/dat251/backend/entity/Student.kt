@@ -1,25 +1,21 @@
 package no.hvl.dat251.backend.entity
 
-import jakarta.persistence.CascadeType
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
-import jakarta.persistence.ManyToMany
-import jakarta.persistence.OneToMany
-import jakarta.persistence.Table
-import jakarta.transaction.Transactional
-import no.hvl.dat251.backend.exp.ExpObserver
+import jakarta.persistence.*
 import java.time.LocalDate
 
 @Entity
 @Table(name = "STUDENTS")
 class Student(
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null,
-    var name: String,
-    var email: String? = null,
+    @Column(nullable = false)
+    var name: String = "",
+    @Column(unique = true, nullable = false)
+    var email: String = "", // spring uses it as username
+    @Column(nullable = false)
+    var passwordHash: String = "",
     var dateOfBirth: LocalDate? = null,
     var enrollmentDate: LocalDate? = null,
     @ManyToMany(cascade = [(CascadeType.MERGE)])
@@ -29,15 +25,25 @@ class Student(
     @OneToMany(cascade = [(CascadeType.MERGE)])
     var studygroups: MutableSet<StudyGroup> = mutableSetOf(),
     var xp: Float = 0f,
-) : ExpObserver {
+) : ExpObserver, UserDetails {
+    var studygroups: MutableSet<StudyGroup> = mutableSetOf()
+
+    override fun getAuthorities(): MutableCollection<out GrantedAuthority> = mutableListOf()
+
+    override fun isAccountNonExpired() = true
+    override fun isAccountNonLocked() = true
+    override fun isCredentialsNonExpired() = true
+    override fun isEnabled() = true
+
+    override fun getUsername(): String = email
+    override fun getPassword(): String? = passwordHash
+
     fun addStudyGroup(studyGroup: StudyGroup) {
         studygroups.add(studyGroup)
     }
-
     fun removeStudyGroup(studyGroup: StudyGroup) {
         studygroups.remove(studyGroup)
     }
-
     fun addActiveSubject(subject: Subject) {
         activeSubjects.add(subject)
     }

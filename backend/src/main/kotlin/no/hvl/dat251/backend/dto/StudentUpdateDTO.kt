@@ -4,8 +4,10 @@ import java.time.LocalDate
 
 data class StudentUpdateDTO(
 
-    val name: String? = null,
-    val email: String? = null,
+    val name: String,
+    val email: String,
+
+    val password: String,
     val dateOfBirth: LocalDate? = null,
     val enrollmentDate: LocalDate? = null,
 
