@@ -3,7 +3,6 @@ package no.hvl.dat251.backend.controller
 import org.springframework.web.bind.annotation.CrossOrigin
 import no.hvl.dat251.backend.dto.StudySessionUpdateDTO
 import no.hvl.dat251.backend.entity.StudySession
-import no.hvl.dat251.backend.entity.StudyGroup
 import no.hvl.dat251.backend.repository.StudentRepository
 import no.hvl.dat251.backend.repository.StudySessionRepository
 import no.hvl.dat251.backend.repository.StudyGroupRepository
@@ -36,9 +35,11 @@ class StudySessionController(
     @PostMapping("")
     fun creatStudySession(@RequestBody studySession: StudySession): ResponseEntity<StudySession> {
         // hardcoded student
-        studySession.registerStudent(studentRepository.findById(1).get())
+        // TODO make login and then remove
         val student1 = studentRepository.findById(1).orElse(null)
+
         if (student1 != null) {
+            studySession.registerStudent(student1)
             studentRepository.save(student1)
         }
         // end of student
@@ -68,8 +69,13 @@ class StudySessionController(
         dto.attendanceIds?.let { studySession.attendance = studentRepository.findAllById(it).toMutableSet() }
         dto.location?.let { studySession.location = it }
         dto.studyGroupId?.let { studySession.studyGroup = studyGroupRepository.findById(it).orElse(null) }
+        if (dto.completed == true){
+            studySession.finish()
+            studySession.attendance.forEach { student ->
+                studentRepository.save(student)
+            }
+        }
         val updated = studySessionRepository.save(studySession)
-        if (updated.completed == true) updated.finish()
         return ResponseEntity.ok(updated)
     }
 

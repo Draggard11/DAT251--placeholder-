@@ -1,7 +1,7 @@
 package no.hvl.dat251.backend.entity
 
+import jakarta.persistence.CascadeType
 import jakarta.persistence.Entity
-import jakarta.persistence.FetchType
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
@@ -9,8 +9,6 @@ import jakarta.persistence.JoinColumn
 import jakarta.persistence.JoinTable
 import jakarta.persistence.ManyToMany
 import jakarta.persistence.ManyToOne
-import jakarta.transaction.Transactional
-import no.hvl.dat251.backend.exp.Exp
 import no.hvl.dat251.backend.exp.ExpObservervableBase
 import java.util.Date
 import jakarta.persistence.Temporal
@@ -42,16 +40,17 @@ class StudySession(
     var attendance: MutableSet<Student> = mutableSetOf(),
     var maxSize: Int = 1,
     var size: Int = 0,
+
 ) : ExpObservervableBase() {
-    @Transient
-    private val xp: Exp = Exp(50f, 0f)
+    var xp: Float = 10f
+    var xpModifier: Float = 0f
 
     fun finish() { // could also be called by study group
         completed = true
-        xp.xpModifier = size / maxSize + 0.0f
-        this.notifyObservers(xp.calculate())
-    }
+        xpModifier = size / maxSize + 0.0f
 
+        this.notifyObservers(xp * xpModifier)
+    }
     fun registerStudent(student: Student) {
         if (maxSize == size) {
             // throw error
