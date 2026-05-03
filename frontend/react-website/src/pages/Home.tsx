@@ -88,6 +88,8 @@ const Home = () => {
             }}
           >
             <button
+              type="button"
+              onClick={() => navigate("/Login")}
               style={{
                 padding: "13px 24px",
                 backgroundColor: "var(--color-primary)",
@@ -105,6 +107,7 @@ const Home = () => {
             </button>
 
             <button
+              type="button"
               onClick={scrollToFeatures}
               style={{
                 padding: "13px 24px",
