@@ -2,7 +2,6 @@ import React, { useRef } from "react";
 import { ArrowRight, BarChart3, Users, CalendarDays } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import StudyHeroImage from "../assets/StudyHeroImage.webp";
-import HvlLogo from "../assets/hvl_logo.png";
 
 const Home = () => {
   const featuresRef = useRef<HTMLDivElement | null>(null);
@@ -55,16 +54,6 @@ const Home = () => {
             padding: "0 24px",
           }}
         >
-          <img
-            src={HvlLogo}
-            alt="logo"
-            style={{
-              width: "86px",
-              marginBottom: "20px",
-              opacity: 0.95,
-            }}
-          />
-
           <h1
             style={{
               fontSize: "72px",

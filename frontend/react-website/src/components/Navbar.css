@@ -1,11 +1,13 @@
 .navbar {
-  background: #111;
-  color: white;
-  padding: 0.75rem 1.5rem;
+  width: 100%;
+  background: #0f172a;
+  color: #e5e7eb;
+  padding: 0.95rem 3rem;
+  border-bottom: 1px solid #1e293b;
 }
 
 .navbar-inner {
-  max-width: 1800px;
+  max-width: 1400px;
   margin: 0 auto;
 
   display: grid;
@@ -18,26 +20,26 @@
   font-size: 1.2rem;
   font-weight: 800;
   color: #ffffff;
-  letter-spacing: 0.2px;
 }
 
 .nav-links {
   justify-self: center;
   display: flex;
+  align-items: center;
   list-style: none;
-  gap: 8rem;
+  gap: 5rem;
   margin: 0;
   padding: 0;
 }
 
 .nav-links a {
+  color: #cbd5e1;
   text-decoration: none;
-  color: #ffffff;
-  transition: 0.2s ease;
   font-size: 0.95rem;
   font-weight: 600;
   padding: 0.45rem 0.75rem;
   border-radius: 10px;
+  transition: 0.2s ease;
 }
 
 .nav-links a:hover {
@@ -48,49 +50,62 @@
 .nav-links a.active {
   color: #38bdf8;
   background-color: rgba(56, 189, 248, 0.08);
-.logout-btn {
-  background: none;
-  border: none;
-  color: white;
-  cursor: pointer;
-  font-size: large;
-  transition: color 0.2s ease;
 }
 
-.logout-btn:hover {
-  color: #ff4444;
-}
-
-.menu-toggle {
-
-  font-size: 1.5rem;
-  background: none;
-  border: none;
-  color: white;
-  cursor: pointer;
-}
-
-.login-link {
+.navbar-actions {
   justify-self: end;
+  display: flex;
+  align-items: center;
+}
+
+.login-link,
+.logout-btn {
   display: flex;
   align-items: center;
   gap: 0.45rem;
 
   color: #e5e7eb;
+  background: transparent;
+  border: 1px solid transparent;
+
   text-decoration: none;
   font-size: 0.95rem;
   font-weight: 600;
+  font-family: inherit;
+
   padding: 0.45rem 0.75rem;
   border-radius: 10px;
+  cursor: pointer;
   transition: 0.2s ease;
 }
 
-.login-link:hover {
+.login-link:hover,
+.logout-btn:hover {
   color: #ffffff;
   background-color: #1e293b;
+  border-color: #334155;
 }
 
-.login-link.active {
+.navbar-brand a {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.navbar-logo {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+}
+
+.navbar-brand span {
+  font-size: 1.2rem;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+}
+
+.navbar-brand a:hover {
   color: #38bdf8;
-  background-color: rgba(56, 189, 248, 0.08);
 }
