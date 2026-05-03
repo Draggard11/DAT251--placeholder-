@@ -2,10 +2,12 @@ import React, { useRef } from "react";
 import { ArrowRight, BarChart3, Users, CalendarDays } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import StudyHeroImage from "../assets/StudyHeroImage.webp";
+import { useAuth } from "../contexts/AuthContext";
 
 const Home = () => {
   const featuresRef = useRef<HTMLDivElement | null>(null);
   const navigate = useNavigate();
+  const { student } = useAuth();
 
   const scrollToFeatures = () => {
     featuresRef.current?.scrollIntoView({
@@ -13,6 +15,15 @@ const Home = () => {
       block: "start",
     });
   };
+
+  const navigateProtected = (path: string) => {
+    if (student) {
+      navigate(path);
+    } else {
+      navigate("Login");
+    }
+  };
+
   return (
     <div
       style={{
@@ -171,7 +182,7 @@ const Home = () => {
               text="Monitor your level, streaks, and completed activities."
               accent="var(--color-primary-soft)"
               icon={<BarChart3 size={26} color="var(--color-primary)" />}
-              onClick={() => navigate("/Stats")}
+              onClick={() => navigateProtected("/Stats")}
             />
 
             <FeatureCard
@@ -179,7 +190,7 @@ const Home = () => {
               text="Collaborate with others and stay accountable together."
               accent="var(--color-completed-soft)"
               icon={<Users size={26} color="var(--color-completed)" />}
-              onClick={() => navigate("/Groups")}
+              onClick={() => navigateProtected("/Groups")}
             />
 
             <FeatureCard
@@ -187,7 +198,7 @@ const Home = () => {
               text="Create focused sessions and build better routines."
               accent="var(--color-active-soft)"
               icon={<CalendarDays size={26} color="var(--color-active)" />}
-              onClick={() => navigate("/StudySession")}
+              onClick={() => navigateProtected("/StudySession")}
             />
           </div>
         </div>
