@@ -1,7 +1,6 @@
 import {useState} from "react";
-import { useNavigate } from "react-router-dom";
 
-import userIcon from '../assets/profile-icon.jpg';
+import userIcon from "../assets/profile-icon.jpg";
 import "../components/Login.css";
 import SignUpModal from "../components/SignUpModal.tsx";
 import { useAuth } from "../contexts/AuthContext";
@@ -13,7 +12,6 @@ const Login = () => {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const { login } = useAuth();
-  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,17 +21,21 @@ const Login = () => {
     try {
       await login(email, password);
       console.log("Login successful!");
-      navigate("/"); // Navigate to home page after successful login
     } catch (error) {
       console.error("Login failed:", error);
-      setError("Invalid email or password");
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="login-page">
+    <div
+      className="login-page"
+      style={{
+        backgroundColor: "var(--color-background)",
+        color: "var(--color-text)",
+      }}
+    >
       <div className="login-box">
 
         <img src={userIcon} alt="User icon" className="login-icon" />
@@ -71,7 +73,7 @@ const Login = () => {
         <p className="signup-text">
           Don't have an account?{" "}
           <span className="signup-link" onClick={() => setShowSignUp(true)}>
-          Sign Up
+            Sign Up
           </span>
         </p>
       </div>
@@ -79,5 +81,4 @@ const Login = () => {
     </div>
   );
 };
-
 export default Login;

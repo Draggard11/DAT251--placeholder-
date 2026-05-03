@@ -115,7 +115,8 @@ const Groups = () => {
       style={{
         padding: "40px 32px",
         width: "100%",
-        backgroundColor: "#f5f7fa",
+        backgroundColor: "var(--color-background)",
+        color: "var(--color-text)",
         minHeight: "100vh",
       }}
     >
