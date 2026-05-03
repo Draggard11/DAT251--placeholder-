@@ -9,6 +9,10 @@ const Home = () => {
   const navigate = useNavigate();
   const { student } = useAuth();
 
+  const handleGetStarted = () => {
+    navigate(student ? "/Subjects" : "/Login");
+  };
+
   const scrollToFeatures = () => {
     featuresRef.current?.scrollIntoView({
       behavior: "smooth",
@@ -20,7 +24,7 @@ const Home = () => {
     if (student) {
       navigate(path);
     } else {
-      navigate("Login");
+      navigate("/Login");
     }
   };
 
@@ -100,7 +104,7 @@ const Home = () => {
           >
             <button
               type="button"
-              onClick={() => navigate("/Login")}
+              onClick={handleGetStarted}
               style={{
                 padding: "13px 24px",
                 backgroundColor: "var(--color-primary)",
