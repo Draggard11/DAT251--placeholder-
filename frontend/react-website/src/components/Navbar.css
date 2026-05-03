@@ -37,6 +37,19 @@
   color: #00bcd4;
 }
 
+.logout-btn {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: large;
+  transition: color 0.2s ease;
+}
+
+.logout-btn:hover {
+  color: #ff4444;
+}
+
 .menu-toggle {
     
   font-size: 1.5rem;

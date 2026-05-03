@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "../components/Login.css"; // eller lag egen css senere
+import { register} from "../services/StudentService.tsx";
 
 type Props = {
     onClose: () => void;
@@ -22,8 +23,7 @@ const SignUpModal: React.FC<Props> = ({ onClose }) => {
         };
         console.log("Ny bruker:", newStudent);
 
-        // Her skal det senere sendes data til backend
-        // onClose();
+        register(newStudent).then(r => console.log("Bruker registrert:", r)).catch(e => console.error("Feil ved registrering:", e));
     };
 
         return (

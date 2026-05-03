@@ -1,0 +1,128 @@
+### Base Configuration
+@host = http://localhost:8080
+@json = application/json
+
+### ============================================================================
+### AUTHENTICATION TESTS
+### ============================================================================
+
+### Register a new user
+POST {{host}}/api/auth/register
+Content-Type: {{json}}
+
+{
+  "name": "Test User",
+  "email": "test@example.com",
+  "password": "password123"
+}
+
+### Login (this will set the session cookie)
+# @name login
+POST {{host}}/api/auth/login
+Content-Type: {{json}}
+
+{
+  "email": "test@example.com",
+  "password": "password123"
+}
+
+### Check if authenticated (should return user data)
+GET {{host}}/me
+
+### ============================================================================
+### STUDENT TESTS (Require Authentication)
+### ============================================================================
+
+### Get all students
+GET {{host}}/api/students
+
+### Create a new student
+POST {{host}}/api/students
+Content-Type: {{json}}
+
+{
+  "name": "John Doe",
+  "email": "john.doe@example.com",
+  "dateOfBirth": "1995-05-15",
+  "enrollmentDate": "2023-08-01"
+}
+
+### Get student by ID
+GET {{host}}/api/students/1
+
+### Update student (PATCH)
+PATCH {{host}}/api/students/1
+Content-Type: {{json}}
+
+{
+  "name": "John Updated"
+}
+
+### Get student EXP
+GET {{host}}/api/students/1/exp
+
+### ============================================================================
+### STUDY GROUP TESTS (Require Authentication)
+### ============================================================================
+
+### Get all study groups
+GET {{host}}/api/studygroups
+
+### Create a study group
+POST {{host}}/api/studygroups
+Content-Type: {{json}}
+
+{
+  "name": "Math Study Group",
+  "description": "Group for studying mathematics"
+}
+
+### Get study group by ID
+GET {{host}}/api/studygroups/1
+
+### Add student to study group
+POST {{host}}/api/studygroups/1/students/1
+
+### Get students in study group
+GET {{host}}/api/studygroups/1/students
+
+### Remove student from study group
+DELETE {{host}}/api/studygroups/1/students/1
+
+### ============================================================================
+### SUBJECT TESTS (Require Authentication)
+### ============================================================================
+
+### Get all subjects
+GET {{host}}/api/subjects
+
+### Create a subject
+POST {{host}}/api/subjects
+Content-Type: {{json}}
+
+{
+  "subjectCode": "MATH101",
+  "name": "Introduction to Mathematics"
+}
+
+### ============================================================================
+### STUDY SESSION TESTS (Require Authentication)
+### ============================================================================
+
+### Get all study sessions
+GET {{host}}/api/studySessions
+
+### Create a study session
+POST {{host}}/api/studySessions
+Content-Type: {{json}}
+
+{
+  "startTime": "2024-01-01T10:00:00",
+  "endTime": "2024-01-01T12:00:00",
+  "studentId": 1,
+  "subjectId": 1
+}
+
+### Get study session by ID
+GET {{host}}/api/studySessions/1
+

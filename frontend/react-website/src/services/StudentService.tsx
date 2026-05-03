@@ -17,7 +17,9 @@ export interface Subject {
 }
 // students services
 export const getStudents = async (): Promise<Student[]> => {
-  const response = await fetch('http://localhost:8080/api/students');
+  const response = await fetch('http://localhost:8080/api/students', {
+    credentials: 'include'
+  });
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
   }
@@ -27,6 +29,7 @@ export const getStudents = async (): Promise<Student[]> => {
 export const createStudent = async (student: Partial<Student>): Promise<Student> => {
   const response = await fetch('http://localhost:8080/api/students', {
     method: 'POST',
+    credentials: 'include',
     headers: {
       'Content-Type': 'application/json'
     },
@@ -39,7 +42,9 @@ export const createStudent = async (student: Partial<Student>): Promise<Student>
 };
 
 export const getStudentById = async (id: any): Promise<Student | null> => {
-  const response = await fetch(`http://localhost:8080/api/students/${id}`);
+  const response = await fetch(`http://localhost:8080/api/students/${id}`, {
+    credentials: 'include'
+  });
   if (!response.ok && response.status !== 404) {
     throw new Error(`HTTP error! status: ${response.status}`);
   }
@@ -51,6 +56,7 @@ export const getStudentById = async (id: any): Promise<Student | null> => {
 export const updateStudent = async (id: string, updatedData: Partial<Student>): Promise<Student | null> => {
   const response = await fetch(`http://localhost:8080/api/students/${id}`, {
     method: 'PATCH',
+    credentials: 'include',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(updatedData)
   });
@@ -65,6 +71,7 @@ export const updateStudent = async (id: string, updatedData: Partial<Student>): 
 export const addSubjectToStudent = async (studentId: number, subjectId: number): Promise<Subject> => {
   const response = await fetch(`http://localhost:8080/api/students/${studentId}/subjects`, {
     method: 'POST',
+    credentials: 'include',
     headers: {
       'Content-Type': 'application/json'
     },
@@ -82,6 +89,7 @@ export const addSubjectToStudent = async (studentId: number, subjectId: number):
 export const getStudyGroups = async (studentId: number): Promise<StudyGroup> => {
   const response = await fetch(`http://localhost:8080/api/students/${studentId}/studygroups`, {
     method: 'GET',
+    credentials: 'include',
     headers: {
       'Content-Type': 'application/json'
     }
@@ -95,9 +103,25 @@ export const getStudyGroups = async (studentId: number): Promise<StudyGroup> => 
 export const getExp = async (studentId: number): Promise<number> => {
     const response = await fetch(`http://localhost:8080/api/students/${studentId}/exp`, {
         method: 'GET',
+        credentials: 'include',
         headers: {
             'Content-Type': 'application/json'
         }
+    });
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return await response.json();
+}
+
+export const register = async (student: Partial<Student>): Promise<Student> => {
+    const response = await fetch('http://localhost:8080/api/auth/register', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(student)
     });
     if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
