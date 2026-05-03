@@ -10,6 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository
 import org.springframework.web.bind.annotation.*
+import java.time.LocalDate
 
 @RestController
 @RequestMapping("/api/auth")
@@ -56,8 +57,8 @@ class AuthController(
         val student = Student(
             name = request.name,
             email = request.email,
-
-            passwordHash = passwordEncoder.encode(request.password)!!
+            passwordHash = passwordEncoder.encode(request.password)!!,
+            dateOfBirth = request.dateOfBirth,
         )
 
         val saved = studentRepository.save(student)
@@ -75,7 +76,8 @@ class AuthController(
 data class RegisterRequest(
     val name: String,
     val email: String,
-    val password: String = ""
+    val password: String = "",
+    val dateOfBirth: LocalDate? = null,
 )
 
 data class LoginRequest(

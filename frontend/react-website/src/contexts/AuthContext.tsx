@@ -7,11 +7,18 @@ interface Student {
   email: string;
 }
 
+export interface RegisterPayload {
+  name: string;
+  email: string;
+  password: string;
+  dateOfBirth?: string;
+}
+
 interface AuthContextType {
   student: Student | null;
   isLoading: boolean;
   login: (email: string, password: string) => Promise<void>;
-  register: (studentData: any) => Promise<void>;
+  register: (studentData: RegisterPayload) => Promise<void>;
   logout: () => Promise<void>;
   checkAuth: () => Promise<void>;
 }
@@ -74,14 +81,23 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     await checkAuth();
   };
 
-  const register = async (studentData: any) => {
+  const register = async (studentData: RegisterPayload) => {
+    const body: Record<string, string> = {
+      name: studentData.name.trim(),
+      email: studentData.email.trim(),
+      password: studentData.password,
+    };
+    if (studentData.dateOfBirth) {
+      body.dateOfBirth = studentData.dateOfBirth;
+    }
+
     const response = await fetch("http://localhost:8080/api/auth/register", {
       method: "POST",
       credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(studentData),
+      body: JSON.stringify(body),
     });
 
     if (!response.ok) {
@@ -89,8 +105,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       throw new Error(errorData || "Registration failed");
     }
 
-    const newStudent = await response.json();
-    setStudent(newStudent);
+    await response.json();
+    await login(studentData.email.trim(), studentData.password);
   };
 
   const logout = async () => {

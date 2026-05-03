@@ -114,17 +114,3 @@ export const getExp = async (studentId: number): Promise<number> => {
     return await response.json();
 }
 
-export const register = async (student: Partial<Student>): Promise<Student> => {
-    const response = await fetch('http://localhost:8080/api/auth/register', {
-        method: 'POST',
-        credentials: 'include',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(student)
-    });
-    if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    return await response.json();
-}

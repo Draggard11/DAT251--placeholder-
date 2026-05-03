@@ -1,79 +1,146 @@
 import React, { useState } from "react";
-import "../components/Login.css"; // eller lag egen css senere
-import { register} from "../services/StudentService.tsx";
+import { useNavigate } from "react-router-dom";
+
+import userIcon from "../assets/profile-icon.jpg";
+import "../components/Login.css";
+import { useAuth } from "../contexts/AuthContext";
 
 type Props = {
-    onClose: () => void;
+  onClose: () => void;
 };
 
 const SignUpModal: React.FC<Props> = ({ onClose }) => {
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [dateOfBirth, setDateOfBirth] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [dateOfBirth, setDateOfBirth] = useState("");
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const { register } = useAuth();
+  const navigate = useNavigate();
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
+  const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target === e.currentTarget) onClose();
+  };
 
-        const newStudent = {
-            name,
-            email,
-            password,
-            dateOfBirth,
-        };
-        console.log("Ny bruker:", newStudent);
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
 
-        register(newStudent).then(r => console.log("Bruker registrert:", r)).catch(e => console.error("Feil ved registrering:", e));
-    };
+    if (password !== confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters.");
+      return;
+    }
 
-        return (
-        <div className="modal-overlay">
-            <div className="signup-modal">
-                <button onClick={onClose} className="close-btn">
-                    ×
-                </button>
+    setIsLoading(true);
+    try {
+      await register({
+        name,
+        email,
+        password,
+        ...(dateOfBirth ? { dateOfBirth } : {}),
+      });
+      onClose();
+      navigate("/");
+    } catch (err) {
+      const message =
+        err instanceof Error ? err.message : "Could not create account.";
+      setError(message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-                <h2>Sign Up</h2>
+  return (
+    <div
+      className="modal-overlay"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="signup-title"
+      onClick={handleOverlayClick}
+    >
+      <div className="signup-modal">
+        <button
+          type="button"
+          onClick={onClose}
+          className="close-btn"
+          aria-label="Close sign up"
+        >
+          ×
+        </button>
 
-                <form className="login-modal" onSubmit={handleSubmit}>
-                    <label>Name</label>
-                    <input
-                        type="text"
-                        placeholder="Your name"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                    />
+        <img src={userIcon} alt="" className="signup-modal-icon" />
 
-                    <label>Email</label>
-                    <input
-                        type="email"
-                        placeholder="Your email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
+        <h2 id="signup-title">Sign Up</h2>
 
-                    <label>Date of birth</label>
-                    <input
-                        type="date"
-                        value={dateOfBirth}
-                        onChange={(e) => setDateOfBirth(e.target.value)}
-                    />
+        <form className="login-form signup-form" onSubmit={handleSubmit}>
+          <label htmlFor="signup-name">Name</label>
+          <input
+            id="signup-name"
+            type="text"
+            placeholder="Your name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+            autoComplete="name"
+          />
 
-                    <label>Password</label>
-                    <input
-                        type="password"
-                        placeholder="Your password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
+          <label htmlFor="signup-email">Email</label>
+          <input
+            id="signup-email"
+            type="email"
+            placeholder="username@email.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            autoComplete="email"
+          />
 
-                    <button type="submit" className="signin-btn">
-                        Register
-                    </button>
-                </form>
-            </div>
-        </div>
-    );
+          <label htmlFor="signup-dob">Date of birth (optional)</label>
+          <input
+            id="signup-dob"
+            type="date"
+            value={dateOfBirth}
+            onChange={(e) => setDateOfBirth(e.target.value)}
+          />
+
+          <label htmlFor="signup-password">Password</label>
+          <input
+            id="signup-password"
+            type="password"
+            placeholder="At least 6 characters"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            minLength={6}
+            autoComplete="new-password"
+          />
+
+          <label htmlFor="signup-confirm">Confirm password</label>
+          <input
+            id="signup-confirm"
+            type="password"
+            placeholder="Repeat password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+            autoComplete="new-password"
+          />
+
+          {error && <div className="form-error">{error}</div>}
+
+          <button type="submit" className="signin-btn" disabled={isLoading}>
+            {isLoading ? "Creating account…" : "Create account"}
+          </button>
+        </form>
+      </div>
+    </div>
+  );
 };
 
 export default SignUpModal;
