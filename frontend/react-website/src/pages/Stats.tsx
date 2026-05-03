@@ -17,7 +17,6 @@ const Stats = () => {
   useEffect(() => {
     // Redirect to login if not authenticated
     if (!student) {
-      navigate("/Login");
       return;
     }
 

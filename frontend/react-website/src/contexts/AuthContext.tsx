@@ -90,9 +90,15 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setStudent(newStudent);
   };
 
-  const logout = () => {
+  const logout = async () => {
     setStudent(null);
-    // Optionally call logout endpoint if you have one
+      await fetch('http://localhost:8080/logout', {
+          method: 'GET',
+          credentials: 'include',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+      });
   };
 
   useEffect(() => {
