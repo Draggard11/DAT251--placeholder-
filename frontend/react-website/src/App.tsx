@@ -1,11 +1,6 @@
-import { useState } from "react";
 import {
-  RouterProvider,
-  createBrowserRouter,
-  BrowserRouter as Router,
   Routes,
   Route,
-  BrowserRouter,
 } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
@@ -14,11 +9,9 @@ import Groups from "./pages/Groups";
 import Subjects from "./pages/Subjects";
 import Login from "./pages/Login";
 import StudySession from "./pages/StudySession";
-import hvlLogo from "./assets/hvl_logo.png";
 import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0);
 
   return (
     <>

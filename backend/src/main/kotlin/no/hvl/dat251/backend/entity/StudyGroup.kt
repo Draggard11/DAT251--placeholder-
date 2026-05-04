@@ -19,7 +19,7 @@ import java.util.Date
 class StudyGroup (
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null,
+    var id: Long? = null,
     var name : String = "Test Group",
     @ManyToMany
     @JoinTable(

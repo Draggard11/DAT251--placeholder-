@@ -30,7 +30,9 @@ const StudySession = () => {
 
   const fetchSessions = async () => {
     try {
-      const res = await fetch("http://localhost:8080/api/studySessions");
+      const res = await fetch("http://localhost:8080/api/studySessions", {
+        credentials: "include",
+      });
       const data = await res.json();
 
       setSessions(
@@ -99,6 +101,7 @@ const StudySession = () => {
           `http://localhost:8080/api/studySessions/${selectedSession.id}`,
           {
             method: "PATCH",
+            credentials: "include",
             headers: {
               "Content-Type": "application/json",
             },
@@ -117,6 +120,7 @@ const StudySession = () => {
       } else {
         res = await fetch("http://localhost:8080/api/studySessions", {
           method: "POST",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
           },
@@ -151,6 +155,7 @@ const StudySession = () => {
     try {
       const res = await fetch(`http://localhost:8080/api/studySessions/${id}`, {
         method: "DELETE",
+        credentials: "include",
       });
 
       if (!res.ok) throw new Error("Failed to delete");
@@ -180,6 +185,7 @@ const StudySession = () => {
     try {
       const res = await fetch(`http://localhost:8080/api/studySessions/${id}`, {
         method: "PATCH",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
@@ -263,7 +269,8 @@ const StudySession = () => {
         padding: "40px 32px",
         width: "100%",
         margin: "0 auto",
-        backgroundColor: "#f5f7fa",
+        backgroundColor: "var(--color-background)",
+        color: "var(--color-text)",
         minHeight: "100vh",
       }}
     >

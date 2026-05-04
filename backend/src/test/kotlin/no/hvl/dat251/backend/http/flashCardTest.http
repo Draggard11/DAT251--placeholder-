@@ -1,0 +1,49 @@
+### Base Configuration
+@host = http://localhost:8080
+@json = application/json
+###
+
+### Register a new user
+POST {{host}}/api/auth/register
+Content-Type: {{json}}
+
+{
+  "name": "Test User",
+  "email": "test@example.com",
+  "password": "password123"
+}
+
+### Login (this will set the session cookie)
+POST {{host}}/api/auth/login
+Content-Type: {{json}}
+
+{
+  "email": "test@example.com",
+  "password": "password123"
+}
+
+### Create a subject
+POST {{host}}/api/subjects
+Content-Type: {{json}}
+
+{
+  "subjectCode": "MATH101",
+  "name": "Introduction to Mathematics"
+}
+
+### Get all subjects
+GET {{host}}/api/subjects
+
+### Create FlashCard
+POST {{host}}/api/subjects/flashcard
+Content-Type: {{json}}
+
+{
+  "question": "1+1",
+  "answer": "2"
+}
+
+### GET FlashCard
+GET {{host}}/api/subjects/flashcards
+
+

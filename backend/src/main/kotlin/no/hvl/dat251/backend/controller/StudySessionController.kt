@@ -3,7 +3,6 @@ package no.hvl.dat251.backend.controller
 import org.springframework.web.bind.annotation.CrossOrigin
 import no.hvl.dat251.backend.dto.StudySessionUpdateDTO
 import no.hvl.dat251.backend.entity.StudySession
-import no.hvl.dat251.backend.entity.StudyGroup
 import no.hvl.dat251.backend.repository.StudentRepository
 import no.hvl.dat251.backend.repository.StudySessionRepository
 import no.hvl.dat251.backend.repository.StudyGroupRepository
@@ -28,22 +27,28 @@ class StudySessionController(
     @Autowired private val studentRepository: StudentRepository,
     @Autowired private val subjectRepository: SubjectRepository,
     @Autowired private val studyGroupRepository: StudyGroupRepository
-    
-){
-
-
+) {
     @GetMapping("")
-    fun getStudySessions() : List<StudySession> =
+    fun getStudySessions(): List<StudySession> =
         studySessionRepository.findAll().toList()
 
     @PostMapping("")
-    fun creatStudySession(@RequestBody studySession: StudySession) : ResponseEntity<StudySession> {
+    fun creatStudySession(@RequestBody studySession: StudySession): ResponseEntity<StudySession> {
+        // hardcoded student
+        // TODO make login and then remove
+        val student1 = studentRepository.findById(1).orElse(null)
+
+        if (student1 != null) {
+            studySession.registerStudent(student1)
+            studentRepository.save(student1)
+        }
+        // end of student
         val savedStudySession = studySessionRepository.save(studySession)
         return ResponseEntity.ok(savedStudySession)
     }
 
     @GetMapping("/{id}")
-    fun getStudySessionById(@PathVariable("id") id : Long) : ResponseEntity<StudySession> {
+    fun getStudySessionById(@PathVariable("id") id : Long): ResponseEntity<StudySession> {
         val StudySession = studySessionRepository.findById(id).orElse(null)
             ?: return ResponseEntity(HttpStatus.NOT_FOUND)
         return ResponseEntity(StudySession, HttpStatus.OK)
@@ -53,8 +58,7 @@ class StudySessionController(
     fun updateStudySession(
         @PathVariable id: Long,
         @RequestBody dto: StudySessionUpdateDTO
-    ) : ResponseEntity<StudySession> {
-
+    ): ResponseEntity<StudySession> {
         val studySession = studySessionRepository.findById(id).orElse(null)
             ?: return ResponseEntity(HttpStatus.NOT_FOUND)
 
@@ -65,17 +69,25 @@ class StudySessionController(
         dto.attendanceIds?.let { studySession.attendance = studentRepository.findAllById(it).toMutableSet() }
         dto.location?.let { studySession.location = it }
         dto.studyGroupId?.let { studySession.studyGroup = studyGroupRepository.findById(it).orElse(null) }
+        if (dto.completed == true){
+            studySession.finish()
+            studySession.attendance.forEach { student ->
+                studentRepository.save(student)
+            }
+        }
         val updated = studySessionRepository.save(studySession)
-        if (updated.completed == true) { updated.finish() }
         return ResponseEntity.ok(updated)
     }
 
     @DeleteMapping("/{id}")
-    fun deleteStudySessionById(@PathVariable("id") id : Long) : ResponseEntity<StudySession> {
-        if (!studySessionRepository.existsById(id)){
+    fun deleteStudySessionById(
+        @PathVariable("id") id: Long
+    ): ResponseEntity<StudySession> {
+        if (!studySessionRepository.existsById(id)) {
             return ResponseEntity(HttpStatus.NOT_FOUND)
         }
         studySessionRepository.deleteById(id)
         return ResponseEntity(HttpStatus.NO_CONTENT)
     }
 }
+

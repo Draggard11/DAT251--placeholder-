@@ -1,7 +1,10 @@
 package no.hvl.dat251.backend.controller
 
+import no.hvl.dat251.backend.entity.FlashCard
+import no.hvl.dat251.backend.entity.FlashCardDto
 import no.hvl.dat251.backend.entity.StudySession
 import no.hvl.dat251.backend.entity.StudyGroup
+import org.springframework.security.core.Authentication
 import no.hvl.dat251.backend.entity.Student
 import no.hvl.dat251.backend.entity.Subject
 import no.hvl.dat251.backend.repository.StudentRepository
@@ -77,5 +80,26 @@ class SubjectController(
         return ResponseEntity(HttpStatus.NO_CONTENT)
     }
 
+    @GetMapping("/flashcards")
+    fun getFlashCardsById(
+        authentication: Authentication?)
+    : ResponseEntity<MutableSet<FlashCard>> {
+        val auth = authentication?.principal as? Student ?: return ResponseEntity(HttpStatus.NOT_FOUND)
+        val student = studentRepository.findById(auth.id ?: return ResponseEntity(HttpStatus.NOT_FOUND)).orElseThrow()
 
+        return ResponseEntity.ok(student.flashCards)
+    }
+
+    @PostMapping("/flashcard")
+    fun addStudentToSubject(
+        @RequestBody flashCard: FlashCardDto,
+        authentication: Authentication?
+    ) : ResponseEntity<FlashCard> {
+        val auth = authentication?.principal as? Student ?: return ResponseEntity(HttpStatus.NOT_FOUND)
+        val student = studentRepository.findById(auth.id ?: return ResponseEntity(HttpStatus.NOT_FOUND)).orElseThrow()
+        val fCard = FlashCard.create(flashCard)
+        student.flashCards.add(fCard)
+        studentRepository.save(student)
+        return ResponseEntity.ok(fCard)
+    }
 }
