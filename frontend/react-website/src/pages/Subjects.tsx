@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Flashcard from "../components/Flashcard";
 import CreateFlashcardModal from "../components/CreateFlashcardModal";
+import { useAuth } from "../contexts/AuthContext";
 
 type Question = {
   id: string;
@@ -29,6 +30,7 @@ type FlashcardItem = {
 
 const Subjects = () => {
   const [flashcards, setFlashcards] = useState<FlashcardItem[]>([]);
+  const { student } = useAuth();
 
   const [isFlashcardModalOpen, setIsFlashcardModalOpen] = useState(false);
   // 🔥 Hardcoded data
@@ -81,6 +83,7 @@ const Subjects = () => {
     },
   ]);
 
+  const [preferenceStudentId, setPreferenceStudentId] = useState("");
   const [selectedSubject, setSelectedSubject] = useState<Subject | null>(null);
   const [selectedQuiz, setSelectedQuiz] = useState<Quiz | null>(null);
   const [newQuizTitle, setNewQuizTitle] = useState("");
@@ -180,6 +183,40 @@ const Subjects = () => {
   useEffect(() => {
     fetchFlashcards();
   }, []);
+
+  const handleAddPreference = async (subjectId: string) => {
+    const studentIdNumber = Number(preferenceStudentId);
+
+    if (!studentIdNumber) {
+      console.error("Invalid student id");
+      return;
+    }
+
+    try {
+      const res = await fetch(
+        `http://localhost:8080/api/subjects/${subjectId}/addpreference`,
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            subjectId: Number(subjectId),
+            studentId: studentIdNumber,
+          }),
+        }
+      );
+
+      if (!res.ok) {
+        throw new Error("Failed to add preference");
+      }
+
+      console.log("Preference added");
+    } catch (err) {
+      console.error("Failed to add preference:", err);
+    }
+  };
 
   return (
     <div
@@ -335,6 +372,60 @@ const Subjects = () => {
             <button onClick={() => setSelectedSubject(null)}>← Back</button>
 
             <h2 style={{ marginTop: "10px" }}>{selectedSubject.name}</h2>
+
+            <div
+              style={{
+                marginTop: "20px",
+                padding: "16px",
+                borderRadius: "12px",
+                border: "1px solid var(--color-border)",
+                backgroundColor: "var(--color-surface-soft)",
+              }}
+            >
+              <h3 style={{ margin: "0 0 8px 0" }}>Add preference</h3>
+
+              <p style={{ margin: "0 0 12px 0", color: "#666" }}>
+                Add a student preference for this subject by entering a student
+                ID.
+              </p>
+
+              <div
+                style={{ display: "flex", gap: "10px", alignItems: "center" }}
+              >
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
+                  placeholder="Student ID"
+                  value={preferenceStudentId}
+                  onChange={(e) => {
+                    const onlyNumbers = e.target.value.replace(/\D/g, "");
+                    setPreferenceStudentId(onlyNumbers);
+                  }}
+                  style={{
+                    padding: "10px",
+                    borderRadius: "8px",
+                    border: "1px solid #ccc",
+                    width: "180px",
+                  }}
+                />
+
+                <button
+                  onClick={() => handleAddPreference(selectedSubject.id)}
+                  style={{
+                    padding: "10px 14px",
+                    borderRadius: "8px",
+                    border: "none",
+                    backgroundColor: "var(--color-primary)",
+                    color: "white",
+                    cursor: "pointer",
+                    fontWeight: 600,
+                  }}
+                >
+                  Add preference
+                </button>
+              </div>
+            </div>
 
             <h3 style={{ marginTop: "20px" }}>Quizzes</h3>
 
