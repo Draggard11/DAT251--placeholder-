@@ -16,8 +16,12 @@ class PreferanceGroupGenerator : GroupGenerator {
         val prefList = mutableMapOf<Long, Set<Long>>()
 
         for (student in students) {
+            val prefs = student.preferences
+                .filter { it.subject?.id == subject.id }
+                .mapNotNull { it.preferredStudentID }
+                .toSet()
 
-            prefList[student.id ?: 0] = (student.groupPreferences[subject.id]) as Set<Long>
+            prefList[student.id!!] = prefs
         }
         //prefList should be a map of each student in a subject to its preferences
         

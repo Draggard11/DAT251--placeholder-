@@ -1,6 +1,8 @@
 package no.hvl.dat251.backend
 
 
+import jakarta.transaction.Transactional
+import no.hvl.dat251.backend.entity.GroupPreference
 import no.hvl.dat251.backend.entity.Student
 import no.hvl.dat251.backend.entity.Subject
 import no.hvl.dat251.backend.groupgeneration.PreferanceGroupGenerator
@@ -22,13 +24,24 @@ class GroupGenerationTests {
     lateinit var studentRepository: StudentRepository
     private val generator = PreferanceGroupGenerator()
 
+    @Test
+    @Transactional
+    @DisplayName("test for genearating with group ")
+    fun genareateGroupsForDAT251(){
+        val subject = subjectRepository
+            .findBySubjectCode("DAT251")
+            .orElseThrow { RuntimeException("Subject not found") }
+        val results = generator.generate(subject)
+        println(results)
+
+    }
         
 
     @Test
     @DisplayName("We should be able to create groups from a list of requests")
     fun generateGroups() {
-        val dat251 = Subject(subjectCode = "DAT251")
-        subjectRepository.save(dat251)
+        val dat251 = Subject(subjectCode = "DAT255")
+
         val student1 = Student(name = "Daan", email = "daan@uib.no")
         studentRepository.save(student1)
         dat251.addStudent(student1)
@@ -41,20 +54,45 @@ class GroupGenerationTests {
             dat251.addStudent(student)
             studentRepository.save(student)
         }
-        
-        for (student in otherStudents) {
 
-            var randomInt1 = Random.nextInt(0, 19)
-            var randomInt2 = Random.nextInt(0, 19)
-            var randomStudent1 = otherStudents[randomInt1].id
-            var randomStudent2 = otherStudents[randomInt2].id
+        subjectRepository.save(dat251)
 
-            var preference = setOf(student1.id, randomStudent1, randomStudent2)
-            student.groupPreferences[dat251.id] =  preference
+        otherStudents.forEach { student ->
+
+            // Always include student1
+            val prefToStudent1 = GroupPreference(
+                student = student,
+                subject = dat251,
+                preferredStudentID = student1.id
+            )
+            student.preferences.add(prefToStudent1)
+
+            // Add 2 more random preferences
+            val randomPrefs = otherStudents
+                .filter { it.id != student.id && it.id != student1.id }
+                .shuffled()
+                .take(2)
+
+            randomPrefs.forEach { prefStudent ->
+                val pref = GroupPreference(
+                    student = student,
+                    subject = dat251,
+                    preferredStudentID = prefStudent.id
+                )
+                student.preferences.add(pref)
+            }
         }
         println("subject id befor test: ${dat251.id}")
-        var preference = mutableSetOf(otherStudents[0].id, otherStudents[2].id)
-        student1.groupPreferences[dat251.id] = preference
+        var preferdStudents = mutableListOf(otherStudents[0].id, otherStudents[2].id)
+        for (prefstudent in otherStudents) {
+            val pref = GroupPreference(
+                student = student1,
+                subject = dat251,
+                preferredStudentID = prefstudent.id
+            )
+            student1.preferences.add(pref)
+        }
+        studentRepository.save(student1)
         println(dat251.students.size)
         val results = generator.generate(dat251)
         println(results)

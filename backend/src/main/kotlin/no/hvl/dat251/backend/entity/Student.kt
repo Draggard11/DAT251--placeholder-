@@ -30,8 +30,8 @@ class Student(
     @OneToMany(cascade = [(CascadeType.MERGE)])
     var studygroups: MutableSet<StudyGroup> = mutableSetOf(),
     //Map of subject to list of students
-    @Transient
-    var groupPreferences: MutableMap<Long?, Set<Long?>> = mutableMapOf(),
+    @OneToMany(mappedBy = "student", cascade = [CascadeType.ALL])
+    var preferences: MutableSet<GroupPreference> = mutableSetOf(),
 
     @OneToMany(cascade = [(CascadeType.MERGE)])
     var flashCards: MutableSet<FlashCard> = mutableSetOf(),

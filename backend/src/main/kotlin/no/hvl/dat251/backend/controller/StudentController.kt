@@ -30,8 +30,8 @@ class StudentController(
 ){
 
     @GetMapping("")
-    fun getStudents() : List<Student> =
-        studentRepository.findAll().toList()
+    fun getStudents() : List<StudentDTO> =
+        studentRepository.findAll().map { it.toDTO() }
 
     @PostMapping("")
     fun creatStudent(@RequestBody student: Student) : ResponseEntity<Student> {
@@ -107,4 +107,23 @@ class StudentController(
             ?: return ResponseEntity(HttpStatus.NOT_FOUND)
         return ResponseEntity(student.xp, HttpStatus.OK)
     }
+}
+data class StudentDTO(
+    val id: Long?,
+    val name: String,
+    val email: String,
+    val xp: Float,
+    val preferences: List<Long>
+)
+fun Student.toDTO(): StudentDTO {
+    val prefs = this.preferences
+        .mapNotNull { it.preferredStudentID }
+
+    return StudentDTO(
+        id = id,
+        name = name,
+        email = email,
+        xp = xp,
+        preferences = prefs
+    )
 }
