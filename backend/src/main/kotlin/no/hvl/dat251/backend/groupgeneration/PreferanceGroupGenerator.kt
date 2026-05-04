@@ -8,37 +8,41 @@ import no.hvl.dat251.backend.entity.StudyGroup
 
 @Service
 class PreferanceGroupGenerator : GroupGenerator {
-    fun generate(subject: Subject): List<List<Long>> {
+    override fun generate(subject: Subject): List<List<Long>> {
         //We get all students taking the subject and add their prefererences for that subject to a map
         val students = subject.students
+        println("students: ${students.size}")
+        println("subject id in generation: ${subject.id}}")
         val prefList = mutableMapOf<Long, Set<Long>>()
 
         for (student in students) {
-            prefList[student.id] = student.groupPreferences[subject]!! ?: emptySet()
+
+            prefList[student.id ?: 0] = (student.groupPreferences[subject.id]) as Set<Long>
         }
         //prefList should be a map of each student in a subject to its preferences
         
         val n = students.size
-
+        val entries = prefList.entries.toList()
+        println(prefList)
         val groups = mutableListOf<PotentialGroup>()
         //Hardcoded for groupsizes of 4. SubjectSize is limited to <32 members (bitwise operators)  
         for (a in 0 until n-3) {
             for (b in a+1 until n-2) {
                 for (c in b+1 until n-1) {
                     for (d in c+1 until n) {
-                        val entries = prefList.entries.toList()
+//
                         val members = listOf(
                             entries[a],
                             entries[b],
                             entries[c],
                             entries[d]
                         )
-                        // val members = listOf(
-                        //     prefList.entries.elementAt(a), 
-                        //     prefList.entries.elementAt(b),
-                        //     prefList.entries.elementAt(c),
-                        //     prefList.entries.elementAt(d)
-                        //     )
+//                         val members = listOf(
+//                             prefList.entries.elementAt(a),
+//                             prefList.entries.elementAt(b),
+//                             prefList.entries.elementAt(c),
+//                             prefList.entries.elementAt(d)
+//                             )
                         var groupScore = 0
 
                         for(i in members) {
