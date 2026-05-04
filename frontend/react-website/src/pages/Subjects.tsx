@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import Flashcard from "../components/Flashcard";
+import CreateFlashcardModal from "../components/CreateFlashcardModal";
 
 type Question = {
   id: string;
@@ -19,7 +21,22 @@ type Subject = {
   quizzes: Quiz[];
 };
 
+type FlashcardItem = {
+  id: string;
+  front: string;
+  back: string;
+};
+
 const Subjects = () => {
+  const [flashcards, setFlashcards] = useState<FlashcardItem[]>([
+    {
+      id: "1",
+      front: "What is Scrum?",
+      back: "An agile framework for managing and delivering work in iterations.",
+    },
+  ]);
+
+  const [isFlashcardModalOpen, setIsFlashcardModalOpen] = useState(false);
   // 🔥 Hardcoded data
   const [subjects, setSubjects] = useState<Subject[]>([
     {
@@ -113,6 +130,17 @@ const Subjects = () => {
     setNewQuizTitle("");
   };
 
+  const handleAddFlashcard = (flashcard: { front: string; back: string }) => {
+    const newFlashcard: FlashcardItem = {
+      id: Date.now().toString(),
+      front: flashcard.front,
+      back: flashcard.back,
+    };
+
+    setFlashcards((prev) => [...prev, newFlashcard]);
+    setIsFlashcardModalOpen(false);
+  };
+
   return (
     <div
       style={{
@@ -184,6 +212,68 @@ const Subjects = () => {
                 </div>
               ))}
             </div>
+          </div>
+        )}
+
+        {!selectedSubject && (
+          <div
+            style={{
+              marginTop: "32px",
+              backgroundColor: "#fff",
+              padding: "24px",
+              borderRadius: "16px",
+              border: "1px solid #ddd",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                marginBottom: "20px",
+              }}
+            >
+              <div>
+                <h2 style={{ margin: 0 }}>Flashcards</h2>
+                <p style={{ color: "#666", margin: "6px 0 0 0" }}>
+                  Review key concepts by flipping the cards.
+                </p>
+              </div>
+
+              <button
+                onClick={() => setIsFlashcardModalOpen(true)}
+                style={{
+                  padding: "10px 16px",
+                  borderRadius: "10px",
+                  border: "none",
+                  backgroundColor: "var(--color-primary)",
+                  color: "white",
+                  cursor: "pointer",
+                  fontWeight: 600,
+                }}
+              >
+                Create Flashcard
+              </button>
+            </div>
+
+            <div
+              style={{
+                display: "flex",
+                gap: "20px",
+                flexWrap: "wrap",
+                justifyContent: "center",
+              }}
+            >
+              {flashcards.map((card) => (
+                <Flashcard key={card.id} front={card.front} back={card.back} />
+              ))}
+            </div>
+            <CreateFlashcardModal
+              isOpen={isFlashcardModalOpen}
+              onClose={() => setIsFlashcardModalOpen(false)}
+              onSave={handleAddFlashcard}
+            />
           </div>
         )}
 
