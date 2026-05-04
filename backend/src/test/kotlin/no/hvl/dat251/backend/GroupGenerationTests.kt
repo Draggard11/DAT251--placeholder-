@@ -29,13 +29,14 @@ class GroupGenerationTests {
     fun generateGroups() {
         val dat251 = Subject(subjectCode = "DAT251")
         subjectRepository.save(dat251)
-        val student1 = Student(name = "Daan")
+        val student1 = Student(name = "Daan", email = "daan@uib.no")
         studentRepository.save(student1)
         dat251.addStudent(student1)
         var otherStudents = mutableListOf<Student>()
         for (i in (0 until 19)) {
             var studentName = "Student $i"
-            val student = Student(name = studentName)
+            var studentEmail = "test$i@test.no"
+            val student = Student(name = studentName, email = studentEmail)
             otherStudents.add(student)
             dat251.addStudent(student)
             studentRepository.save(student)
