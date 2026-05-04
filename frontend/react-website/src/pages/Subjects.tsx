@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Flashcard from "../components/Flashcard";
 import CreateFlashcardModal from "../components/CreateFlashcardModal";
 
@@ -23,18 +23,12 @@ type Subject = {
 
 type FlashcardItem = {
   id: string;
-  front: string;
-  back: string;
+  question: string;
+  answer: string;
 };
 
 const Subjects = () => {
-  const [flashcards, setFlashcards] = useState<FlashcardItem[]>([
-    {
-      id: "1",
-      front: "What is Scrum?",
-      back: "An agile framework for managing and delivering work in iterations.",
-    },
-  ]);
+  const [flashcards, setFlashcards] = useState<FlashcardItem[]>([]);
 
   const [isFlashcardModalOpen, setIsFlashcardModalOpen] = useState(false);
   // 🔥 Hardcoded data
@@ -130,16 +124,61 @@ const Subjects = () => {
     setNewQuizTitle("");
   };
 
-  const handleAddFlashcard = (flashcard: { front: string; back: string }) => {
-    const newFlashcard: FlashcardItem = {
-      id: Date.now().toString(),
-      front: flashcard.front,
-      back: flashcard.back,
-    };
+  const handleAddFlashcard = async (flashcard: {
+    front: string;
+    back: string;
+  }) => {
+    try {
+      const res = await fetch("http://localhost:8080/api/flashcards", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          question: flashcard.front,
+          answer: flashcard.back,
+        }),
+      });
 
-    setFlashcards((prev) => [...prev, newFlashcard]);
-    setIsFlashcardModalOpen(false);
+      if (!res.ok) {
+        throw new Error("Failed to create flashcard");
+      }
+
+      await fetchFlashcards();
+      setIsFlashcardModalOpen(false);
+    } catch (err) {
+      console.error("Failed to create flashcard:", err);
+    }
   };
+
+  const fetchFlashcards = async () => {
+    try {
+      const res = await fetch("http://localhost:8080/api/flashcards", {
+        credentials: "include",
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to fetch flashcards");
+      }
+
+      const data = await res.json();
+
+      setFlashcards(
+        data.map((card: any) => ({
+          id: String(card.id),
+          question: card.question ?? "",
+          answer: card.answer ?? "",
+        }))
+      );
+    } catch (err) {
+      console.error("Failed to fetch flashcards:", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchFlashcards();
+  }, []);
 
   return (
     <div
@@ -266,7 +305,11 @@ const Subjects = () => {
               }}
             >
               {flashcards.map((card) => (
-                <Flashcard key={card.id} front={card.front} back={card.back} />
+                <Flashcard
+                  key={card.id}
+                  front={card.question}
+                  back={card.answer}
+                />
               ))}
             </div>
             <CreateFlashcardModal
