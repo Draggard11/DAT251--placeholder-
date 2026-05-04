@@ -113,14 +113,16 @@ class SubjectController(
         @PathVariable("id") id : Long,
         @PathVariable("student_id") student_id : Long,
         authentication: Authentication?,
-    ) : ResponseEntity<GroupPreference>{
+    ) : ResponseEntity<PreferenceResponseDTO>{
         val auth = authentication?.principal as? Student ?: return ResponseEntity(HttpStatus.NOT_FOUND)
         val student = studentRepository.findById(auth.id ?: return ResponseEntity(HttpStatus.NOT_FOUND)).orElseThrow()
         val subject = subjectRepository.findById(id).orElse(null)
         val prefs = GroupPreference(student=student, subject=subject, preferredStudentID = student_id)
         student.preferences.add(prefs)
         studentRepository.save(student)
-        return ResponseEntity.ok(prefs)
+        return ResponseEntity.ok(
+            PreferenceResponseDTO(student_id, id)
+        )
     }
 
     @PostMapping("/{id}/generateGroups")
@@ -141,3 +143,7 @@ class SubjectController(
         return ResponseEntity.ok(groups)
     }
 }
+data class PreferenceResponseDTO(
+    val preferredStudentId: Long?,
+    val subjectId: Long?
+)

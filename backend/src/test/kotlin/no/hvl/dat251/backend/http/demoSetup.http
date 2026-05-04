@@ -11,9 +11,9 @@ POST {{host}}/api/auth/register
 Content-Type: {{json}}
 
 {
-  "name": "Test User",
+  "name": "Aksel",
   "email": "test@example.com",
-  "password": "password123"
+  "password": "123"
 }
 
 ### Login (this will set the session cookie)
@@ -23,7 +23,7 @@ Content-Type: {{json}}
 
 {
   "email": "test@example.com",
-  "password": "password123"
+  "password": "123"
 }
 
 ### Check if authenticated (should return user data)

@@ -35,8 +35,10 @@ class StudyGroupsController(
     )
     {
         @GetMapping("")
-        fun getAllGroups(): ResponseEntity<Set<StudyGroup>> {
-            val groups = studyGroupRepository.findAll().toSet()
+        fun getAllGroups(): ResponseEntity<List<StudyGroupDTO>> {
+            val groups = studyGroupRepository.findAll()
+                .map { it.toDTO() }
+
             return ResponseEntity.ok(groups)
         }
 
@@ -119,4 +121,17 @@ class StudyGroupsController(
         }
 
 
+}
+
+data class StudyGroupDTO(
+    val id: Long?,
+    val name: String,
+    val students: List<String>
+)
+fun StudyGroup.toDTO(): StudyGroupDTO {
+    return StudyGroupDTO(
+        id = this.id,
+        name = this.name,
+        students = this.students.map { it.name }
+    )
 }

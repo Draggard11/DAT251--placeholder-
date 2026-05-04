@@ -29,6 +29,7 @@ class DemoDataConfig {
             Student(
                 name = "Aksel",
                 email = "aksel@uib.no",
+                xp = 64.5f,
                 passwordHash = passwordEncoder.encode("123")!!
             )
         )
