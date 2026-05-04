@@ -2,6 +2,7 @@ package no.hvl.dat251.backend.controller
 
 import org.springframework.web.bind.annotation.CrossOrigin
 import no.hvl.dat251.backend.dto.StudySessionUpdateDTO
+import no.hvl.dat251.backend.entity.Student
 import no.hvl.dat251.backend.entity.StudySession
 import no.hvl.dat251.backend.repository.StudentRepository
 import no.hvl.dat251.backend.repository.StudySessionRepository
@@ -10,6 +11,7 @@ import no.hvl.dat251.backend.repository.SubjectRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.core.Authentication
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PatchMapping
@@ -57,7 +59,8 @@ class StudySessionController(
     @PatchMapping("/{id}")
     fun updateStudySession(
         @PathVariable id: Long,
-        @RequestBody dto: StudySessionUpdateDTO
+        @RequestBody dto: StudySessionUpdateDTO,
+        authentication: Authentication?
     ): ResponseEntity<StudySession> {
         val studySession = studySessionRepository.findById(id).orElse(null)
             ?: return ResponseEntity(HttpStatus.NOT_FOUND)
@@ -70,10 +73,11 @@ class StudySessionController(
         dto.location?.let { studySession.location = it }
         dto.studyGroupId?.let { studySession.studyGroup = studyGroupRepository.findById(it).orElse(null) }
         if (dto.completed == true){
+            val auth = authentication?.principal as? Student ?: return ResponseEntity(HttpStatus.NOT_FOUND)
+            val student = studentRepository.findById(auth.id ?: return ResponseEntity(HttpStatus.NOT_FOUND)).orElseThrow()
+            student.xp += 6.7f
             studySession.finish()
-            studySession.attendance.forEach { student ->
-                studentRepository.save(student)
-            }
+            studentRepository.save(student)
         }
         val updated = studySessionRepository.save(studySession)
         return ResponseEntity.ok(updated)

@@ -28,19 +28,26 @@ const StudyGroupCard = ({
           <p style={descriptionStyle}>{group.description}</p>
         )}
 
-        <div style={avatarsRowStyle}>
-          <div style={avatarStyle}></div>
-          <div style={avatarStyle}></div>
-          <div style={avatarStyle}></div>
-          <span>+2</span>
-        </div>
+          <div style={studentsSectionStyle}>
+            <p style={studentsLabelStyle}>Students:</p>
+            {group.students && group.students.length > 0 ? (
+              <ul style={studentsListStyle}>
+                {group.students.map((student, index) => (
+                  <li key={index} style={studentItemStyle}>
+                    {student}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p style={noStudentsStyle}>No students in this group</p>
+            )}
+          </div>
 
         <div style={attendanceSectionStyle}>
           <p style={attendanceLabelStyle}>Attendance (last session)</p>
 
           <div style={avatarsRowStyle}>
-            <div style={avatarStyle}></div>
-            <div style={avatarStyle}></div>
+              
           </div>
         </div>
       </div>
@@ -165,6 +172,37 @@ const subjectStyle = {
 const descriptionStyle = {
   margin: 0,
   color: "#666",
+  fontSize: "16px",
+};
+
+const studentsSectionStyle = {
+  display: "flex",
+  flexDirection: "column" as const,
+  gap: "6px",
+};
+
+const studentsLabelStyle = {
+  margin: 0,
+  color: "#666",
+  fontSize: "18px",
+  lineHeight: "1.2",
+};
+
+const studentsListStyle = {
+  listStyleType: "disc" as const,
+  margin: 0,
+  paddingLeft: "20px",
+};
+
+const studentItemStyle = {
+  margin: 0,
+  color: "#333",
+  fontSize: "16px",
+};
+
+const noStudentsStyle = {
+  margin: 0,
+  color: "#999",
   fontSize: "16px",
 };
 

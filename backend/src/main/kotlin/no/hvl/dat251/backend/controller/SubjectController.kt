@@ -96,7 +96,7 @@ class SubjectController(
     }
 
     @PostMapping("/flashcard")
-    fun addStudentToSubject(
+    fun addFlashcard(
         @RequestBody flashCard: FlashCardDto,
         authentication: Authentication?
     ) : ResponseEntity<FlashCard> {
@@ -109,7 +109,7 @@ class SubjectController(
     }
 
     @PostMapping("/{id}/addPrefences/{student_id}")
-    fun addPresencesToSubject(
+    fun addPresencesToStudent(
         @PathVariable("id") id : Long,
         @PathVariable("student_id") student_id : Long,
         authentication: Authentication?,
@@ -135,9 +135,10 @@ class SubjectController(
         val subject = subjectRepository.findById(id).orElse(null)
         val generator = PreferanceGroupGenerator()
         val groups = generator.generate(subject ?: return ResponseEntity(HttpStatus.NOT_FOUND))
+        var count = 1
         for (group in groups) {
             val students = studentRepository.findAllById(group).toMutableSet()
-            val studyGroup = StudyGroup(name="generatedGroup", students = students)
+            val studyGroup = StudyGroup(name="${subject.subjectCode} gruppe ${count++}", students = students)
             studyGroupRepository.save(studyGroup)
         }
         return ResponseEntity.ok(groups)

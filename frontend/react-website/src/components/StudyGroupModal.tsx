@@ -11,6 +11,7 @@ interface Props {
 const StudyGroupModal = ({ isOpen, onClose, onSave, initialData }: Props) => {
   const [subject, setSubject] = useState("");
   const [groupName, setGroupName] = useState("");
+  const [students, setStudents] = useState([]);
   const [description, setDescription] = useState("");
   const [link, setLink] = useState("");
 
@@ -36,6 +37,7 @@ const StudyGroupModal = ({ isOpen, onClose, onSave, initialData }: Props) => {
     onSave({
       subject,
       groupName,
+        students,
       description,
       link,
     });

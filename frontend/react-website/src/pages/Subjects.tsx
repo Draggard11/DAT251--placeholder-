@@ -213,6 +213,28 @@ const Subjects = () => {
       console.error("Failed to add preference:", err);
     }
   };
+    const handleGenerateGroups = async (subjectId: string) => {
+        try {
+            const res = await fetch(
+                `http://localhost:8080/api/subjects/${subjectId}/generateGroups`,
+                {
+                    method: "POST",
+                    credentials: "include",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+
+            if (!res.ok) {
+                throw new Error("Failed to add preference");
+            }
+
+            console.log("Preference added");
+        } catch (err) {
+            console.error("Failed to add preference:", err);
+        }
+    };
 
   return (
     <div
@@ -420,6 +442,20 @@ const Subjects = () => {
                 >
                   Add preference
                 </button>
+                  <button
+                      onClick={() => handleGenerateGroups(selectedSubject.id)}
+                      style={{
+                          padding: "10px 14px",
+                          borderRadius: "8px",
+                          border: "none",
+                          backgroundColor: "var(--color-primary)",
+                          color: "white",
+                          cursor: "pointer",
+                          fontWeight: 600,
+                      }}
+                  >
+                      Generate groups
+                  </button>
               </div>
             </div>
 

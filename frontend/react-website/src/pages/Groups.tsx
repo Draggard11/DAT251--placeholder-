@@ -25,6 +25,7 @@ const Groups = () => {
         data.map((group: any) => ({
           id: String(group.id),
           groupName: group.name,
+            students: group.students,
           subject: "",
           description: "",
           link: "",
