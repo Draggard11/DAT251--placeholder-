@@ -1,8 +1,6 @@
 package no.hvl.dat251.backend.entity
 
-import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.*
-import no.hvl.dat251.backend.exp.Exp
 import no.hvl.dat251.backend.exp.ExpObserver
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
@@ -11,7 +9,6 @@ import java.time.LocalDate
 @Entity
 @Table(name = "STUDENTS")
 class Student(
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null,
@@ -32,6 +29,9 @@ class Student(
     //Map of subject to list of students
     @OneToMany(mappedBy = "student", cascade = [CascadeType.ALL])
     var preferences: MutableSet<GroupPreference> = mutableSetOf(),
+
+    @OneToMany(cascade = [(CascadeType.MERGE)])
+    var preferences2: MutableSet<Preferences> = mutableSetOf(),
 
     @OneToMany(cascade = [(CascadeType.MERGE)])
     var flashCards: MutableSet<FlashCard> = mutableSetOf(),
@@ -64,4 +64,18 @@ class Student(
         // it would be best to let frontend deal with notifying the user and use GET if a session is claimed finished
         this.xp += xp
     }
+
+    val studentPreferences: Map<Long, List<Long>>
+        get() = preferences2.groupBy({ it.subjectId }, { it.studentId })
 }
+
+
+@Entity
+class Preferences(
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var id: Long? = null,
+
+    var subjectId: Long,
+    var studentId: Long,
+)

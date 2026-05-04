@@ -1,0 +1,147 @@
+### Base Configuration
+@host = http://localhost:8080
+@json = application/json
+
+
+### Register a new user
+POST {{host}}/api/auth/register
+Content-Type: {{json}}
+
+{
+  "name": "Test User",
+  "email": "test@example.com",
+  "password": "password123"
+}
+
+### Register a new user
+POST {{host}}/api/auth/register
+Content-Type: {{json}}
+
+{
+  "name": "Test User 2",
+  "email": "test2@example.com",
+  "password": "password123"
+}
+
+### Register a new user
+POST {{host}}/api/auth/register
+Content-Type: {{json}}
+
+{
+  "name": "Test User 3",
+  "email": "test3@example.com",
+  "password": "password123"
+}
+
+### Register a new user
+POST {{host}}/api/auth/register
+Content-Type: {{json}}
+
+{
+  "name": "Test User 4",
+  "email": "test4@example.com",
+  "password": "password123"
+}
+
+### Login (this will set the session cookie)
+# @name login
+POST {{host}}/api/auth/login
+Content-Type: {{json}}
+
+{
+  "email": "test@example.com",
+  "password": "password123"
+}
+
+### Get all subjects
+GET {{host}}/api/subjects
+
+### Create a subject
+POST {{host}}/api/subjects
+Content-Type: {{json}}
+
+{
+  "subjectCode": "MATH101",
+  "name": "Introduction to Mathematics"
+}
+
+### add student to subject
+POST {{host}}/api/subjects/1/students/1
+
+###
+# @name login
+POST {{host}}/api/auth/login
+Content-Type: {{json}}
+
+{
+  "email": "test2@example.com",
+  "password": "password123"
+}
+### add student 2 to subject
+POST {{host}}/api/subjects/1/students/2
+
+###
+# @name login
+POST {{host}}/api/auth/login
+Content-Type: {{json}}
+
+{
+  "email": "test3@example.com",
+  "password": "password123"
+}
+### add student 3 to subject
+POST {{host}}/api/subjects/1/students/3
+
+###
+# @name login
+POST {{host}}/api/auth/login
+Content-Type: {{json}}
+
+{
+  "email": "test4@example.com",
+  "password": "password123"
+}
+
+### add student 4 to subject
+POST {{host}}/api/subjects/1/students/4
+
+
+### add students preferences
+POST http://localhost:8080/api/subjects/1/addPrefences
+Content-Type: {{json}}
+
+{
+    "subjectId": "1",
+    "studentId": "1"
+}
+
+### add students preferences
+POST http://localhost:8080/api/subjects/1/addPrefences
+Content-Type: {{json}}
+
+{
+    "subjectId": "1",
+    "studentId": "2"
+}
+
+### add students preferences
+POST http://localhost:8080/api/subjects/1/addPrefences
+Content-Type: {{json}}
+
+{
+    "subjectId": "1",
+    "studentId": "3"
+}
+
+
+### add students preferences
+POST http://localhost:8080/api/subjects/1/addPrefences
+Content-Type: {{json}}
+
+{
+    "subjectId": "1",
+    "studentId": "4"
+}
+
+### generate groups
+POST http://localhost:8080/api/subjects/1/generateGroups

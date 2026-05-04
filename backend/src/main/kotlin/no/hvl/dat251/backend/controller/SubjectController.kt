@@ -2,11 +2,14 @@ package no.hvl.dat251.backend.controller
 
 import no.hvl.dat251.backend.entity.FlashCard
 import no.hvl.dat251.backend.entity.FlashCardDto
-import no.hvl.dat251.backend.entity.StudySession
+import no.hvl.dat251.backend.entity.GroupPreference
+import no.hvl.dat251.backend.entity.Preferences
 import no.hvl.dat251.backend.entity.StudyGroup
 import org.springframework.security.core.Authentication
 import no.hvl.dat251.backend.entity.Student
 import no.hvl.dat251.backend.entity.Subject
+import no.hvl.dat251.backend.groupgeneration.PreferanceGroupGenerator
+import no.hvl.dat251.backend.repository.PreferencesRepository
 import no.hvl.dat251.backend.repository.StudentRepository
 import no.hvl.dat251.backend.repository.StudySessionRepository
 import no.hvl.dat251.backend.repository.StudyGroupRepository
@@ -16,7 +19,6 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -29,8 +31,8 @@ class SubjectController(
     @Autowired private val studySessionRepository: StudySessionRepository,
     @Autowired private val studentRepository: StudentRepository,
     @Autowired private val subjectRepository: SubjectRepository,
-    @Autowired private val studyGroupRepository: StudyGroupRepository
-
+    @Autowired private val studyGroupRepository: StudyGroupRepository,
+    @Autowired private val preferencesRepository: PreferencesRepository
 ){
 
 
@@ -59,12 +61,15 @@ class SubjectController(
     }
 
     @PostMapping("/{subject_id}/students/{student_id}")
-    fun addStudentToSubject(@PathVariable("subject_id") subject_id: Long, @PathVariable("student_id") student_id: Long) : ResponseEntity<Student> {
+    fun addStudentToSubject(
+        @PathVariable("subject_id") subject_id: Long,
+        authentication: Authentication?
+    ): ResponseEntity<Student> {
         val subject = subjectRepository.findById(subject_id).orElse(null)
             ?: return ResponseEntity(HttpStatus.NOT_FOUND)
-        val student = studentRepository.findById(student_id).orElse(null)
-            ?: return ResponseEntity(HttpStatus.NOT_FOUND)
 
+        val auth = authentication?.principal as? Student ?: return ResponseEntity(HttpStatus.NOT_FOUND)
+        val student = studentRepository.findById(auth.id ?: return ResponseEntity(HttpStatus.NOT_FOUND)).orElseThrow()
         subject.addStudent(student)
 
         subjectRepository.save(subject)
@@ -101,5 +106,38 @@ class SubjectController(
         student.flashCards.add(fCard)
         studentRepository.save(student)
         return ResponseEntity.ok(fCard)
+    }
+
+    @PostMapping("/{id}/addPrefences/{student_id}")
+    fun addPresencesToSubject(
+        @PathVariable("id") id : Long,
+        @PathVariable("student_id") student_id : Long,
+        authentication: Authentication?,
+    ) : ResponseEntity<GroupPreference>{
+        val auth = authentication?.principal as? Student ?: return ResponseEntity(HttpStatus.NOT_FOUND)
+        val student = studentRepository.findById(auth.id ?: return ResponseEntity(HttpStatus.NOT_FOUND)).orElseThrow()
+        val subject = subjectRepository.findById(id).orElse(null)
+        val prefs = GroupPreference(student=student, subject=subject, preferredStudentID = student_id)
+        student.preferences.add(prefs)
+        studentRepository.save(student)
+        return ResponseEntity.ok(prefs)
+    }
+
+    @PostMapping("/{id}/generateGroups")
+    fun generateGroups(
+        @PathVariable("id") id : Long,
+        authentication: Authentication?,
+    ): ResponseEntity<Any> {
+        val auth = authentication?.principal as? Student ?: return ResponseEntity(HttpStatus.NOT_FOUND)
+        val student = studentRepository.findById(auth.id ?: return ResponseEntity(HttpStatus.NOT_FOUND)).orElseThrow()
+        val subject = subjectRepository.findById(id).orElse(null)
+        val generator = PreferanceGroupGenerator()
+        val groups = generator.generate(subject ?: return ResponseEntity(HttpStatus.NOT_FOUND))
+        for (group in groups) {
+            val students = studentRepository.findAllById(group).toMutableSet()
+            val studyGroup = StudyGroup(name="generatedGroup", students = students)
+            studyGroupRepository.save(studyGroup)
+        }
+        return ResponseEntity.ok(groups)
     }
 }
