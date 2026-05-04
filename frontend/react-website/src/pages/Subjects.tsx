@@ -194,17 +194,13 @@ const Subjects = () => {
 
     try {
       const res = await fetch(
-        `http://localhost:8080/api/subjects/${subjectId}/addpreference`,
+        `http://localhost:8080/api/subjects/${subjectId}/addPrefences/${studentIdNumber}`,
         {
           method: "POST",
           credentials: "include",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            subjectId: Number(subjectId),
-            studentId: studentIdNumber,
-          }),
         }
       );
 
