@@ -11,7 +11,7 @@ import jakarta.persistence.ManyToMany
 import no.hvl.dat251.backend.entity.Student
 
 @Entity
-data class Subject(
+open class Subject(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null,
@@ -30,7 +30,5 @@ data class Subject(
     fun addGroup(group: StudyGroup) {
         studyGroups.add(group)
     }
-
-
 
 }

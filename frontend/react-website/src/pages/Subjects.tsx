@@ -129,7 +129,8 @@ const Subjects = () => {
     back: string;
   }) => {
     try {
-      const res = await fetch("http://localhost:8080/api/flashcards", {
+      // when flashcards are connected to each subject of the student also these can be specified
+      const res = await fetch("http://localhost:8080/api/subjects/flashcard", {
         method: "POST",
         credentials: "include",
         headers: {
@@ -154,7 +155,7 @@ const Subjects = () => {
 
   const fetchFlashcards = async () => {
     try {
-      const res = await fetch("http://localhost:8080/api/flashcards", {
+      const res = await fetch("http://localhost:8080/api/subjects/flashcards", {
         credentials: "include",
       });
 

@@ -27,6 +27,9 @@ class Student(
     var completedSubjects: MutableSet<Subject> = mutableSetOf(),
     @OneToMany(cascade = [(CascadeType.MERGE)])
     var studygroups: MutableSet<StudyGroup> = mutableSetOf(),
+    @OneToMany(cascade = [(CascadeType.MERGE)])
+    var flashCards: MutableSet<FlashCard> = mutableSetOf(),
+    //TODO add flashcards connected to subject
     var xp: Float = 0f,
 ) : ExpObserver, UserDetails {
 
