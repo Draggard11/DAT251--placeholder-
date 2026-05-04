@@ -2,48 +2,55 @@ package no.hvl.dat251.backend.groupgeneration
 
 import no.hvl.dat251.backend.entity.GroupGenerationRequest
 import org.springframework.stereotype.Service
+import no.hvl.dat251.backend.entity.Student
+import no.hvl.dat251.backend.entity.Subject
+import no.hvl.dat251.backend.entity.StudyGroup
 
 @Service
-class RandomGroupGenerator : GroupGenerator {
-    override fun generate(requests: List<GroupGenerationRequest>): List<List<Long>> {
-        //GroupGenerationRequests should hold: 
-        //1. The student's ID
-        //2. The preferences of that student
-        val n = requests.size
-        val idToIndex = requests.mapIndexed { index, req ->
-            req.id to index
-        }.toMap()
-        // We create a n-by-n matrix for looking up scores
-        val scores = Array(n) {
-            IntArray(n)
-        }
+class PreferanceGroupGenerator : GroupGenerator {
+    fun generate(subject: Subject): List<List<Long>> {
+        //We get all students taking the subject and add their prefererences for that subject to a map
+        val students = subject.students
+        val prefList = mutableMapOf<Long, Set<Long>>()
 
-        // 
-        for (req in requests) {
-            val i = idToIndex[req.id]!!
-
-            for (pref in req.preferences) {
-                val j = idToIndex[pref] ?: continue
-                scores[i][j] += 1
-            }
+        for (student in students) {
+            prefList[student.id] = student.groupPreferences[subject]!! ?: emptySet()
         }
+        //prefList should be a map of each student in a subject to its preferences
+        
+        val n = students.size
 
         val groups = mutableListOf<PotentialGroup>()
-
-        //Hardcoded for groupsizes of 4. and classes of less than 32.
+        //Hardcoded for groupsizes of 4. SubjectSize is limited to <32 members (bitwise operators)  
         for (a in 0 until n-3) {
             for (b in a+1 until n-2) {
                 for (c in b+1 until n-1) {
                     for (d in c+1 until n) {
-                        val members = intArrayOf(a, b, c, d)
+                        val entries = prefList.entries.toList()
+                        val members = listOf(
+                            entries[a],
+                            entries[b],
+                            entries[c],
+                            entries[d]
+                        )
+                        // val members = listOf(
+                        //     prefList.entries.elementAt(a), 
+                        //     prefList.entries.elementAt(b),
+                        //     prefList.entries.elementAt(c),
+                        //     prefList.entries.elementAt(d)
+                        //     )
                         var groupScore = 0
+
                         for(i in members) {
                             for(j in members) {
-                                groupScore += scores[i][j]
+                                if (j.key in i.value) {
+                                    groupScore += 1
+                                }
                             }
                         }
                         val mask = (1 shl a) or (1 shl b) or (1 shl c) or (1 shl d)
-                        groups.add(PotentialGroup(members,group_score, mask))
+                        val studs = members.map { it.key }
+                        groups.add(PotentialGroup(studs, groupScore, mask))
                     }
                 }
             }
@@ -64,17 +71,16 @@ class RandomGroupGenerator : GroupGenerator {
         
         val chosenGroups = mutableListOf<List<Long>>()
         for (c in chosen) {
-            val memberIds = c.members.map {indexToId[it]!!}
-            chosenGroups.add(memberIds)
+            chosenGroups.add(c.members)
         }
 
         return chosenGroups
     }
-
 }
 
 data class PotentialGroup(
-    val members: IntArray, 
+    val members: List<Long>, 
     val score: Int,
-    val mask: Int)
+    val mask: Int
+    )
 

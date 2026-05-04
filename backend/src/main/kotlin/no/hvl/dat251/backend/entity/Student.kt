@@ -23,6 +23,9 @@ class Student(
     var completedSubjects: MutableSet<Subject> = mutableSetOf(),
     @OneToMany(cascade = [(CascadeType.MERGE)])
     var studygroups: MutableSet<StudyGroup> = mutableSetOf(),
+    //Map of subject to list of students
+    var groupPreferences: MutableMap<Long, Set<Long>> = mutableMapOf()
+
 ) : ExpObserver {
     var xp: Float = 0f
     fun addStudyGroup(studyGroup: StudyGroup) {
@@ -34,6 +37,7 @@ class Student(
     fun addActiveSubject(subject: Subject) {
         activeSubjects.add(subject)
     }
+    
 
     override fun update(xp: Float) {
         // we can notify the user from the backend
