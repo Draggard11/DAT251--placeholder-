@@ -14,6 +14,7 @@ import no.hvl.dat251.backend.repository.SubjectRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.core.Authentication
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -43,9 +44,15 @@ class StudyGroupsController(
         }
 
         @PostMapping("")
-        fun createStudyGroup(@RequestBody studyGroup: StudyGroup) : ResponseEntity<StudyGroup>{
+        fun createStudyGroup(
+            @RequestBody studyGroup: StudyGroup,
+            authentication: Authentication?
+        ) : ResponseEntity<StudyGroup>{
+            val auth = authentication?.principal as? Student ?: return ResponseEntity(HttpStatus.NOT_FOUND)
+            val student = studentRepository.findById(auth.id ?: return ResponseEntity(HttpStatus.NOT_FOUND)).orElseThrow()
+            studyGroup.students.add(student)
             val saved = studyGroupRepository.save(studyGroup)
-            return ResponseEntity.ok(studyGroup)
+            return ResponseEntity.ok(saved)
         }
 
         @GetMapping("/{id}")
