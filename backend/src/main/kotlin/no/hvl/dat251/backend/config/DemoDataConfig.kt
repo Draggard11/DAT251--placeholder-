@@ -50,7 +50,7 @@ class DemoDataConfig {
         )
         subject.addStudent(demoStudent)
         // Create 19 students
-        val students = (1..19).map { i ->
+        val students = (2..20).map { i ->
             studentRepo.save(
                 Student(
                     name = "Student $i",
